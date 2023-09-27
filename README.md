@@ -1,8 +1,7 @@
 # smog-alado
 Desktop vaporizer project with 2S battery, homemade heating element and temperature control
 
-![board](https://github.com/machadoleonardo94/smog-alado/assets/52208834/85342156-3d72-429e-84fb-716e176a9e57)
-
+![board](https://github.com/machadoleonardo94/smog-alado/assets/52208834/82a1beb1-0f0f-4a3b-9d36-1a72f8a2a4b8)
 
 ## Main Features:
 * ESP12F processor
