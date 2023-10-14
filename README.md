@@ -38,7 +38,7 @@ Desktop vaporizer project with 2S battery, homemade heating element and temperat
 * 2S lithium battery charger circuit
 * 9V~12V 2A brick power supply
 
-##Suggested addons:
+## Suggested addons:
 * GX16-4 panel connector (for heating element replacement)
 * Lever or rotary switch (for hard turning off)
 * Push button (for waking up and selecting presets)
