@@ -20,6 +20,7 @@ Desktop vaporizer project with 2S battery, homemade heating element and temperat
 * 1x PCB
 * 1x ESP-12F module
 * 1x 100k NTC 3950 thermistor
+* 2x 1x2 male header 1" spaced
 * 1x AMS1117 3V3
 * 1x 40N02 TO252 N-channel MOSFET
 * 1x 2mm DC 2A+ panel power connector
