@@ -25,7 +25,6 @@ void setup() {
 }
 
 bool state = false;
-uint16_t adcRaw = 0;
 double heaterTemperature = 0;
 int preset = 0;
 
@@ -59,7 +58,10 @@ void loop() {
 double resCalc (){
   int pulldownResistor = 1000;
   float resistor = 0;
-  adcRaw = analogRead(A0);
+  uint16_t adcRaw = 0;
+  for (int k=0; k<16; k++)
+    adcRaw += analogRead(A0);
+  adcRaw = adcRaw >> 4;
   Serial.print("ADC raw value: ");
   Serial.println(adcRaw);
   resistor = pulldownResistor * 1024 / (adcRaw-9) - pulldownResistor;
