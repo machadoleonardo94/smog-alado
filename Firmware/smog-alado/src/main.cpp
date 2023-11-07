@@ -1,5 +1,9 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <Adafruit_ADS1X15.h>
+
 
 #define ledPin 2
 #define SDA 4
@@ -13,6 +17,8 @@ double resCalc ();
 double steinhart (double termistor);
 void runHeater ( int preset);
 
+Adafruit_ADS1015 ads;
+
 void setup() {
   pinMode(ledPin, OUTPUT);
   pinMode(buttonPin, INPUT);
@@ -23,6 +29,7 @@ void setup() {
   Serial.begin(115200);
   WiFi.mode(WIFI_OFF);
 }
+
 
 bool state = false;
 double heaterTemperature = 0;
@@ -59,14 +66,11 @@ void loop() {
 // put function definitions here:
 double resCalc (){
   int pulldownResistor = 1000;
-  float resistor = 0;
+  double resistor = 0;
   uint16_t adcRaw = 0;
-  for (int k=0; k<16; k++)
-    adcRaw += analogRead(A0);
-  adcRaw = adcRaw >> 4;
-  Serial.print("ADC raw value: ");
-  Serial.println(adcRaw);
-  resistor = pulldownResistor * 1024 / (adcRaw-9) - pulldownResistor;
+  adcRaw = ads.readADC_SingleEnded(0);
+  Serial.printf("ADC raw value: %d \n", adcRaw);
+  resistor = pulldownResistor * 65535 / (adcRaw) - pulldownResistor;
   Serial.printf("Calculated resistor: %.1f \n", resistor);
   return resistor;
 }
