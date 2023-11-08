@@ -15,9 +15,10 @@
 // put function declarations here:
 double resCalc ();
 double steinhart (double termistor);
-void runHeater ( int preset);
+void runHeater (int preset);
+int buttonPress (int button);
 
-Adafruit_ADS1015 ads;
+Adafruit_ADS1115 ads;
 
 void setup() {
   pinMode(ledPin, OUTPUT);
@@ -26,6 +27,10 @@ void setup() {
   pinMode(A0, INPUT);
   digitalWrite(ledPin, LOW); //builtin LED set to ON on boot
   digitalWrite(heater, LOW);  //heater set to OFF on boot
+  if (!(ads.begin())){
+    Serial.println("Failed to initialize ADS.");
+  }
+  ads.setGain(GAIN_ONE);
   Serial.begin(115200);
   WiFi.mode(WIFI_OFF);
 }
@@ -34,8 +39,9 @@ void setup() {
 bool state = false;
 double heaterTemperature = 0;
 double heaterOld = 0;
-int tempGoal = 200;
-int preset = 0;
+int tempGoal = 220;
+int preset = 3;
+bool debouncedButton = false;
 
 double adcTimer = 0;
 double loopTimer = 0;
@@ -48,8 +54,10 @@ void loop() {
   }
 
   if (!digitalRead(buttonPin)){
-    while(!digitalRead(buttonPin));
-    preset++;
+    debouncedButton = buttonPress(buttonPin);
+    if (debouncedButton){
+      preset++;
+    }
     Serial.printf("Clict Clect \n");
     delay(100);
     if (preset >= 4)
@@ -67,11 +75,15 @@ void loop() {
 double resCalc (){
   int pulldownResistor = 1000;
   double resistor = 0;
-  uint16_t adcRaw = 0;
+  uint16_t adcRaw = 1000;
   adcRaw = ads.readADC_SingleEnded(0);
   Serial.printf("ADC raw value: %d \n", adcRaw);
-  resistor = pulldownResistor * 65535 / (adcRaw) - pulldownResistor;
+  Serial.printf("Measured voltage: %.1f \n", ads.computeVolts(adcRaw));
+  //resistor = 200;
+  resistor = (32768 / (adcRaw)) * pulldownResistor - pulldownResistor;
   Serial.printf("Calculated resistor: %.1f \n", resistor);
+  if (resistor <200 )
+    resistor = 200;
   return resistor;
 }
 
@@ -92,7 +104,6 @@ void runHeater(int preset){
   int power = 0;
   int powerPercent = 0;
   int pValue = 3;
-  int iValue = 2;
   switch (preset){
     case 0:
       power = 0;
@@ -112,9 +123,9 @@ void runHeater(int preset){
     case 3: 
       if (heaterTemperature < 230){
         if (tempGoal - heaterTemperature > 20)
-          power = 150;
+          power = 180;
         else {
-          power = 150 + pValue * (tempGoal - heaterTemperature);
+          power = 175 + pValue * (tempGoal - heaterTemperature);
         }
       } 
       break;
@@ -128,4 +139,15 @@ void runHeater(int preset){
     analogWrite (heater, power);
   else
     digitalWrite (heater, LOW);
+}
+
+int buttonPress(int button) {
+  int count = 0;
+  while(!digitalRead(button)){
+    count++;
+    delay(10);
+  if (count>10)
+    return 1;
+  }
+  return 0; 
 }
