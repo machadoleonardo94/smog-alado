@@ -11,6 +11,10 @@
 #define buttonPin 12
 #define heater 14
 
+#define kp 1
+#define ki 0.05
+#define tempMax 235
+
 
 // put function declarations here:
 double resCalc ();
@@ -35,13 +39,13 @@ void setup() {
   WiFi.mode(WIFI_OFF);
 }
 
-
-bool state = false;
 double heaterTemperature = 0;
-double heaterOld = 0;
-int tempGoal = 220;
+double tempGoal = 220;
+double error = 0;
+double integral = 0;
 int preset = 3;
 bool debouncedButton = false;
+bool state = false;
 
 double adcTimer = 0;
 double loopTimer = 0;
@@ -64,26 +68,26 @@ void loop() {
       preset = 0;
   }
 
-  if ((millis()-loopTimer) > 500){
-  loopTimer=millis();
-  digitalWrite(ledPin, state);
-  state = !(state);
+  if ((millis()-loopTimer) > 1000){
+    loopTimer=millis();
+    digitalWrite(ledPin, state);
+    state = !(state);
+    Serial.printf("Thermistor resistence: %.1f \n", resCalc());
+    Serial.printf("Temperature reading: %.1f \n", steinhart(resCalc()));
   }
 }
 
 // put function definitions here:
 double resCalc (){
-  int pulldownResistor = 1000;
+  int pulldownResistor = 4700;
   double resistor = 0;
   uint16_t adcRaw = 1000;
   adcRaw = ads.readADC_SingleEnded(0);
-  Serial.printf("ADC raw value: %d \n", adcRaw);
-  Serial.printf("Measured voltage: %.1f \n", ads.computeVolts(adcRaw));
-  //resistor = 200;
   resistor = (32768 / (adcRaw)) * pulldownResistor - pulldownResistor;
-  Serial.printf("Calculated resistor: %.1f \n", resistor);
   if (resistor <200 )
     resistor = 200;
+  if (resistor > 120000)
+    resistor = 120000;
   return resistor;
 }
 
@@ -96,36 +100,39 @@ double steinhart (double termistor){
   // Temperature in Kelvin = 1 / {A + B[ln(R)] + C[ln(R)]^3}
   double ln_r = log(termistor); // Saving the Log(resistance) so not to calculate it 4 times later.
   float temperature = (1 / (a + (b * ln_r) + (c * ln_r * ln_r * ln_r))) - 273.15; //Convert K to ºC
-  Serial.printf("Temperature reading: %.1f \n", temperature);
   return (temperature); 
 }
 
 void runHeater(int preset){
   int power = 0;
-  int powerPercent = 0;
-  int pValue = 3;
+  float powerPercent = 0;
+  error = tempGoal - heaterTemperature;
   switch (preset){
     case 0:
       power = 0;
       break;
-    case 1:
+    case 1: //open loop preheating at 20% power
       if (heaterTemperature < 140)
-        power = 50;
+        power = 20*255/100;
       else
         power = 0;;
       break;
-    case 2:
+    case 2: //open loop preheating at 40% power
           if (heaterTemperature < 180)
-        power = 100;
+        power = 40*255/100;
       else
         power = 0;
       break;
     case 3: 
-      if (heaterTemperature < 230){
-        if (tempGoal - heaterTemperature > 20)
-          power = 180;
+      if (heaterTemperature < tempMax){
+        if (error > 10)
+          power = 200;
         else {
-          power = 175 + pValue * (tempGoal - heaterTemperature);
+          integral += integral + (error * ki);
+          if (integral > 20) integral = 20;
+          if (integral < -20) integral = -20;
+          power = 150 + error * kp + integral;
+          if (power>255) power = 255;
         }
       } 
       break;
@@ -134,7 +141,7 @@ void runHeater(int preset){
   }
   powerPercent = 100 * power/255;
   Serial.printf ("PWM Heating %d \n", power);
-  Serial.printf ("PWM Heating %d%% \n", powerPercent);
+  Serial.printf ("PWM Heating %.1f%% \n", powerPercent);
   if (power > 0)
     analogWrite (heater, power);
   else
