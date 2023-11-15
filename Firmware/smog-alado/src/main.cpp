@@ -11,8 +11,8 @@
 #define buttonPin 12
 #define heater 14
 
-#define kp 6
-#define ki 0.2
+#define kp 8
+#define ki 0.15
 #define tempMax 260
 #define ANALOG_RANGE 1024
 
@@ -44,7 +44,7 @@ void setup() {
 
 double thermistor = 500;
 double heaterTemperature = 0;
-double tempGoal = 235;
+double tempGoal = 0;
 double error = 0;
 double integral = 0;
 double proportional = 0;
@@ -72,25 +72,29 @@ void loop() {
     if (debouncedButton){
       preset++;
     }
+    if (preset==0)
+    tempGoal = 0;
+    if ((preset > 0) & (preset < 12))
+      tempGoal = 190+(preset*5);
+    if (preset >= 12)
+      preset = 0;
     Serial.printf("Clict Clect \n");
     delay(100);
-    if (preset >= 4)
-      preset = 0;
   }
 
   if ((millis()-loopTimer) > 1000){
     loopTimer=millis();
     digitalWrite(ledPin, state);
     state = !(state);
-    double powerPercent = 100*power/ANALOG_RANGE;
     Serial.print(">Thermistor resistence: ");
     Serial.println(thermistor);
     Serial.print(">Temperature reading: ");
     Serial.println(heaterTemperature);
-    Serial.print(">Power output: ");
-    Serial.println(powerPercent);
-    Serial.print(">Filtered ADC: ");
-    Serial.println(adcFiltered);    
+    Serial.print(">Temperature Goal: ");
+    Serial.println(tempGoal);
+    //Serial.print(">Filtered ADC: ");
+    //Serial.println(adcFiltered);
+    
   }
 }
 
@@ -124,38 +128,19 @@ double steinhart (double termistor){
 void runHeater(int preset){
   power = 0;
   error = tempGoal - heaterTemperature;
-  switch (preset){
-    case 0:
-      power = 0;
-      break;
-    case 1: //open loop preheating at 20% power
-      if (heaterTemperature < 140)
-        power = 20*ANALOG_RANGE/100;
-      else
-        power = 0;;
-      break;
-    case 2: //open loop preheating at 40% power
-          if (heaterTemperature < 200)
-        power = 40*ANALOG_RANGE/100;
-      else
-        power = 0;
-      break;
-    case 3: 
-      if (heaterTemperature < tempMax){
-        if (error > 10)
-          power = 80*ANALOG_RANGE/100;
-        else {
-          integral += (error * ki);
-          if (integral > 12) integral = 12;
-          if (integral < -12) integral = -12;
-          proportional = error * kp;
-          power = 0.4*ANALOG_RANGE + proportional + integral;
-          if (power>ANALOG_RANGE) power = ANALOG_RANGE;
-        }
-      } 
-      break;
-    default:
-      Serial.printf("No valid power option \n");
+  if (preset > 0){
+    if (heaterTemperature < tempMax){
+      if (error > 20)
+        power = 80*ANALOG_RANGE/100;
+      else {
+        integral += (error * ki);
+        if (integral > 40) integral = 40;
+        if (integral < -40) integral = -40;
+        proportional = error * kp;
+        power = 0.4*ANALOG_RANGE + proportional + integral;
+        if (power>ANALOG_RANGE) power = ANALOG_RANGE;
+      }
+    }
   }
   if (power > 0)
     analogWrite (heater, power);
@@ -164,7 +149,9 @@ void runHeater(int preset){
   Serial.print(">Proportional part: ");
   Serial.println(proportional);
   Serial.print(">Integral part: ");
-  Serial.println(integral);  
+  Serial.println(integral);
+  Serial.print(">Power output: ");
+  Serial.println(power);
 }
 
 int buttonPress(int button) {
