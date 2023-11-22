@@ -12,11 +12,13 @@
 #include "components/ADS1115/setup.h"
 #include "components/THERMISTOR/setup.h"
 #include "components/HEATER/setup.h"
+#include "components/PUSHBUTTON/setup.h"
 
 int buttonPress(int button);
 
 void setup()
 {
+  delay(1000);
   Serial.begin(115200);
   Serial.println("setup");
   pinMode(ledPin, OUTPUT);
@@ -31,22 +33,21 @@ void setup()
   setup_OTA();
 
   analogWriteRange(ANALOG_RANGE);
+
+  //enable light sleep
+  wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);
+  wifi_fpm_open();
+
+  // register one or more wake-up interrupts
+  gpio_pin_wakeup_enable(buttonPin, GPIO_PIN_INTR_LOLEVEL);
 }
 
 void loop()
 {
   ArduinoOTA.handle();
-  if (workingADS)
-  {
-    if ((millis() - adcTimer) > 200)
-    {
-      adcTimer = millis();
-      thermistor = calculate_resistance();
-      heaterTemperature = steinhart(thermistor);
-      runHeater(preset);
-    }
-  }
-  if (buttonPress(buttonPin))
+
+  uint8_t click = buttonPress(buttonPin);
+  if (click == 1)
   {
     preset++;
     if (preset == 0)
@@ -57,29 +58,54 @@ void loop()
       preset = 0;
     Serial.printf("Clict Clect \n");
     delay(100);
+    idleTimer = 0;
   }
-  if ((millis() - loopTimer) > 500)
+  if (click == 2)
   {
-    loopTimer = millis();
-    // if (preset == 0)
+    Serial.println("Going to sleep");
+    preset = 0;
+    tempGoal = 0;
+    digitalWrite(heater, LOW);
+    wifi_set_sleep_type(LIGHT_SLEEP_T);
+    delay(10);
+    Serial.println("Yo, WAKE AND BAKE");
+  }
+
+  if (workingADS)
+  {
+    if (adcTimer > (SAMPLES_TO_SEC/5)) //reads ADC eveery 200ms
+    {
+      adcTimer = 0;
+      thermistor = calculate_resistance();
+      heaterTemperature = steinhart(thermistor);
+      runHeater(preset);
+    }
+  }
+  
+  if (logTimer > SAMPLES_TO_SEC)  //logs variables every 1s
+  {
+    logTimer = 0;
     digitalWrite(ledPin, state);
-    // else
-    //   analogWrite(ledPin, preset*90);
     state = !(state);
     run_logger();
   }
-}
 
-int buttonPress(int button)
-{
-  int count = 0;
-  while (!digitalRead(button))
+  if (idleTimer > (5 * 60 * SAMPLES_TO_SEC))  //shutdown after 5 minutes 
   {
-    count++;
-    delay(2);
+    Serial.println("Going to sleep");
+    preset = 0;
+    tempGoal = 0;
+    digitalWrite(heater, LOW);
+    wifi_set_sleep_type(LIGHT_SLEEP_T);
+    delay(10);
+    Serial.println("Yo, WAKE AND BAKE");
   }
-  if (count > 10)
-    return 1;
-  else
-    return 0;
+
+  if ((millis() - globalTimer) > SAMPLING_TIMER)
+  {
+    globalTimer = millis();
+    idleTimer++;
+    logTimer++;
+    adcTimer++;
+  }
 }

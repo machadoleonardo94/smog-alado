@@ -1,5 +1,5 @@
-#if !defined(FEATURE_QUALQUER)
-#define FEATURE_QUALQUER
+#if !defined(RUN_HEATER)
+#define RUN_HEATER
 
 #include "shared/dependencies.h"
 //* Adicione o arquivo setup.h caso a feature atual faça uso de outras features do mesmo componente.
@@ -38,4 +38,4 @@ void runHeater(int preset)
     digitalWrite(heater, LOW);
 }
 
-#endif // FEATURE_QUALQUER
+#endif // RUN_HEATER

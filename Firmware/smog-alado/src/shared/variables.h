@@ -22,10 +22,10 @@ bool state = false;
 uint16_t adcRaw = 1000;
 uint16_t adcFiltered = 1000;
 
+double globalTimer = 0;
 double adcTimer = 0;
-double heaterTimer = 0;
-double loopTimer = 0;
-double blinkyTimer = 0;
+double logTimer = 0;
+double idleTimer = 0;
 
 bool workingADS = false;
 

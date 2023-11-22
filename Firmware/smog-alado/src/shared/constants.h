@@ -4,6 +4,10 @@
 //* Multiplier to convert microseconds to seconds.
 #define one_second_in_microseconds 1000000
 
+//* Sampling timers
+#define SAMPLING_TIMER 10
+#define SAMPLES_TO_SEC 1000/SAMPLING_TIMER
+
 //* PID constants for heating control
 #define KP 15
 #define KI 0.15
