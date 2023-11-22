@@ -1,0 +1,24 @@
+#if !defined(PROJECT_GLOBAL_CONSTANTS)
+#define PROJECT_GLOBAL_CONSTANTS
+
+//* Multiplier to convert microseconds to seconds.
+#define one_second_in_microseconds 1000000
+
+//* PID constants for heating control
+#define KP 15
+#define KI 0.15
+#define KD 80
+
+//* Temperature limit to avoid burnout
+#define tempMax 260
+
+//* Pulldown resistor
+#define PULLDOWN 4700
+
+//* Higher resolution for PWM output (default 256)
+#define ANALOG_RANGE 1024
+
+#define EEPROM_WIFI_SSID_START 0
+#define EEPROM_WIFI_PASS_START 64
+
+#endif // PROJECT_GLOBAL_CONSTANTS
