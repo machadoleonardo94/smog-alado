@@ -1,8 +1,15 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
+#include <ESP8266mDNS.h>
+#include <WiFiUdp.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_ADS1X15.h>
+#include <ArduinoOTA.h>
+#include <DNSServer.h>
+#include <ESP8266WebServer.h>
+#include <WiFiManager.h>
+#include <EEPROM.h>
 
 
 #define ledPin 2
@@ -16,6 +23,12 @@
 #define tempMax 260
 #define ANALOG_RANGE 1024
 
+#define EEPROM_WIFI_SSID_START 0
+#define EEPROM_WIFI_PASS_START 64
+
+char customWifiSSID[32];
+char customWifiPass[32];
+
 
 // put function declarations here:
 double resCalc ();
@@ -24,6 +37,12 @@ void runHeater (int preset);
 int buttonPress (int button);
 
 Adafruit_ADS1115 ads;
+
+void configModeCallback(WiFiManager *myWiFiManager) {
+  Serial.println("Entered config mode");
+  Serial.println(WiFi.softAPIP());
+  Serial.println(myWiFiManager->getConfigPortalSSID());
+}
 
 void setup() {
   pinMode(ledPin, OUTPUT);
@@ -40,6 +59,74 @@ void setup() {
   Serial.println("setup");
   WiFi.mode(WIFI_OFF);
   analogWriteRange(ANALOG_RANGE);
+
+  // Set up WiFiManager
+  WiFiManager wifiManager;
+  wifiManager.setTimeout(30);
+  wifiManager.setAPCallback(configModeCallback);
+
+  // Try to load WiFi credentials from EEPROM
+  EEPROM.begin(512); // Initialize EEPROM with 512 bytes
+  EEPROM.get(EEPROM_WIFI_SSID_START, customWifiSSID);
+  EEPROM.get(EEPROM_WIFI_PASS_START, customWifiPass);
+
+  // Set the custom parameters for WiFiManager
+  WiFiManagerParameter customSSID("SSID", "WiFi SSID", customWifiSSID, 32);
+  WiFiManagerParameter customPass("password", "WiFi Password", customWifiPass, 32);
+
+  wifiManager.addParameter(&customSSID);
+  wifiManager.addParameter(&customPass);
+
+  // Try to connect to WiFi, or start a configuration portal if connection fails
+  if (!wifiManager.autoConnect("AutoConnectAP")) {
+    Serial.println("Failed to connect and hit timeout");
+    delay(3000);
+    // Reset and try again, or maybe put it to deep sleep
+    ESP.reset();
+    delay(5000);
+  }
+
+  // Save WiFi credentials to EEPROM
+  strncpy(customWifiSSID, customSSID.getValue(), 32);
+  strncpy(customWifiPass, customPass.getValue(), 32);
+  EEPROM.put(EEPROM_WIFI_SSID_START, customWifiSSID);
+  EEPROM.put(EEPROM_WIFI_PASS_START, customWifiPass);
+  EEPROM.commit();
+
+  // If you get here, you have connected to the WiFi
+  Serial.println("Connected to WiFi");
+
+  // Initialize OTA
+  ArduinoOTA.onStart([]() {
+    String type;
+    if (ArduinoOTA.getCommand() == U_FLASH)
+      type = "sketch";
+    else // U_FS
+      type = "filesystem";
+
+    // NOTE: if updating FS this would be the place to unmount FS using FS.end()
+    Serial.println("Start updating " + type);
+  });
+
+  ArduinoOTA.onEnd([]() {
+    Serial.println("\nEnd");
+    ESP.reset();
+  });
+
+  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
+    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+  });
+
+  ArduinoOTA.onError([](ota_error_t error) {
+    Serial.printf("Error[%u]: ", error);
+    if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
+    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
+    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
+    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
+    else if (error == OTA_END_ERROR) Serial.println("End Failed");
+  });
+
+  ArduinoOTA.begin();
 }
 
 double thermistor = 500;
@@ -60,6 +147,8 @@ double heaterTimer = 0;
 double loopTimer = 0;
 
 void loop() {
+  ArduinoOTA.handle();
+  
   if ((millis()-adcTimer) > 200){
     adcTimer = millis();
     thermistor = resCalc();
@@ -84,7 +173,10 @@ void loop() {
 
   if ((millis()-loopTimer) > 1000){
     loopTimer=millis();
-    digitalWrite(ledPin, state);
+    //if (preset == 0)
+      digitalWrite(ledPin, state);
+    //else
+    //  analogWrite(ledPin, preset*90);
     state = !(state);
     Serial.print(">Thermistor resistence: ");
     Serial.println(thermistor);
@@ -142,16 +234,17 @@ void runHeater(int preset){
       }
     }
   }
-  if (power > 0)
+  if (power > 0){
     analogWrite (heater, power);
+  }
   else
     digitalWrite (heater, LOW);
-  Serial.print(">Proportional part: ");
-  Serial.println(proportional);
-  Serial.print(">Integral part: ");
-  Serial.println(integral);
-  Serial.print(">Power output: ");
-  Serial.println(power);
+  //Serial.print(">Proportional part: ");
+  //Serial.println(proportional);
+  //Serial.print(">Integral part: ");
+  //Serial.println(integral);
+  //Serial.print(">Power output: ");
+  //Serial.println(power);
 }
 
 int buttonPress(int button) {
