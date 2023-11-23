@@ -9,14 +9,14 @@
 #define SAMPLES_TO_SEC 1000/SAMPLING_TIMER
 
 //* PID constants for heating control
-#define KP 15
+#define KP 8
 #define KI 0.15
 #define KD 80
 
 //* Temperature limit to avoid burnout
 #define tempMax 260
 
-//* Pulldown resistor
+//* Pulldown resistor R10
 #define PULLDOWN 4700
 
 //* Higher resolution for PWM output (default 256)
@@ -24,5 +24,10 @@
 
 #define EEPROM_WIFI_SSID_START 0
 #define EEPROM_WIFI_PASS_START 64
+
+//* Paramethers for OLED display
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define SCREEN_ADDRESS 0x3C
 
 #endif // PROJECT_GLOBAL_CONSTANTS
