@@ -10,6 +10,12 @@ void runHeater(int preset)
 {
   power = 0;
   error = tempGoal - heaterTemperature;
+
+  if (preset == 0)
+    tempGoal = 0;
+  if ((preset > 0) & (preset < 12))
+    tempGoal = 190 + (preset * 5);
+
   if (preset > 0)
   {
     if (heaterTemperature < tempMax)
@@ -27,9 +33,12 @@ void runHeater(int preset)
         power = 0.4 * ANALOG_RANGE + proportional + integral;
         if (power > ANALOG_RANGE)
           power = ANALOG_RANGE;
+        if (power < 0)
+          power = 0;
       }
     }
   }
+  powerPercent = 100 * power / ANALOG_RANGE;
   if (power > 0)
   {
     analogWrite(heater, power);
