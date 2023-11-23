@@ -28,5 +28,7 @@ double logTimer = 0;
 double idleTimer = 0;
 
 bool workingADS = false;
+bool workingWIFI = false;
+bool workingOTA = false;
 
 #endif // PROJECT_GLOBAL_VARIABLES

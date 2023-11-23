@@ -4,7 +4,6 @@
 //* Shared:
 #include "shared/dependencies.h"
 //* Utilities:
-#include "utilities/esp_sleep_timer.h"
 #include "utilities/OTA.h"
 #include "utilities/WIFI.h"
 #include "utilities/logger.h"
@@ -28,25 +27,27 @@ void setup()
   digitalWrite(ledPin, LOW); // builtin LED set to ON on boot
   digitalWrite(heater, LOW); // heater set to OFF on boot
 
-  workingADS = setup_ADS1115();
+  setup_ADS1115();
   setup_WIFI();
   setup_OTA();
 
   analogWriteRange(ANALOG_RANGE);
 
   //enable light sleep
-  wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);
-  wifi_fpm_open();
+  //wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);
+  //wifi_fpm_open();
 
   // register one or more wake-up interrupts
-  gpio_pin_wakeup_enable(buttonPin, GPIO_PIN_INTR_LOLEVEL);
+  //gpio_pin_wakeup_enable(buttonPin, GPIO_PIN_INTR_LOLEVEL);
 }
 
 void loop()
 {
-  ArduinoOTA.handle();
+  if (workingOTA)
+    ArduinoOTA.handle();
 
-  uint8_t click = buttonPress(buttonPin);
+  uint8_t click = 0;
+  //click = buttonPress(buttonPin);
   if (click == 1)
   {
     preset++;
@@ -66,7 +67,7 @@ void loop()
     preset = 0;
     tempGoal = 0;
     digitalWrite(heater, LOW);
-    wifi_set_sleep_type(LIGHT_SLEEP_T);
+    //wifi_set_sleep_type(LIGHT_SLEEP_T);
     delay(10);
     Serial.println("Yo, WAKE AND BAKE");
   }
@@ -96,7 +97,7 @@ void loop()
     preset = 0;
     tempGoal = 0;
     digitalWrite(heater, LOW);
-    wifi_set_sleep_type(LIGHT_SLEEP_T);
+    //wifi_set_sleep_type(LIGHT_SLEEP_T);
     delay(10);
     Serial.println("Yo, WAKE AND BAKE");
   }

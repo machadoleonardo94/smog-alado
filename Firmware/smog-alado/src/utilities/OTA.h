@@ -1,11 +1,10 @@
-#if !defined(OTA)
-#define OTA
+#if !defined(OTA_SETUP)
+#define OTA_SETUP
 
 #include <ArduinoOTA.h>
 
 #include "shared/dependencies.h"
 
-//* Puts ESP32 in deep sleep for the specified number of seconds.
 void setup_OTA()
 {
   // Initialize OTA
