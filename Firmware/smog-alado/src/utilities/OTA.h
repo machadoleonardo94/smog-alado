@@ -5,7 +5,7 @@
 
 #include "shared/dependencies.h"
 
-void setup_OTA()
+int setup_OTA()
 {
   // Initialize OTA
   ArduinoOTA.onStart([]()
@@ -37,6 +37,7 @@ void setup_OTA()
     else if (error == OTA_END_ERROR) Serial.println("End Failed"); });
 
   ArduinoOTA.begin();
+  return 1;
 }
 
 #endif // ESP_OTA

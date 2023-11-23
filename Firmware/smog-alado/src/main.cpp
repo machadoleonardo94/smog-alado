@@ -27,9 +27,9 @@ void setup()
   digitalWrite(ledPin, LOW); // builtin LED set to ON on boot
   digitalWrite(heater, LOW); // heater set to OFF on boot
 
-  setup_ADS1115();
+  workingADS = setup_ADS1115();
   setup_WIFI();
-  setup_OTA();
+  workingOTA = setup_OTA();
 
   analogWriteRange(ANALOG_RANGE);
 
@@ -46,8 +46,7 @@ void loop()
   if (workingOTA)
     ArduinoOTA.handle();
 
-  uint8_t click = 0;
-  //click = buttonPress(buttonPin);
+  click = buttonPress(buttonPin);
   if (click == 1)
   {
     preset++;

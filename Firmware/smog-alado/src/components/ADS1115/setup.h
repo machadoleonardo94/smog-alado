@@ -5,7 +5,7 @@
 #include "components/ADS1115/features/read_voltage.h"
 
 //* Initializes ADC module i2c communication.
-void setup_ADS1115()
+int setup_ADS1115()
 {
     serialMon.println("[ADS1115] SETUP STARTED!");
 
@@ -13,6 +13,7 @@ void setup_ADS1115()
     if (!ads.begin())
     {
         serialMon.println("Failed to initialize ADS.");
+        return 0;
     }
 
     //* Set gain.
@@ -33,6 +34,7 @@ void setup_ADS1115()
     //* In case of adding an IO expander, use one GPIO to set an inhibitor pin so all inputs go high impedance
     BLINKY
     serialMon.println("[ADS1115] SETUP FINISHED!");
+    return 1;
 }
 
 #endif // SETUP_ADS1115
