@@ -3,13 +3,6 @@
 
 #include "shared/dependencies.h"
 
-#include <ESP8266WiFi.h>
-#include <ESP8266mDNS.h>
-#include <WiFiUdp.h>
-#include <DNSServer.h>
-#include <ESP8266WebServer.h>
-#include <WiFiManager.h>
-
 char customWifiSSID[32];
 char customWifiPass[32];
 
@@ -40,7 +33,7 @@ void setup_WIFI()
   wifiManager.addParameter(&customPass);
 
   // Try to connect to WiFi, or start a configuration portal if connection fails
-  if (!wifiManager.autoConnect("AutoConnectAP"))
+  if (!wifiManager.autoConnect("Gnome on the Cloud"))
   {
     Serial.println("Failed to connect and hit timeout");
     delay(3000);

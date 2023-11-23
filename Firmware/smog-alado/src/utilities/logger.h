@@ -18,8 +18,10 @@ void run_logger()
     Serial.println(integral);
     Serial.print(">Power output: ");
     Serial.println(power);
-    //  Serial.print(">Filtered ADC: ");
-    //  Serial.println(adcFiltered);
+    Serial.print("ADS status: ");
+    Serial.println(workingADS);
+    Serial.print("Display status: ");
+    Serial.println(workingDisplay);
     Serial.println();
     Serial.println();
 }
