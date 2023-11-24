@@ -62,7 +62,7 @@ void loop()
     updateDisplay();
   }
 
-  if (idleTimer > (5 * 60 * SAMPLES_TO_SEC))  //shutdown after 5 minutes 
+  if (idleTimer > (10 * 60 * SAMPLES_TO_SEC))  //shutdown after 10 minutes 
   {
     sleepRoutine();
   }

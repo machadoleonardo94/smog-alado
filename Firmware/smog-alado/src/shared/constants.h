@@ -9,8 +9,8 @@
 #define SAMPLES_TO_SEC 1000/SAMPLING_TIMER
 
 //* PID constants for heating control
-#define KP 8
-#define KI 0.15
+#define KP 10
+#define KI 0.2
 #define KD 80
 
 //* Temperature limit to avoid burnout

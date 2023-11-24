@@ -21,7 +21,7 @@ void runHeater(int preset)
     if (heaterTemperature < tempMax)
     {
       if (error > 20)
-        power = 80 * ANALOG_RANGE / 100;
+        power = 100 * ANALOG_RANGE / 100;
       else
       {
         integral += (error * KI);

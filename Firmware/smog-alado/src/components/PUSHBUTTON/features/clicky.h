@@ -31,6 +31,7 @@ int buttonPress(int button)
       preset = 0;
       display.dim(false);
       sleepy = false;
+      setup_WIFI();
     }  
     Serial.printf("Clict Clect \n");
     idleTimer = 0;

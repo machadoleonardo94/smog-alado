@@ -20,6 +20,13 @@ void setup_WIFI()
   wifiManager.setTimeout(30);
   wifiManager.setAPCallback(configModeCallback);
 
+  WiFi.setPhyMode(WIFI_PHY_MODE_11N);       // WiFi N mode, best speed, lower range, lower power
+  WiFi.setOutputPower(20.5f);               // Output power of WiFi, dBm range: max +20.5dBm  min 0dBm
+  //WiFi.setSleepMode(WIFI_LIGHT_SLEEP, 1);   // Lowest WiFi power setting
+
+  WiFi.setAutoReconnect(true);
+  WiFi.persistent(true);
+
   // Try to load WiFi credentials from EEPROM
   EEPROM.begin(512); // Initialize EEPROM with 512 bytes
   EEPROM.get(EEPROM_WIFI_SSID_START, customWifiSSID);
@@ -38,8 +45,8 @@ void setup_WIFI()
     Serial.println("Failed to connect and hit timeout");
     delay(3000);
     // Reset and try again, or maybe put it to deep sleep
-    ESP.reset();
-    delay(5000);
+    //ESP.reset();
+    //delay(5000);
   }
 
   // Save WiFi credentials to EEPROM
