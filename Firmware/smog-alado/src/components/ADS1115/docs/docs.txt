@@ -1,0 +1,20 @@
+
+    ---> Datasheet:
+    https://www.makerhero.com/img/files/download/ADS1115-Datasheet.pdf
+
+    ---> Módulo:
+    https://www.makerhero.com/produto/conversor-analogico-digital-4-canais-ads1115/
+
+    ---> Tutorial:
+    https://www.youtube.com/watch?v=VQ2S1Jvpmio
+    https://github.com/adafruit/Adafruit_ADS1X15/tree/master/examples
+    https://microcontrollerslab.com/ads1115-external-adc-with-esp32/
+    
+    ---> Adafruit_ADS1X15 github:
+    https://github.com/adafruit/Adafruit_ADS1X15/tree/master
+
+    -----------------------------------------------------------------------------------------------------------------------
+    " The address of the ADS1113/4/5 is determined by to which pin the ADDR is connected to:
+      GND (0x48), VDD (0x49), SDA (0x4A), or SCL (0x4B). "
+    Acessado em: https://github.com/RobTillaart/ADS1X15
+    -----------------------------------------------------------------------------------------------------------------------
