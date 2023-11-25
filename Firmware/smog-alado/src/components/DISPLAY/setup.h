@@ -4,7 +4,8 @@
 #include "shared/dependencies.h"
 
 // ADICIONAR AQUI OS IMPORTS DOS ARQUIVOS DAS FEATURES.
- #include "components/DISPLAY/features/display.h"
+#include "components/DISPLAY/features/display.h"
+#include "components/DISPLAY/constants.h"
  
 int setup_display()
 {
@@ -14,7 +15,7 @@ int setup_display()
   }
   display.clearDisplay();
   drawXbm(logo_bits, _width, _height, 0, 0);
-  delay(3000);
+  delay(5000);
   return 1;
 }
 #endif // SETUP_DISPLAY

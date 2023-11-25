@@ -2,6 +2,7 @@
 #define WIFI_SETUP
 
 #include "shared/dependencies.h"
+#include "components/DISPLAY/setup.h"
 
 char customWifiSSID[32];
 char customWifiPass[32];
@@ -39,14 +40,14 @@ void setup_WIFI()
   wifiManager.addParameter(&customSSID);
   wifiManager.addParameter(&customPass);
 
+  displayWificonnect();
+
   // Try to connect to WiFi, or start a configuration portal if connection fails
   if (!wifiManager.autoConnect("Gnome on the Cloud"))
   {
+    displayPortal();
+    wifiManager.setConfigPortalTimeout(APtimeout);
     Serial.println("Failed to connect and hit timeout");
-    delay(3000);
-    // Reset and try again, or maybe put it to deep sleep
-    //ESP.reset();
-    //delay(5000);
   }
 
   // Save WiFi credentials to EEPROM

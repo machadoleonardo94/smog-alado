@@ -30,12 +30,12 @@ void setup()
   digitalWrite(ledPin, LOW); // builtin LED set to ON on boot
   digitalWrite(heater, LOW); // heater set to OFF on boot
 
+  workingDisplay = setup_display();
   setup_WIFI();
   setup_OTA();
   workingADS = setup_ADS1115();
-  workingDisplay = setup_display();
   timeZoneSet = setup_TELNET();
-  // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnete won't work
+  // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnet won't work
   
   analogWriteRange(ANALOG_RANGE);
 }
@@ -64,7 +64,7 @@ void loop()
       updateDisplay();
   }
 
-  if (idleTimer > (10 * 60 * SAMPLES_TO_SEC))  //shutdown after 10 minutes 
+  if (idleTimer > (TIME_TO_SLEEP))  //sleep after 10 minutes 
   {
     sleepRoutine();
   }

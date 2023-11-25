@@ -3,34 +3,48 @@
 
 #include "shared/dependencies.h"
 #include "components/DISPLAY/setup.h"
+#include "components/DISPLAY/constants.h"
+
+#include "utilities/WIFI.h"
 
 #define _width 128
 #define _height 64
 
 void updateDisplay() {
+  int remainingTime = (TIME_TO_SLEEP - idleTimer)/SAMPLING_TIMER;
+  idleMinutes = remainingTime / 600;
+  idleSeconds = (remainingTime % 600)/10;
+
   display.clearDisplay();
   display.setTextSize(1); // Set text size to 2 (you can adjust the size as needed)
   display.setTextColor(SSD1306_WHITE);
 
-  display.setCursor(0, 0);
+  display.setCursor(0, LINE0);
   display.print("Temperature: ");
   display.print(heaterTemperature);
   display.print((char)247);
   display.print("C");
 
-  display.setCursor(0, 16); // Adjust vertical position
+  display.setCursor(0, LINE1); // Adjust vertical position
   display.print("Temp. Goal:  ");
+  if (tempGoal<10)
+    display.print("0");
   display.print(tempGoal);
   display.print((char)247);
   display.print("C");
 
-  display.setCursor(0, 32); // Adjust vertical position
+  display.setCursor(0, LINE2); // Adjust vertical position
   display.print("PWM: ");
   display.print(powerPercent);
-  display.print("%");
+  display.print("%    ");
+  display.print(idleMinutes);
+  display.print(":");
+  if (idleSeconds<10)
+    display.print("0");
+  display.print(idleSeconds);
 
   // Display the IP address
-  display.setCursor(0, 48); // Adjust vertical position
+  display.setCursor(0, LINE3); // Adjust vertical position
   display.print("IP: ");
   display.print(WiFi.localIP());
 
@@ -39,6 +53,42 @@ void updateDisplay() {
 
 void drawXbm(const uint8_t *xbm_data, int16_t width, int16_t height, int16_t x, int16_t y) {
   display.drawXBitmap(x, y, xbm_data, width, height, SSD1306_WHITE);
+  display.display();
+}
+
+void displayPortal()
+{
+  display.clearDisplay();
+  display.setTextSize(1); // Set text size to 2 (you can adjust the size as needed)
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(30, LINE0);
+  display.print("Gnome on the Cloud");
+  display.setCursor(0, LINE1);
+  display.print("Please connect to wifiAP");
+  display.setCursor(50, LINE2);
+  display.print("or wait ");
+  display.print(APtimeout);
+  display.print("s");
+
+  display.display();
+}
+
+void displayWificonnect()
+{
+  char SSID[32];
+  EEPROM.get(EEPROM_WIFI_SSID_START, SSID);
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0, LINE0);
+  display.print("Connecting to wifi: ");
+  display.setCursor(0, LINE1);
+  //for (int x=0; x<30;x++)
+  display.print(SSID);
+
   display.display();
 }
 
