@@ -12,8 +12,8 @@ double calculate_resistance()
     return 120000;
   else
     resistor = (3.3 / (adcVoltage)) * PULLDOWN - PULLDOWN;
-  if (resistor < 200)
-    resistor = 200;
+  if (resistor < 150)
+    resistor = 150;
   if (resistor > 120000)
     resistor = 120000;
   return resistor;

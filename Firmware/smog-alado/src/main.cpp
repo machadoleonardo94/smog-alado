@@ -30,10 +30,10 @@ void setup()
   digitalWrite(ledPin, LOW); // builtin LED set to ON on boot
   digitalWrite(heater, LOW); // heater set to OFF on boot
 
-  workingADS = setup_ADS1115();
-  workingDisplay = setup_display();
   setup_WIFI();
   setup_OTA();
+  workingADS = setup_ADS1115();
+  workingDisplay = setup_display();
   timeZoneSet = setup_TELNET();
   // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnete won't work
   
