@@ -44,7 +44,9 @@ int buttonPress(int button)
   }
   if (state == 3)
   {
-    ESP.reset();
+    display.clearDisplay();
+    display.display();
+    ESP.restart();
   }
   delay(100);
   return 1;
