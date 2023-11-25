@@ -21,14 +21,16 @@ void updateDisplay() {
 
   display.setCursor(0, LINE0);
   display.print("Temperature: ");
+  if (heaterTemperature<100)
+    display.print(" ");
   display.print(heaterTemperature);
   display.print((char)247);
   display.print("C");
 
   display.setCursor(0, LINE1); // Adjust vertical position
   display.print("Temp. Goal:  ");
-  if (tempGoal<10)
-    display.print("0");
+  if (tempGoal<100)
+    display.print(" 0");
   display.print(tempGoal);
   display.print((char)247);
   display.print("C");
@@ -36,7 +38,7 @@ void updateDisplay() {
   display.setCursor(0, LINE2); // Adjust vertical position
   display.print("PWM: ");
   display.print(powerPercent);
-  display.print("%    ");
+  display.print("%       ");
   display.print(idleMinutes);
   display.print(":");
   if (idleSeconds<10)
@@ -80,15 +82,11 @@ void displayWificonnect()
   EEPROM.get(EEPROM_WIFI_SSID_START, SSID);
 
   display.clearDisplay();
-  display.setTextSize(1);
+  display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
 
-  display.setCursor(0, LINE0);
-  display.print("Connecting to wifi: ");
   display.setCursor(0, LINE1);
-  //for (int x=0; x<30;x++)
-  display.print(SSID);
-
+  display.print("Connecting to WiFi");
   display.display();
 }
 
