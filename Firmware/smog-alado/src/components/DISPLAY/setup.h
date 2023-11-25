@@ -13,6 +13,8 @@ int setup_display()
     return 0;
   }
   display.clearDisplay();
+  drawXbm(logo_bits, _width, _height, 0, 0);
+  delay(3000);
   return 1;
 }
 #endif // SETUP_DISPLAY
