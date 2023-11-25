@@ -5,8 +5,8 @@
 
 void setupSleep(){
   //enable light sleep
-  wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);
-  wifi_fpm_open();
+  //wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);
+  //wifi_fpm_open();
 
   //register one or more wake-up interrupts
   gpio_pin_wakeup_enable(buttonPin, GPIO_PIN_INTR_LOLEVEL);
@@ -25,7 +25,7 @@ void sleepRoutine()
     display.dim(true);
     sleepy = true;
     Serial.println("Turning WiFi Off");
-    wifi_set_sleep_type(LIGHT_SLEEP_T);
+    WiFi.mode(WIFI_OFF);
     delay(50);
     Serial.println("Yo, WAKE AND BAKE");
 }

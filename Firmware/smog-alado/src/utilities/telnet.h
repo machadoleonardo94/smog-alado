@@ -33,6 +33,8 @@ void TelnetPrint() {
   TelnetStream.print(" ");
   TelnetStream.println(timeStr);
   TelnetStream.println("----------Device variables----------");
+  TelnetStream.print("Idle timer: ");
+  TelnetStream.println(idleTimer);
   TelnetStream.print("Temperature reading: ");
   TelnetStream.println(heaterTemperature);
   TelnetStream.printf("Temperature Goal: ");

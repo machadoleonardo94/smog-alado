@@ -27,9 +27,12 @@ uint16_t adcFiltered = 1000;
 
 //* Timers for ilusion of threads
 double globalTimer = 0;
-double adcTimer = 0;
-double logTimer = 0;
-double idleTimer = 0;
+uint16_t adcTimer = 0;
+uint16_t logTimer = 0;
+uint16_t idleTimer = 0;
+uint16_t idleMinutes = 0;
+uint16_t idleSeconds = 0;
+uint16_t APtimeout = 180;
 
 //* Booleans to check if functions will be called 
 bool workingADS = false;

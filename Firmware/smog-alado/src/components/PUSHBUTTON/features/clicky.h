@@ -20,6 +20,8 @@ int buttonPress(int button)
     state = 1; 
   if (count > 1000)
     state = 2;
+  if (count > 5000)
+    state = 3;
   
   if (state == 1)
   {
@@ -28,9 +30,10 @@ int buttonPress(int button)
       preset = 0;
     if (sleepy == true)
     {
+      sleepy = false;
       preset = 0;
       display.dim(false);
-      sleepy = false;
+      WiFi.begin();
     }  
     Serial.printf("Clict Clect \n");
     idleTimer = 0;
@@ -38,6 +41,12 @@ int buttonPress(int button)
   if (state == 2)
   {
     sleepRoutine();
+  }
+  if (state == 3)
+  {
+    display.clearDisplay();
+    display.display();
+    ESP.restart();
   }
   delay(100);
   return 1;
