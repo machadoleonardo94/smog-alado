@@ -35,6 +35,7 @@ void setup()
   setup_WIFI();
   setup_OTA();
   timeZoneSet = setup_TELNET();
+  // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnete won't work
   
   analogWriteRange(ANALOG_RANGE);
 }
@@ -59,7 +60,8 @@ void loop()
     digitalWrite(ledPin, !digitalRead(ledPin));
     run_logger();
     TelnetPrint();
-    updateDisplay();
+    if (workingDisplay)
+      updateDisplay();
   }
 
   if (idleTimer > (10 * 60 * SAMPLES_TO_SEC))  //shutdown after 10 minutes 
