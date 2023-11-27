@@ -36,7 +36,6 @@ void setup()
   workingADS = setup_ADS1115();
   timeZoneSet = setup_TELNET();
   // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnet won't work
-  
   analogWriteRange(ANALOG_RANGE);
 }
 
@@ -46,15 +45,15 @@ void loop()
 
   buttonPress(buttonPin);
 
-  if ((workingADS) && (adcTimer > (SAMPLES_TO_SEC/5))) //reads ADC every 200ms
+  if ((workingADS) && (adcTimer > (SAMPLES_TO_SEC / 5))) // reads ADC every 200ms
   {
     adcTimer = 0;
     thermistor = calculate_resistance();
     heaterTemperature = steinhart(thermistor);
     runHeater(preset);
   }
-  
-  if (!sleepy && (logTimer > SAMPLES_TO_SEC))  //logs variables every 1s if awake
+
+  if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
     logTimer = 0;
     digitalWrite(ledPin, !digitalRead(ledPin));
@@ -64,7 +63,7 @@ void loop()
       updateDisplay();
   }
 
-  if (idleTimer > (TIME_TO_SLEEP))  //sleep after 10 minutes 
+  if (idleTimer > (TIME_TO_SLEEP)) // sleep after 10 minutes
   {
     sleepRoutine();
   }

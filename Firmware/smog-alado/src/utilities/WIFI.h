@@ -21,9 +21,9 @@ void setup_WIFI()
   wifiManager.setTimeout(30);
   wifiManager.setAPCallback(configModeCallback);
 
-  WiFi.setPhyMode(WIFI_PHY_MODE_11N);       // WiFi N mode, best speed, lower range, lower power
-  WiFi.setOutputPower(20.5f);               // Output power of WiFi, dBm range: max +20.5dBm  min 0dBm
-  //WiFi.setSleepMode(WIFI_LIGHT_SLEEP, 1);   // Lowest WiFi power setting
+  WiFi.setPhyMode(WIFI_PHY_MODE_11N); // WiFi N mode, best speed, lower range, lower power
+  WiFi.setOutputPower(20.5f);         // Output power of WiFi, dBm range: max +20.5dBm  min 0dBm
+  // WiFi.setSleepMode(WIFI_LIGHT_SLEEP, 1);   // Lowest WiFi power setting
 
   WiFi.setAutoReconnect(true);
   WiFi.persistent(true);

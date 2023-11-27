@@ -17,15 +17,15 @@ int buttonPress(int button)
   if (count < 10)
     return 0;
   if (count > 20)
-    state = 1; 
+    state = 1;
   if (count > 1000)
     state = 2;
   if (count > 5000)
     state = 3;
-  
+
   if (state == 1)
   {
-    preset++;   
+    preset++;
     if (preset >= 12)
       preset = 0;
     if (sleepy == true)
@@ -34,7 +34,7 @@ int buttonPress(int button)
       preset = 0;
       display.dim(false);
       WiFi.begin();
-    }  
+    }
     Serial.printf("Clict Clect \n");
     idleTimer = 0;
   }

@@ -22,7 +22,6 @@ double calculate_resistance()
 double steinhart(double thermistor)
 {
 
-
   //  NTC 3950 10k
   //  const static double  a = 0.0011260101763638105;
   //  const static double  b = 0.00023990205585764816;
