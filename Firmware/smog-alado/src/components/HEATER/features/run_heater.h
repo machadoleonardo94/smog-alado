@@ -14,7 +14,7 @@ void runHeater(int preset)
   if (preset == 0)
     tempGoal = 0;
   if ((preset > 0) & (preset < 12))
-    tempGoal = 190 + (preset * 5);
+    tempGoal = 190 + (preset * 6);
 
   if (preset > 0)
   {

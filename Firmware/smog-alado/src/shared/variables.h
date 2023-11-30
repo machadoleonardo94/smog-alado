@@ -32,6 +32,7 @@ uint16_t logTimer = 0;
 uint16_t idleTimer = 0;
 uint16_t idleMinutes = 0;
 uint16_t idleSeconds = 0;
+uint16_t remainingTime = 100;
 uint16_t APtimeout = 180;
 
 //* Booleans to check if functions will be called 

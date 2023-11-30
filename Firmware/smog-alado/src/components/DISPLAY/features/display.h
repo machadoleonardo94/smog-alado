@@ -11,7 +11,7 @@
 #define _height 64
 
 void updateDisplay() {
-  int remainingTime = (TIME_TO_SLEEP - idleTimer)/SAMPLING_TIMER;
+  remainingTime = (TIME_TO_SLEEP - idleTimer)/SAMPLING_TIMER;
   idleMinutes = remainingTime / 600;
   idleSeconds = (remainingTime % 600)/10;
 
@@ -30,7 +30,7 @@ void updateDisplay() {
   display.setCursor(0, LINE1); // Adjust vertical position
   display.print("Temp. Goal:  ");
   if (tempGoal<100)
-    display.print(" 0");
+    display.print("  ");
   display.print(tempGoal);
   display.print((char)247);
   display.print("C");
@@ -38,7 +38,7 @@ void updateDisplay() {
   display.setCursor(0, LINE2); // Adjust vertical position
   display.print("PWM: ");
   display.print(powerPercent);
-  display.print("%       ");
+  display.print("%      ");
   display.print(idleMinutes);
   display.print(":");
   if (idleSeconds<10)

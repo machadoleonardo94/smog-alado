@@ -13,12 +13,12 @@
 #define TIME_TO_SLEEP 10 * 60 * SAMPLES_TO_SEC
 
 //* PID constants for heating control
-#define KP 10
-#define KI 0.2
+#define KP 9
+#define KI 0.15
 #define KD 80
 
 //* Temperature limit to avoid burnout
-#define tempMax 260
+#define tempMax 280
 
 //* Pulldown resistor R10
 #define PULLDOWN 4700
