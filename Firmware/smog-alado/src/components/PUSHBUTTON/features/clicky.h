@@ -26,7 +26,7 @@ int buttonPress(int button)
   if (state == 1)
   {
     preset++;   
-    if (preset >= 12)
+    if (preset >= 10)
       preset = 0;
     if (sleepy == true)
     {
@@ -37,6 +37,14 @@ int buttonPress(int button)
     }  
     Serial.printf("Clict Clect \n");
     idleTimer = 0;
+    if (preset == 0)
+      tempGoal = 0;
+    if (preset == 1)
+      tempGoal = 100;
+    if (preset == 2)
+      tempGoal = 150;
+    if ((preset > 2) & (preset < 10))
+      tempGoal = 160 + (preset * 5);
   }
   if (state == 2)
   {

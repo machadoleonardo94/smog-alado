@@ -11,11 +11,6 @@ void runHeater(int preset)
   power = 0;
   error = tempGoal - heaterTemperature;
 
-  if (preset == 0)
-    tempGoal = 0;
-  if ((preset > 0) & (preset < 12))
-    tempGoal = 190 + (preset * 6);
-
   if (preset > 0)
   {
     if (heaterTemperature < tempMax)
