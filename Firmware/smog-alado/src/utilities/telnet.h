@@ -44,11 +44,11 @@ void TelnetPrint() {
   TelnetStream.print("Power output: ");
   TelnetStream.println(powerPercent);
   TelnetStream.print("Proportional part: ");
-  TelnetStream.println(proportional * KP);
+  TelnetStream.println(proportional);
   TelnetStream.print("Integral part: ");
-  TelnetStream.println(integral * KI);
+  TelnetStream.println(integral);
   TelnetStream.print("Derivative part: ");
-  TelnetStream.println(derivative * KD);
+  TelnetStream.println(derivative);
   TelnetStream.println("");
   TelnetStream.println("");
 }
