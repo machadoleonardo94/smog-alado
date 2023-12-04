@@ -16,6 +16,7 @@ double thermistor = 500;
 double heaterTemperature = 0;
 double tempGoal = 0;
 double error = 0;
+double prevError = 0;
 double integral = 0;
 double proportional = 0;
 double derivative = 0;

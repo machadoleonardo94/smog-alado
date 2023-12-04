@@ -10,7 +10,7 @@
 #define SAMPLES_TO_SEC 1000/SAMPLING_TIMER      //how many increments every 1s 
 
 //* Sleep timer
-#define TIME_TO_SLEEP 10 * 60 * SAMPLES_TO_SEC
+#define TIME_TO_SLEEP 10 * 60 * SAMPLES_TO_SEC - 1 
 
 //* PID constants for heating control
 #define KP 9
