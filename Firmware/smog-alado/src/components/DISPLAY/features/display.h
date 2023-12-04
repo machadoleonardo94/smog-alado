@@ -38,7 +38,8 @@ void updateDisplay() {
   display.setCursor(0, LINE2); // Adjust vertical position
   display.print("PWM: ");
   display.print(powerPercent);
-  display.print("%      ");
+  display.print("%");
+  display.setCursor(102, LINE2);
   display.print(idleMinutes);
   display.print(":");
   if (idleSeconds<10)
