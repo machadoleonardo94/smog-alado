@@ -41,12 +41,12 @@ void setup_WIFI()
   wifiManager.addParameter(&customPass);
 
   displayWificonnect();
+  wifiManager.setConfigPortalTimeout(APtimeout);
 
   // Try to connect to WiFi, or start a configuration portal if connection fails
   if (!wifiManager.autoConnect("Gnome on the Cloud"))
   {
     displayPortal();
-    wifiManager.setConfigPortalTimeout(APtimeout);
     Serial.println("Failed to connect and hit timeout");
   }
 
