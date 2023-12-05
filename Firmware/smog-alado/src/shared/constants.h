@@ -13,9 +13,9 @@
 #define TIME_TO_SLEEP 10 * 60 * SAMPLES_TO_SEC - 1 
 
 //* PID constants for heating control
-#define KP 9
+#define KP 10
 #define KI 0.15
-#define KD 80
+#define KD 150
 
 //* Temperature limit to avoid burnout
 #define tempMax 280

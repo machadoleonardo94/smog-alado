@@ -16,24 +16,24 @@ void runHeater(int preset)
   {
     if (heaterTemperature < tempMax)
     {
-      if (error > 20)
-        power = 100 * ANALOG_RANGE / 100;
+      if (error > 30)
+        power = 70 * ANALOG_RANGE / 100;
       else
       {
         proportional = error * KP;
         integral += ((error + prevError) / 2.0) * KI;  // Trapezoidal rule for integration
         derivative = (error - prevError) * KD;
-        if (integral > 600)
-          integral = 600;
-        if (integral < -600)
-          integral = -600;
+        if (integral > 300)
+          integral = 300;
+        if (integral < -300)
+          integral = -300;
         if (derivative > 300)
           derivative = 300;
         if (derivative < -300)
           derivative = -300;
         power = (proportional + integral + derivative);
-        if (power > 100)
-          power = 100;
+        if (power > 700)
+          power = 700;
         if (power < 0)
           power = 0;
       }
