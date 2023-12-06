@@ -30,6 +30,7 @@ void updateDisplay()
 
   display.setCursor(0, LINE1); // Adjust vertical position
   display.print("Temp. Goal:  ");
+
   if (tempGoal < 100)
     display.print(" 0");
   display.print(tempGoal);
@@ -39,7 +40,8 @@ void updateDisplay()
   display.setCursor(0, LINE2); // Adjust vertical position
   display.print("PWM: ");
   display.print(powerPercent);
-  display.print("%       ");
+  display.print("%");
+  display.setCursor(102, LINE2);
   display.print(idleMinutes);
   display.print(":");
   if (idleSeconds < 10)

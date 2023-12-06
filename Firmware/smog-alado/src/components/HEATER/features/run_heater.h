@@ -8,36 +8,19 @@
 
 void runHeater(int preset)
 {
-  power = 0;
-  error = tempGoal - heaterTemperature;
-
-  if (preset == 0)
-    tempGoal = 0;
-  if ((preset > 0) & (preset < 12))
-    tempGoal = 190 + (preset * 5);
-
-  if (preset > 0)
+  error = abs(tempGoal - heaterTemperature);
+  
+  if (error >= 50) //we're far from setpoint, use aggressive parameters
   {
-    if (heaterTemperature < tempMax)
-    {
-      if (error > 20)
-        power = 100 * ANALOG_RANGE / 100;
-      else
-      {
-        integral += (error * KI);
-        if (integral > 40)
-          integral = 40;
-        if (integral < -40)
-          integral = -40;
-        proportional = error * KP;
-        power = 0.4 * ANALOG_RANGE + proportional + integral;
-        if (power > ANALOG_RANGE)
-          power = ANALOG_RANGE;
-        if (power < 0)
-          power = 0;
-      }
-    }
+     myPID.SetTunings(aggKp, aggKi, aggKd);
   }
+  else
+  {
+    myPID.SetTunings(Kp, Ki, Kd);
+  }
+
+  myPID.Compute();
+
   powerPercent = 100 * power / ANALOG_RANGE;
   if (power > 0)
   {
