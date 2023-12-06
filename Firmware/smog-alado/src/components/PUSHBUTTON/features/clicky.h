@@ -17,17 +17,17 @@ int buttonPress(int button)
   if (count < 10)
     return 0;
   if (count > 20)
-    state = 1; 
-  if (count > 1000)
+    state = 1;
+  if (count > 800)
     state = 2;
   if (count > 5000)
     state = 3;
-  //if (count > 10000)
-  //  state = 4;
+  if (count > 10000)
+    state = 4;
   
   if (state == 1)
   {
-    preset++;   
+    preset++;
     if (preset >= 10)
       preset = 0;
     if (sleepy == true)
@@ -36,7 +36,7 @@ int buttonPress(int button)
       preset = 0;
       display.dim(false);
       WiFi.begin();
-    }  
+    }
     Serial.printf("Clict Clect \n");
     idleTimer = 0;
     if (preset == 0)
@@ -50,25 +50,19 @@ int buttonPress(int button)
   }
   if (state == 2)
   {
+    sleepRoutine();
+  }
+  if (state == 3)
+  {
     TelnetStream.println("Tuning PID Parameters");
     autoTunePID();
   }
-  if (state == 3)
+  if (state == 4)
   {
     display.clearDisplay();
     display.display();
     ESP.restart();
   }
-  //if (state == 3)
-  //{
-  //  sleepRoutine();
-  //}
-  //if (state == 4 )
-  //{
-  //  display.clearDisplay();
-  //  display.display();
-  //  ESP.restart();
-  //}
   delay(100);
   return 1;
 }

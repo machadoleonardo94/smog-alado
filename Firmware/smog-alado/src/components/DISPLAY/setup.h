@@ -6,10 +6,11 @@
 // ADICIONAR AQUI OS IMPORTS DOS ARQUIVOS DAS FEATURES.
 #include "components/DISPLAY/features/display.h"
 #include "components/DISPLAY/constants.h"
- 
+
 int setup_display()
 {
- if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
+  if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
+  {
     Serial.println("SSD1306 allocation failed");
     return 0;
   }
