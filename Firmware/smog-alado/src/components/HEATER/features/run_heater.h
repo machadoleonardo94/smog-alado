@@ -8,37 +8,19 @@
 
 void runHeater(int preset)
 {
-  power = 0;
-  prevError = error;
-  error = tempGoal - heaterTemperature;
-
-  if (preset > 0)
+  error = abs(tempGoal - heaterTemperature);
+  
+  if (error >= 50) //we're far from setpoint, use aggressive parameters
   {
-    if (heaterTemperature < tempMax)
-    {
-      if (error > 30)
-        power = 70 * ANALOG_RANGE / 100;
-      else
-      {
-        proportional = error * KP;
-        integral += ((error + prevError) / 2.0) * KI;  // Trapezoidal rule for integration
-        derivative = (error - prevError) * KD;
-        if (integral > 300)
-          integral = 300;
-        if (integral < -300)
-          integral = -300;
-        if (derivative > 300)
-          derivative = 300;
-        if (derivative < -300)
-          derivative = -300;
-        power = (proportional + integral + derivative);
-        if (power > 700)
-          power = 700;
-        if (power < 0)
-          power = 0;
-      }
-    }
+     myPID.SetTunings(aggKp, aggKi, aggKd);
   }
+  else
+  {
+    myPID.SetTunings(Kp, Ki, Kd);
+  }
+
+  myPID.Compute();
+
   powerPercent = 100 * power / ANALOG_RANGE;
   if (power > 0)
   {

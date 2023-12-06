@@ -22,6 +22,8 @@ int buttonPress(int button)
     state = 2;
   if (count > 5000)
     state = 3;
+  //if (count > 10000)
+  //  state = 4;
   
   if (state == 1)
   {
@@ -48,7 +50,8 @@ int buttonPress(int button)
   }
   if (state == 2)
   {
-    sleepRoutine();
+    TelnetStream.println("Tuning PID Parameters");
+    autoTunePID();
   }
   if (state == 3)
   {
@@ -56,8 +59,18 @@ int buttonPress(int button)
     display.display();
     ESP.restart();
   }
+  //if (state == 3)
+  //{
+  //  sleepRoutine();
+  //}
+  //if (state == 4 )
+  //{
+  //  display.clearDisplay();
+  //  display.display();
+  //  ESP.restart();
+  //}
   delay(100);
   return 1;
 }
 
-#endif // PUSHBUTTON
+#endif // RUN_PUSHBUTTON

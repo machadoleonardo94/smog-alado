@@ -8,6 +8,7 @@
 #include "utilities/nuke_eeprom.h"
 #include "utilities/lightsleep.h"
 #include "utilities/telnet.h"
+#include "utilities/autotune_PID.h"
 //* Components:
 #include "components/ADS1115/setup.h"
 #include "components/THERMISTOR/setup.h"
@@ -38,6 +39,17 @@ void setup()
   // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnet won't work
   
   analogWriteRange(ANALOG_RANGE);
+
+  myPID.SetOutputLimits(0, ANALOG_RANGE);
+  myPID.SetMode(AUTOMATIC);
+  
+  if(tuning)
+  {
+    tuning = false;
+    changeAutoTune();
+    tuning = true;
+  }
+
 }
 
 void loop()
@@ -64,10 +76,10 @@ void loop()
       updateDisplay();
   }
 
-  if (idleTimer > (TIME_TO_SLEEP))  //sleep after 10 minutes 
+  /*if (idleTimer > (TIME_TO_SLEEP))  //sleep after 10 minutes 
   {
     sleepRoutine();
-  }
+  }*/
 
   if ((millis() - globalTimer) > SAMPLING_TIMER)
   {
