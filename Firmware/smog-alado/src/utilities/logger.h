@@ -12,10 +12,6 @@ void run_logger()
     Serial.println(heaterTemperature);
     Serial.print(">Temperature Goal: ");
     Serial.println(tempGoal);
-    Serial.print(">Proportional part: ");
-    Serial.println(proportional);
-    Serial.print(">Integral part: ");
-    Serial.println(integral);
     Serial.print(">Power output: ");
     Serial.println(power);
     Serial.print("ADS status: ");

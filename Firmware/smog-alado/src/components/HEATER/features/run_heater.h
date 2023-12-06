@@ -38,7 +38,23 @@ void runHeater(int preset)
       else
         analogWrite(heater, power);
     }
+
+  /*
+  error = abs(tempGoal - heaterTemperature);
+  
+  if (error >= 50) //we're far from setpoint, use aggressive parameters
+  {
+     myPID.SetTunings(aggKp, aggKi, aggKd);
   }
+  else
+  {
+    myPID.SetTunings(Kp, Ki, Kd);
+
+  }
+
+  myPID.Compute();
+  */
+  
   powerPercent = 100 * power / ANALOG_RANGE;
   if (power == 0)
     digitalWrite(heater, LOW);

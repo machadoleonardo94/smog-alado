@@ -43,14 +43,20 @@ void TelnetPrint() {
   TelnetStream.println(thermistor);
   TelnetStream.print("Power output: ");
   TelnetStream.println(powerPercent);
-  TelnetStream.print("Proportional part: ");
-  TelnetStream.println(proportional);
-  TelnetStream.print("Integral part: ");
-  TelnetStream.println(integral);
-  TelnetStream.print("Derivative part: ");
-  TelnetStream.println(derivative);
+  TelnetStream.print("KP: ");
+  TelnetStream.println(myPID.GetKp());
+  TelnetStream.print("KI: ");
+  TelnetStream.println(myPID.GetKi());
+  TelnetStream.print("KD: ");
+  TelnetStream.println(myPID.GetKd());
+  TelnetStream.print("TKP: ");
+  TelnetStream.println(TKp);
+  TelnetStream.print("TKI: ");
+  TelnetStream.println(TKi);
+  TelnetStream.print("TKD: ");
+  TelnetStream.println(TKd);
   TelnetStream.println("");
   TelnetStream.println("");
 }
 
-#endif
+#endif // TELNET_SETUP
