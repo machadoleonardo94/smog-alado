@@ -13,7 +13,7 @@
 #define TIME_TO_SLEEP 10 * 60 * SAMPLES_TO_SEC - 1 
 
 //* PID constants for heating control
-#define KP 10
+#define KP 12
 #define KI 0.15
 #define KD 150
 
