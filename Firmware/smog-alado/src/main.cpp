@@ -16,8 +16,6 @@
 #include "components/PUSHBUTTON/setup.h"
 #include "components/DISPLAY/setup.h"
 
-int buttonPress(int button);
-
 void setup()
 {
   BLINKY

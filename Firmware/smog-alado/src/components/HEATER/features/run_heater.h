@@ -38,7 +38,7 @@ void runHeater(int preset)
       else
         analogWrite(heater, power);
     }
-
+  }
   /*
   error = abs(tempGoal - heaterTemperature);
   
