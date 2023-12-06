@@ -10,29 +10,37 @@
 Adafruit_ADS1115 ads; /* Use this for the 16-bit version */
 //* 0.96" OLED I2C display
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+//* Async WiFi and WEB services
+AsyncWebServer server(80);
+DNSServer dns;
+AsyncWiFiManager wifiManager(&server, &dns);
+
 
 //* Heater variables
 double thermistor = 500;
 double heaterTemperature = 0;
 double tempGoal = 0;
 double error = 0;
-double integral = 0;
-double proportional = 0;
-double derivative = 0;
-double prevError = 0;
 double power = 0;
 double powerPercent = 0;
 int preset = 0;
 uint16_t adcRaw = 1000;
 uint16_t adcFiltered = 1000;
 
+
+//*Old PID
+/*
+double integral = 0;
+double proportional = 0;
+double derivative = 0;
+double prevError = 0;
+*/
+
 //PID control and Tune
-double Kp = 10, Ki = 1, Kd = 1; 
+double Kp = 7, Ki = 0.6, Kd = 180; 
 double aggKp = (Kp * 2), aggKi =  (Ki * 2), aggKd =  (Kd * 2);
 double TKp, TKi, TKd;
-
-byte ATuneModeRemember=2;
-bool tuning;
+boolean tuning = false;
 
 PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, DIRECT);
 PID_ATune aTune(&heaterTemperature, &power);

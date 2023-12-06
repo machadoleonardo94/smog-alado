@@ -9,6 +9,7 @@
 #include "utilities/lightsleep.h"
 #include "utilities/telnet.h"
 #include "utilities/autotune_PID.h"
+#include "utilities/webserver.h"
 //* Components:
 #include "components/ADS1115/setup.h"
 #include "components/THERMISTOR/setup.h"
@@ -32,20 +33,18 @@ void setup()
   workingDisplay = setup_display();
   setup_WIFI();
   setup_OTA();
+  
+  setupWebServer();
+
   workingADS = setup_ADS1115();
   timeZoneSet = setup_TELNET();
   // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnet won't work
   analogWriteRange(ANALOG_RANGE);
-
-  myPID.SetOutputLimits(0, ANALOG_RANGE);
-  myPID.SetMode(AUTOMATIC);
   
-  if(tuning)
-  {
-    tuning = false;
-    changeAutoTune();
-    tuning = true;
-  }
+  myPID.SetOutputLimits(0, ANALOG_RANGE);
+  myPID.SetSampleTime(200);
+  myPID.SetMode(AUTOMATIC);
+  //changeAutoTune();  // Initiate auto-tuning at startup
 
 }
 
@@ -62,6 +61,8 @@ void loop()
     heaterTemperature = steinhart(thermistor);
     runHeater(preset);
   }
+
+  autoTunePID();  // Call the autoTunePID function for tuning logic
 
   if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
