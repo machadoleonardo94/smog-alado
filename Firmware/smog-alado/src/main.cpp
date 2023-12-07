@@ -33,7 +33,7 @@ void setup()
   workingDisplay = setup_display();
   setup_WIFI();
   setup_OTA();
-  
+  readPIDParametersFromEEPROM();
   setupWebServer();
 
   workingADS = setup_ADS1115();
@@ -42,10 +42,7 @@ void setup()
   analogWriteRange(ANALOG_RANGE);
   
   myPID.SetOutputLimits(0, ANALOG_RANGE);
-  myPID.SetSampleTime(200);
   myPID.SetMode(AUTOMATIC);
-  //changeAutoTune();  // Initiate auto-tuning at startup
-
 }
 
 void loop()

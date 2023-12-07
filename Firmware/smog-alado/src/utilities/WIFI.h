@@ -16,6 +16,8 @@ void configModeCallback(AsyncWiFiManager *myWiFiManager)
 
 void setup_WIFI()
 {
+  WiFi.hostname("SmogAlado");
+  
   // Set up ESPAsyncWiFiManager
   AsyncWiFiManager wifiManager(&server, &dns);
   wifiManager.setConfigPortalTimeout(APtimeout);
@@ -36,6 +38,10 @@ void setup_WIFI()
   {
     displayPortal();
     Serial.println("Failed to connect and hit timeout");
+
+    // If WiFi connection failed, stay in AP mode
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP("SmogAlado_AP", "12345678");
   }
 
   // Save WiFi credentials to EEPROM

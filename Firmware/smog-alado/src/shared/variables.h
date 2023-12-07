@@ -37,9 +37,8 @@ double prevError = 0;
 */
 
 //PID control and Tune
-double Kp = 7, Ki = 0.6, Kd = 180; 
+double Kp = 1, Ki = 1, Kd = 1; 
 double aggKp = (Kp * 2), aggKi =  (Ki * 2), aggKd =  (Kd * 2);
-double TKp, TKi, TKd;
 boolean tuning = false;
 
 PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, DIRECT);
@@ -54,6 +53,7 @@ uint16_t idleMinutes = 0;
 uint16_t idleSeconds = 0;
 uint16_t remainingTime = 100;
 uint16_t APtimeout = 180;
+uint16_t minutes = 10;
 
 //* Booleans to check if functions will be called 
 bool workingADS = false;
