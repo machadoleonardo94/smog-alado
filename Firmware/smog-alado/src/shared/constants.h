@@ -12,6 +12,9 @@
 //* Sleep timer
 #define TIME_TO_SLEEP minutes * 60 * SAMPLES_TO_SEC - 1 
 
+//* Time zone for NTP time sync
+#define TIME_ZONE TZ_America_Sao_Paulo
+
 //* Temperature limit to avoid burnout
 #define tempMax 205
 

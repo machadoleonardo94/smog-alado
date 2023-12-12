@@ -7,6 +7,7 @@
 extern double Kp, Ki, Kd, tempGoal, heaterTemperature, powerPercent;
 extern bool sleepy, tuning;
 extern uint16_t minutes, maxAutoTuneDurationMinutes;
+extern char timeStr[20];
 
 void handleFile(AsyncWebServerRequest *request, const char *filename) 
 {
@@ -213,6 +214,7 @@ void setupWebServer()
     jsonDoc["Kp"] = Kp;
     jsonDoc["Ki"] = Ki;
     jsonDoc["Kd"] = Kd;
+    jsonDoc["timeStr"] = timeStr;
 
     String jsonData;
     serializeJson(jsonDoc, jsonData);
