@@ -1,0 +1,22 @@
+body {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+input {
+  background-color: #32b0ac;
+  color: #ffffff;
+}
+
+#toast-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+  z-index: 1000;
+}

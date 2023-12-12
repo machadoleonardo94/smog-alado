@@ -19,6 +19,7 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <EEPROM.h>
+#include <LittleFS.h>
 
 #include <Adafruit_I2CDevice.h>
 #include <Adafruit_ADS1X15.h>

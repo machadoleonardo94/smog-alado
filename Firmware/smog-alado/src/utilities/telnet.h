@@ -32,6 +32,7 @@ void TelnetPrint() {
   TelnetStream.print(i++);
   TelnetStream.print(" ");
   TelnetStream.println(timeStr);
+  TelnetStream.println("Connected to WiFi. Hostname: " + WiFi.hostname());
   TelnetStream.println("----------Device variables----------");
   TelnetStream.print("Idle timer: ");
   TelnetStream.println(idleTimer);

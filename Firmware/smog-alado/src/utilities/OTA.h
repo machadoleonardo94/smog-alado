@@ -14,7 +14,7 @@ void setup_OTA()
     else // U_FS
       type = "filesystem";
 
-    // NOTE: if updating FS this would be the place to unmount FS using FS.end()
+    LittleFS.end();
     Serial.println("Start updating " + type); });
 
   ArduinoOTA.onEnd([]()
