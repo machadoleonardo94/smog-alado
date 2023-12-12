@@ -8,7 +8,7 @@
 #include "utilities/nuke_eeprom.h"
 #include "utilities/lightsleep.h"
 #include "utilities/telnet.h"
-#include "utilities/autotune_PID.h"
+#include "utilities/PID.h"
 #include "utilities/webserver.h"
 //* Components:
 #include "components/ADS1115/setup.h"
@@ -31,9 +31,11 @@ void setup()
   digitalWrite(heater, LOW); // heater set to OFF on boot
 
   workingDisplay = setup_display();
+  LittleFS.begin();
+  //LittleFS.format();
   setup_WIFI();
   setup_OTA();
-  readPIDParametersFromEEPROM();
+  setupPID();
   setupWebServer();
 
   workingADS = setup_ADS1115();
@@ -41,8 +43,6 @@ void setup()
   // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnet won't work
   analogWriteRange(ANALOG_RANGE);
   
-  myPID.SetOutputLimits(0, ANALOG_RANGE);
-  myPID.SetMode(AUTOMATIC);
 }
 
 void loop()
@@ -59,7 +59,7 @@ void loop()
     runHeater(preset);
   }
 
-  autoTunePID();  // Call the autoTunePID function for tuning logic
+  //autoTunePID();  // Call the autoTunePID function for tuning logic
 
   if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
