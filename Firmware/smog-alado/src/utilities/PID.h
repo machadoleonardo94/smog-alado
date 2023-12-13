@@ -22,7 +22,7 @@ void setupPID()
 {
   readPIDParametersFromEEPROM();
   myPID.SetOutputLimits(0, ANALOG_RANGE);
-  myPID.SetSampleTime(200);
+  myPID.SetSampleTime(SAMPLES_TO_SEC / 5);
   myPID.SetMode(AUTOMATIC);
   myPID.SetTunings(Kp, Ki, Kd);
 }
