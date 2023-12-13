@@ -3,6 +3,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+//import 'package:connectivity_checker/connectivity_checker.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,6 +43,10 @@ class MyAppState extends ChangeNotifier {
     } else {
       favorites.add(current);
     }
+    notifyListeners();
+  }
+
+  void checkNetwork() {
     notifyListeners();
   }
 }
@@ -116,6 +121,12 @@ class GeneratorPage extends StatelessWidget {
     } else {
       icon = Icons.favorite_border;
     }
+    IconData icon2;
+    if (appState.favorites.contains(pair)) {
+      icon2 = Icons.network_wifi;
+    } else {
+      icon2 = Icons.network_wifi_1_bar;
+    }
 
     return Center(
       child: Column(
@@ -139,6 +150,14 @@ class GeneratorPage extends StatelessWidget {
                   appState.getNext();
                 },
                 child: Text('Next'),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                icon: Icon(icon2),
+                label: Text('Check Connection'),
               ),
             ],
           ),
