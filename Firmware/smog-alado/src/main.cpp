@@ -39,14 +39,13 @@ void setup()
 
   myPID.SetOutputLimits(0, ANALOG_RANGE);
   myPID.SetMode(AUTOMATIC);
-  
-  if(tuning)
+
+  if (tuning)
   {
     tuning = false;
     changeAutoTune();
     tuning = true;
   }
-
 }
 
 void loop()
