@@ -6,8 +6,18 @@
 double calculate_resistance()
 {
   double resistor = 0;
-  uint16_t adcRaw = ads.readADC_SingleEnded(0);
-  double adcVoltage = ads.computeVolts(adcRaw);
+  uint16_t adcRaw = 0;
+  double adcVoltage = 0;
+  if (workingADS)
+  {
+    adcRaw = ads.readADC_SingleEnded(0);
+    adcVoltage = ads.computeVolts(adcRaw);
+  }
+  else
+  {
+    adcRaw = analogRead(A0);
+    adcVoltage = adcRaw / 1024;
+  }
   if (adcRaw < 1000)
     return 120000;
   else
