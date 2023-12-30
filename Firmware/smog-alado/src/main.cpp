@@ -54,7 +54,7 @@ void loop()
 
   buttonPress(buttonPin);
 
-  if ((workingADS) && (adcTimer > (SAMPLES_TO_SEC / 5))) // reads ADC every 200ms
+  if (adcTimer > (SAMPLES_TO_SEC / 5)) // reads ADC every 200ms
   {
     adcTimer = 0;
     thermistor = calculate_resistance();
