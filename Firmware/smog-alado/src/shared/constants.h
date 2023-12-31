@@ -4,13 +4,12 @@
 //* Multiplier to convert microseconds to seconds.
 #define one_second_in_microseconds 1000000
 
-
 //* Sampling timers
-#define SAMPLING_TIMER 10                       //delay between counting increments
-#define SAMPLES_TO_SEC 1000/SAMPLING_TIMER      //how many increments every 1s 
+#define SAMPLING_TIMER 10                    // delay between counting increments
+#define SAMPLES_TO_SEC 1000 / SAMPLING_TIMER // how many increments every 1s
 
 //* Sleep timer
-#define TIME_TO_SLEEP 10 * 60 * SAMPLES_TO_SEC - 1 
+#define TIME_TO_SLEEP 10 * 60 * SAMPLES_TO_SEC - 1
 
 //* PID constants for heating control
 #define KP 12
@@ -31,9 +30,9 @@
 #define EEPROM_WIFI_PASS_START 64
 
 //* EEPROM addresses for PID
-//#define EEPROM_KP_ADDRESS 128
-//#define EEPROM_KI_ADDRESS 132
-//#define EEPROM_KD_ADDRESS 136
+// #define EEPROM_KP_ADDRESS 128
+// #define EEPROM_KI_ADDRESS 132
+// #define EEPROM_KD_ADDRESS 136
 
 //* Paramethers for OLED display
 #define SCREEN_WIDTH 128
