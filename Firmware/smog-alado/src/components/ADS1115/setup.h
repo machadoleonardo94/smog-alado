@@ -32,7 +32,10 @@ int setup_ADS1115()
 
     //* Sets CD4067 to read an unused channel (CH15) in case fuckups blow up the least amount of circuit
     //* In case of adding an IO expander, use one GPIO to set an inhibitor pin so all inputs go high impedance
-    BLINKY
+    for (int i = 0; i < 20; i++)
+    {
+        BLINKY
+    }
     serialMon.println("[ADS1115] SETUP FINISHED!");
     return 1;
 }

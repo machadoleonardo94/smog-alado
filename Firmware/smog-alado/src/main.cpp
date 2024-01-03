@@ -28,25 +28,27 @@ void setup()
   pinMode(A0, INPUT);
   digitalWrite(ledPin, LOW); // builtin LED set to ON on boot
   digitalWrite(heater, LOW); // heater set to OFF on boot
+  WiFi.mode(WIFI_OFF);
 
   workingDisplay = setup_display();
+  workingADS = setup_ADS1115();
+  analogWriteRange(ANALOG_RANGE);
+
   setup_WIFI();
   setup_OTA();
-  workingADS = setup_ADS1115();
   timeZoneSet = setup_TELNET();
-  // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnet won't work
-  analogWriteRange(ANALOG_RANGE);
 
   myPID.SetOutputLimits(0, ANALOG_RANGE);
   myPID.SetMode(AUTOMATIC);
-  
-  if(tuning)
+
+  if (tuning)
   {
     tuning = false;
     changeAutoTune();
     tuning = true;
   }
 
+  os_update_cpu_frequency(10);
 }
 
 void loop()
@@ -55,7 +57,7 @@ void loop()
 
   buttonPress(buttonPin);
 
-  if ((workingADS) && (adcTimer > (SAMPLES_TO_SEC / 5))) // reads ADC every 200ms
+  if (adcTimer > (SAMPLES_TO_SEC / 5)) // reads ADC every 200ms
   {
     adcTimer = 0;
     thermistor = calculate_resistance();

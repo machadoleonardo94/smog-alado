@@ -24,7 +24,7 @@ int buttonPress(int button)
     state = 3;
   if (count > 10000)
     state = 4;
-  
+
   if (state == 1)
   {
     preset++;
@@ -35,6 +35,7 @@ int buttonPress(int button)
       sleepy = false;
       preset = 0;
       display.dim(false);
+      WiFi.forceSleepWake();
       WiFi.begin();
     }
     Serial.printf("Clict Clect \n");
