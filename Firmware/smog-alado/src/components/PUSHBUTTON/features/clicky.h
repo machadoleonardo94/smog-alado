@@ -43,9 +43,9 @@ int buttonPress(int button)
     if (preset == 1)
       tempGoal = 100;
     if (preset == 2)
-      tempGoal = 150;
+      tempGoal = 120;
     if ((preset > 2) & (preset < 10))
-      tempGoal = 140 + (preset * 5);
+      tempGoal = 110 + (preset * 5);
   }
   if (state == 2)
   {
