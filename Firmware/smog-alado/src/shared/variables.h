@@ -26,14 +26,6 @@ int preset = 0;
 uint16_t adcRaw = 1000;
 uint16_t adcFiltered = 1000;
 
-//*Old PID
-/*
-double integral = 0;
-double proportional = 0;
-double derivative = 0;
-double prevError = 0;
-*/
-
 // PID control and Tune
 double Kp = 1, Ki = 1, Kd = 1;
 bool tuning = false;

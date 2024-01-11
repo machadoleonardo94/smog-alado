@@ -79,10 +79,10 @@ void loop()
       updateDisplay();
   }
 
-  /* if (idleTimer > (TIME_TO_SLEEP)) // sleep after 10 minutes
+  if (idleTimer > (TIME_TO_SLEEP)) // sleep after 10 minutes
   {
     sleepRoutine();
-  } */
+  }
 
   if ((millis() - globalTimer) > SAMPLING_TIMER)
   {

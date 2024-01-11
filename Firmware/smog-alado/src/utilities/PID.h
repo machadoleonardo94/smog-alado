@@ -29,15 +29,14 @@ void readPIDParametersFromEEPROM()
 void savePIDParametersToEEPROM()
 {
   // Store new values in EEPROM
-    EEPROM.put(EEPROM_KP_ADDRESS, Kp);
-    EEPROM.put(EEPROM_KI_ADDRESS, Ki);
-    EEPROM.put(EEPROM_KD_ADDRESS, Kd);
-    EEPROM.commit();
+  EEPROM.put(EEPROM_KP_ADDRESS, Kp);
+  EEPROM.put(EEPROM_KI_ADDRESS, Ki);
+  EEPROM.put(EEPROM_KD_ADDRESS, Kd);
+  EEPROM.commit();
 }
 
 void changeAutoTune()
 {
-
 }
 
 #endif // TUNE_PID
