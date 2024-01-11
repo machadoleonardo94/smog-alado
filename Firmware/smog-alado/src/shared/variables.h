@@ -39,7 +39,6 @@ double Kp = 1, Ki = 1, Kd = 1;
 bool tuning = false;
 
 PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, P_ON_M, DIRECT);
-PID_ATune aTune(&heaterTemperature, &power);
 
 //* Timers for ilusion of threads
 double globalTimer = 0;
