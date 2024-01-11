@@ -43,14 +43,7 @@ void runHeater(int preset)
 
   error = abs(tempGoal - heaterTemperature);
 
-  if (error >= 50) // we're far from setpoint, use aggressive parameters
-  {
-    myPID.SetTunings(aggKp, aggKi, aggKd);
-  }
-  else
-  {
-    myPID.SetTunings(Kp, Ki, Kd);
-  }
+  myPID.SetTunings(Kp, Ki, Kd);
 
   myPID.Compute();
 

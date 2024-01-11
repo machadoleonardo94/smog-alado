@@ -42,7 +42,6 @@ unsigned long autoTuneStartTime;
 uint16_t maxAutoTuneDurationMinutes = 10;
 
 PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, P_ON_M, DIRECT);
-PID_ATune aTune(&heaterTemperature, &power);
 
 //* Timers for ilusion of threads
 double globalTimer = 0;
