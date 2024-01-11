@@ -27,6 +27,18 @@ function updateData() {
 // Start the initial update
 updateData();
 
+function changeTimeToSleep() {
+  const newTimeToSleep = document.getElementById('newTimeToSleep').value;
+  fetch('/change-time-to-sleep?newTimeToSleep=' + newTimeToSleep, {
+    method: 'POST'
+  })
+    .then(response => response.text())
+    .then(result => {
+      showToast(result);
+      updateData();
+    });
+}
+
 function toggleTuning() {
   fetch('/toggle-tuning', {
     method: 'POST'
@@ -34,6 +46,17 @@ function toggleTuning() {
     .then(response => response.text())
     .then(result => {
       console.log(result);
+    });
+}
+
+function changeMaxAutoTuneDuration() {
+  const newMaxAutoTuneDuration = document.getElementById('newMaxAutoTuneDuration').value;
+  fetch('/change-max-auto-tune-duration?newMaxAutoTuneDuration=' + newMaxAutoTuneDuration, {
+    method: 'POST'
+  })
+    .then(response => response.text())
+    .then(result => {
+      showToast(result);
     });
 }
 
@@ -122,28 +145,5 @@ function rebootESP() {
     .then(result => {
       console.log(result);
       showToast('Now rebooting');
-    });
-}
-
-function changeTimeToSleep() {
-  const newTimeToSleep = document.getElementById('newTimeToSleep').value;
-  fetch('/change-time-to-sleep?newTimeToSleep=' + newTimeToSleep, {
-    method: 'POST'
-  })
-    .then(response => response.text())
-    .then(result => {
-      showToast(result);
-      updateData();
-    });
-}
-
-function changeMaxAutoTuneDuration() {
-  const newMaxAutoTuneDuration = document.getElementById('newMaxAutoTuneDuration').value;
-  fetch('/change-max-auto-tune-duration?newMaxAutoTuneDuration=' + newMaxAutoTuneDuration, {
-    method: 'POST'
-  })
-    .then(response => response.text())
-    .then(result => {
-      showToast(result);
     });
 }

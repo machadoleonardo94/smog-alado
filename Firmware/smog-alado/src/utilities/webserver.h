@@ -9,6 +9,7 @@ extern bool sleepy, tuning;
 extern uint16_t minutes, maxAutoTuneDurationMinutes;
 extern char timeStr[20];
 
+// Function to load files from FS, determining format
 void handleFile(AsyncWebServerRequest *request, const char *filename) 
 {
   File file = LittleFS.open(filename, "r");
@@ -42,27 +43,45 @@ void handleFile(AsyncWebServerRequest *request, const char *filename)
   }
 } 
 
+// Function to handle the HTML from FS
 void handleHTML(AsyncWebServerRequest *request) 
 {
   handleFile(request, "/index.html");
 }
 
+// Function to handle the scripts from FS
 void handleJS(AsyncWebServerRequest *request) 
 {
   handleFile(request, "/scripts.js");
 }
 
+// Function to handle the stylesheet from FS
 void handleCSS(AsyncWebServerRequest *request) 
 {
   handleFile(request, "/styles.css");
 }
 
+// Function to toggle PID auto-tune
 void handleToggleTuning(AsyncWebServerRequest *request)
 {
   changeAutoTune();  // Toggle the tuning state
   request->send(200, "text/plain", "Tuning state toggled");
 }
 
+// Function to change the PID auto-tune duration
+void handleChangeMaxAutoTuneDuration(AsyncWebServerRequest *request) {
+  if (request->hasParam("newMaxAutoTuneDuration")) {
+    const int newMaxAutoTuneDuration = request->getParam("newMaxAutoTuneDuration")->value().toInt();
+    maxAutoTuneDurationMinutes = newMaxAutoTuneDuration;
+    TelnetStream.println("Max Auto Tune Duration changed successfully");
+    request->send(200, "text/plain", "Max Auto Tune Duration changed successfully");
+  } else {
+    TelnetStream.println("Missing parameter: newMaxAutoTuneDuration");
+    request->send(400, "text/plain", "Invalid request");
+  }
+}
+
+// Function to change temperature goal
 void handleChangeTempGoal(AsyncWebServerRequest *request)
 {
   if (request->hasParam("newTempGoal"))
@@ -175,6 +194,7 @@ void handleChangeTimeToSleep(AsyncWebServerRequest *request)
   }
 }
 
+// Function to reboot the ESP
 void handleRebootESP(AsyncWebServerRequest *request)
 {
   TelnetStream.println("Rebooting ESP...");
@@ -185,18 +205,6 @@ void handleRebootESP(AsyncWebServerRequest *request)
 
   // Perform the reboot
   ESP.restart();
-}
-
-void handleChangeMaxAutoTuneDuration(AsyncWebServerRequest *request) {
-  if (request->hasParam("newMaxAutoTuneDuration")) {
-    const int newMaxAutoTuneDuration = request->getParam("newMaxAutoTuneDuration")->value().toInt();
-    maxAutoTuneDurationMinutes = newMaxAutoTuneDuration;
-    TelnetStream.println("Max Auto Tune Duration changed successfully");
-    request->send(200, "text/plain", "Max Auto Tune Duration changed successfully");
-  } else {
-    TelnetStream.println("Missing parameter: newMaxAutoTuneDuration");
-    request->send(400, "text/plain", "Invalid request");
-  }
 }
 
 // Initialize the web server
