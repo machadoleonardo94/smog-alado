@@ -38,13 +38,9 @@ double prevError = 0;
 
 //PID control and Tune
 double Kp = 1, Ki = 1, Kd = 1; 
-boolean tuning = false;
-bool autoTuneInProgress = true;
-unsigned long autoTuneStartTime;
-uint16_t maxAutoTuneDurationMinutes = 10;
+bool tuning = false;
 
 PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, P_ON_M, DIRECT);
-PID_ATune aTune(&heaterTemperature, &power);
 
 //* Timers for ilusion of threads
 double globalTimer = 0;
