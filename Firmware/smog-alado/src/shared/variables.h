@@ -52,6 +52,7 @@ uint16_t idleMinutes = 0;
 uint16_t idleSeconds = 0;
 uint16_t remainingTime = 100;
 uint16_t APtimeout = 180;
+uint16_t minutes = 10;
 
 //* Booleans to check if functions will be called
 bool workingADS = false;

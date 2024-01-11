@@ -9,12 +9,7 @@
 #define SAMPLES_TO_SEC 1000 / SAMPLING_TIMER // how many increments every 1s
 
 //* Sleep timer
-#define TIME_TO_SLEEP 10 * 60 * SAMPLES_TO_SEC - 1
-
-//* PID constants for heating control
-#define KP 12
-#define KI 0.15
-#define KD 150
+#define TIME_TO_SLEEP minutes * 60 * SAMPLES_TO_SEC - 1
 
 //* Temperature limit to avoid burnout
 #define tempMax 205
@@ -26,13 +21,13 @@
 #define ANALOG_RANGE 1024
 
 //* EEPROM addresses for wifi
-#define EEPROM_WIFI_SSID_START 0
-#define EEPROM_WIFI_PASS_START 64
+#define EEPROM_WIFI_SSID_START 128
+#define EEPROM_WIFI_PASS_START 192
 
 //* EEPROM addresses for PID
-// #define EEPROM_KP_ADDRESS 128
-// #define EEPROM_KI_ADDRESS 132
-// #define EEPROM_KD_ADDRESS 136
+#define EEPROM_KP_ADDRESS 0
+#define EEPROM_KI_ADDRESS 32
+#define EEPROM_KD_ADDRESS 64
 
 //* Paramethers for OLED display
 #define SCREEN_WIDTH 128
