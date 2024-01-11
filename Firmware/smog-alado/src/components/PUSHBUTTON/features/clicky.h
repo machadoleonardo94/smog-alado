@@ -2,8 +2,6 @@
 #define RUN_PUSHBUTTON
 
 #include "shared/dependencies.h"
-//* Adicione o arquivo setup.h caso a feature atual faça uso de outras features do mesmo componente.
-// #include "components/0-TEMPLATE/setup.h"
 
 int buttonPress(int button)
 {
@@ -47,7 +45,7 @@ int buttonPress(int button)
     if (preset == 2)
       tempGoal = 150;
     if ((preset > 2) & (preset < 10))
-      tempGoal = 160 + (preset * 5);
+      tempGoal = 140 + (preset * 5);
   }
   if (state == 2)
   {
