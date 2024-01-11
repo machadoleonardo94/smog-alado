@@ -3,8 +3,6 @@
 
 #include "shared/dependencies.h"
 
-#define TIME_ZONE TZ_America_Sao_Paulo
-
 int setup_TELNET(){
     int counter = 0;
     configTime(TIME_ZONE, "pool.ntp.org");
@@ -26,12 +24,12 @@ int setup_TELNET(){
 void TelnetPrint() {
   static int i = 0;
 
-  char timeStr[20];
   sprintf(timeStr, "%02d-%02d-%02d %02d:%02d:%02d", year(), month(), day(), hour(), minute(), second());
 
   TelnetStream.print(i++);
   TelnetStream.print(" ");
   TelnetStream.println(timeStr);
+  TelnetStream.println("Connected to WiFi. Hostname: " + WiFi.hostname());
   TelnetStream.println("----------Device variables----------");
   TelnetStream.print("Idle timer: ");
   TelnetStream.println(idleTimer);
@@ -49,12 +47,6 @@ void TelnetPrint() {
   TelnetStream.println(myPID.GetKi());
   TelnetStream.print("KD: ");
   TelnetStream.println(myPID.GetKd());
-  TelnetStream.print("TKP: ");
-  TelnetStream.println(TKp);
-  TelnetStream.print("TKI: ");
-  TelnetStream.println(TKi);
-  TelnetStream.print("TKD: ");
-  TelnetStream.println(TKd);
   TelnetStream.println("");
   TelnetStream.println("");
 }

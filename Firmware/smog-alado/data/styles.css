@@ -1,0 +1,76 @@
+/* Define color variables */
+:root {
+  --background-color: #000000;
+  --text-color: #ffffff;
+  --input-background: #32b0ac;
+  --toast-background: #333;
+  --toast-text: #fff;
+}
+
+/* Apply color variables and additional styles */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  max-width: 100%;
+  margin: 10px auto;
+  text-align: center;
+}
+
+form {
+  max-width: 99%; /* Adjust the percentage based on your design */
+  margin: 10px auto;
+}
+
+/* Add border to the container wrapping label, button, and input */
+.form-container {
+  box-sizing: border-box; /* Include border and padding in the total width */
+  border: 1px solid #fff;
+  padding: 4px;
+  margin-bottom: 6px;
+  max-width: 99%; /* Adjust the percentage based on your design */
+  margin: 0 auto; /* Center the container within the form */
+}
+
+.group-container {
+  box-sizing: border-box; /* Include border and padding in the total width */
+  border: 1px solid #fff;
+  padding: 4px;
+  margin-bottom: 6px;
+  max-width: 100%; /* Adjust the percentage based on your design */
+  margin: 0 auto; /* Center the container within the form */
+}
+
+/* Style adjustments for specific elements within the groups */
+label {
+  font-size: 0.95rem;
+  width: 150px;
+  margin-bottom: 4px;
+  display: inline-block; /* Ensure labels and buttons are inline-block elements */
+}
+
+button {
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  width: 75px; /* Set a fixed width for buttons */
+  display: inline-block; /* Ensure labels and buttons are inline-block elements */
+}
+
+input {
+  background-color: var(--input-background);
+  color: var(--text-color);
+  width: 225px;
+}
+
+#toast-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--toast-background);
+  color: var(--toast-text);
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+  z-index: 1000;
+}

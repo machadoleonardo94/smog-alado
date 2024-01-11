@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script type="text/javascript" src="scripts.js"></script>
+</head>
+
+<body>
+  <h1>Smog Alado - Controles</h1>
+  <p id='timeStr'>Current Time: </p>
+
+  <div class="form-container">
+    <p id='tempGoal'>Temperature Goal: </p>
+    <p id='temperature'>Temperature: </p>
+    <p id='pwmOutput'>PWM Output: </p>
+    <p id='timeToSleep'>Time to Sleep: </p>
+  </div>
+
+  <div class="form-container">
+    <p id='tuningState'>Tuning: </p>
+    <p id='Kd'>Kd: </p>
+    <p id='Kp'>Kp: </p>
+    <p id='Ki'>Ki: </p>
+  </div>
+
+  <form>    
+    <div class="group-container">
+      <label for='newMaxAutoTuneDuration'>Auto-Tune Time:</label>
+      <button type='button' onclick='changeMaxAutoTuneDuration();'>Apply</button><br>
+      <input type='text' id='newMaxAutoTuneDuration' name='newMaxAutoTuneDuration'><br>
+    </div>
+
+    <div class="group-container">
+      <label for='newTimeToSleep'>Sleep timer:</label>
+      <button type='button' onclick='changeTimeToSleep();'>Apply</button><br>
+      <input type='text' id='newTimeToSleep' name='newTimeToSleep'><br>
+    </div>
+
+    <div class="group-container">    
+      <label for='newTempGoal'>Set Temperature:</label>
+      <button type='button' onclick='changeTempGoal();'>Apply</button><br>
+      <input type='text' id='newTempGoal' name='newTempGoal'><br>
+    </div>
+
+    <div class="group-container">
+      <label for='newKp'>Set Kp:</label>
+      <button type='button' onclick='changeKp();'>Apply</button><br>
+      <input type='text' id='newKp' name='newKp'><br>
+    </div>
+
+    <div class="group-container">
+      <label for='newKi'>Set Ki:</label>
+      <button type='button' onclick='changeKi();'>Apply</button><br>
+      <input type='text' id='newKi' name='newKi'><br>
+    </div>
+
+    <div class="group-container">
+      <label for='newKd'>Set Kd:</label>
+      <button type='button' onclick='changeKd();'>Apply</button><br>
+      <input type='text' id='newKd' name='newKd'><br>
+    </div>
+
+    <div class="group-container">
+      <button type='button' onclick='toggleTuning();'>Auto-tune PID</button>
+      <button type='button' onclick='commitToEEPROM();'>Commit to EEPROM</button>
+      <button type='button' onclick='rebootESP();'>Reboot</button><br>
+    </div>
+  </form>
+
+  <div id='toast-container'>
+    <div id='toast-message'></div>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>

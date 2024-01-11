@@ -7,7 +7,7 @@
 char customWifiSSID[32];
 char customWifiPass[32];
 
-void configModeCallback(WiFiManager *myWiFiManager)
+void configModeCallback(AsyncWiFiManager *myWiFiManager)
 {
   Serial.println("Entered config mode");
   Serial.println(WiFi.softAPIP());
@@ -16,49 +16,48 @@ void configModeCallback(WiFiManager *myWiFiManager)
 
 void setup_WIFI()
 {
-  // Set up WiFiManager
-  WiFiManager wifiManager;
-  wifiManager.setTimeout(30);
-  wifiManager.setAPCallback(configModeCallback);
+  MDNS.begin("smog.alado");
+  WiFi.hostname("smog-alado");
+  // Set up ESPAsyncWiFiManager
+  AsyncWiFiManager wifiManager(&server, &dns);
+  wifiManager.setConfigPortalTimeout(APtimeout);
+  wifiManager.setConnectTimeout(30);
 
-  WiFi.setPhyMode(WIFI_PHY_MODE_11N); // WiFi N mode, best speed, lower range, lower power
-  WiFi.setOutputPower(20.5f);         // Output power of WiFi, dBm range: max +20.5dBm  min 0dBm
-  // WiFi.setSleepMode(WIFI_LIGHT_SLEEP, 1);   // Lowest WiFi power setting
-
-  WiFi.setAutoReconnect(true);
-  WiFi.persistent(true);
-
-  // Try to load WiFi credentials from EEPROM
-  EEPROM.begin(512); // Initialize EEPROM with 512 bytes
-  EEPROM.get(EEPROM_WIFI_SSID_START, customWifiSSID);
-  EEPROM.get(EEPROM_WIFI_PASS_START, customWifiPass);
-
-  // Set the custom parameters for WiFiManager
-  WiFiManagerParameter customSSID("SSID", "WiFi SSID", customWifiSSID, 32);
-  WiFiManagerParameter customPass("password", "WiFi Password", customWifiPass, 32);
-
+  // Custom parameters for Wi-Fi SSID and password
+  AsyncWiFiManagerParameter customSSID("SSID", "WiFi SSID", customWifiSSID, 32);
+  AsyncWiFiManagerParameter customPass("password", "WiFi Password", customWifiPass, 32);
+  
+  // Add custom parameters to WiFiManager
   wifiManager.addParameter(&customSSID);
   wifiManager.addParameter(&customPass);
 
   displayWificonnect();
-  wifiManager.setConfigPortalTimeout(APtimeout);
 
   // Try to connect to WiFi, or start a configuration portal if connection fails
   if (!wifiManager.autoConnect("Gnome on the Cloud"))
   {
     displayPortal();
     Serial.println("Failed to connect and hit timeout");
+
+    // If WiFi connection failed, stay in AP mode
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP("SmogAlado_AP", "12345678");
   }
 
   // Save WiFi credentials to EEPROM
   strncpy(customWifiSSID, customSSID.getValue(), 32);
   strncpy(customWifiPass, customPass.getValue(), 32);
+
+  dns.start(53, "*", WiFi.softAPIP());
+
+  server.begin();
+
+  EEPROM.begin(512); // Initialize EEPROM with 512 bytes
   EEPROM.put(EEPROM_WIFI_SSID_START, customWifiSSID);
   EEPROM.put(EEPROM_WIFI_PASS_START, customWifiPass);
   EEPROM.commit();
 
-  // If you get here, you have connected to the WiFi
   Serial.println("Connected to WiFi");
 }
 
-#endif // ESP_WIFI
+#endif // WIFI_SETUP

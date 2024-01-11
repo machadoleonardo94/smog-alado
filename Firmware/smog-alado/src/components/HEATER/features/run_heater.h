@@ -8,6 +8,7 @@
 
 void runHeater(int preset)
 {
+  /*
   power = 0;
   prevError = error;
   error = tempGoal - heaterTemperature;

@@ -54,7 +54,7 @@ int buttonPress(int button)
   if (state == 3)
   {
     TelnetStream.println("Tuning PID Parameters");
-    autoTunePID();
+    changeAutoTune();  // Call the autoTunePID function for tuning logic
   }
   if (state == 4)
   {

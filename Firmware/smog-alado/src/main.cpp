@@ -8,7 +8,8 @@
 #include "utilities/nuke_eeprom.h"
 #include "utilities/lightsleep.h"
 #include "utilities/telnet.h"
-#include "utilities/autotune_PID.h"
+#include "utilities/PID.h"
+#include "utilities/webserver.h"
 //* Components:
 #include "components/ADS1115/setup.h"
 #include "components/THERMISTOR/setup.h"
@@ -64,6 +65,8 @@ void loop()
     heaterTemperature = steinhart(thermistor);
     runHeater(preset);
   }
+
+  autoTunePID(); // Call the autoTunePID function for tuning logic
 
   if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
