@@ -8,12 +8,11 @@
 
 void runHeater(int preset)
 {
-  /*
   power = 0;
-  prevError = error;
-  error = tempGoal - heaterTemperature;
 
   /*
+    prevError = error;
+    error = tempGoal - heaterTemperature;
     proportional = error * KP;
     integral += ((error + prevError) / 2.0) * KI; // Trapezoidal rule for integration
     derivative = (error - prevError) * KD;
@@ -40,7 +39,8 @@ void runHeater(int preset)
         analogWrite(heater, power);
       }
     }
-  */
+    */
+
   error = abs(tempGoal - heaterTemperature);
 
   if (error >= 50) // we're far from setpoint, use aggressive parameters
