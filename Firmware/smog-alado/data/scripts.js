@@ -11,6 +11,7 @@ function updateData() {
       document.getElementById('Kp').innerText = 'Kp: ' + data.Kp.toFixed(2);
       document.getElementById('Ki').innerText = 'Ki: ' + data.Ki.toFixed(2);
       document.getElementById('Kd').innerText = 'Kd: ' + data.Kd.toFixed(2);
+      document.getElementById('timeStr').innerText = 'Current Time: ' + data.timeStr;
 
       setTimeout(updateData, 400);
     })
