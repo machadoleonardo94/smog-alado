@@ -2,8 +2,6 @@
 #define RUN_PUSHBUTTON
 
 #include "shared/dependencies.h"
-//* Adicione o arquivo setup.h caso a feature atual faça uso de outras features do mesmo componente.
-// #include "components/0-TEMPLATE/setup.h"
 
 int buttonPress(int button)
 {
@@ -24,7 +22,7 @@ int buttonPress(int button)
     state = 3;
   if (count > 10000)
     state = 4;
-  
+
   if (state == 1)
   {
     preset++;
@@ -35,6 +33,7 @@ int buttonPress(int button)
       sleepy = false;
       preset = 0;
       display.dim(false);
+      WiFi.forceSleepWake();
       WiFi.begin();
     }
     Serial.printf("Clict Clect \n");
@@ -44,9 +43,9 @@ int buttonPress(int button)
     if (preset == 1)
       tempGoal = 100;
     if (preset == 2)
-      tempGoal = 150;
+      tempGoal = 120;
     if ((preset > 2) & (preset < 10))
-      tempGoal = 160 + (preset * 5);
+      tempGoal = 110 + (preset * 5);
   }
   if (state == 2)
   {

@@ -26,12 +26,12 @@ int preset = 0;
 uint16_t adcRaw = 1000;
 uint16_t adcFiltered = 1000;
 
-//PID control and Tune
-double Kp = 10, Ki = 1, Kd = 1; 
-double aggKp = (Kp * 2), aggKi =  (Ki * 2), aggKd =  (Kd * 2);
+// PID control and Tune
+double Kp = 10, Ki = 1, Kd = 1;
+double aggKp = (Kp * 2), aggKi = (Ki * 2), aggKd = (Kd * 2);
 double TKp, TKi, TKd;
 
-byte ATuneModeRemember=2;
+byte ATuneModeRemember = 2;
 bool tuning;
 
 PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, DIRECT);
@@ -47,7 +47,7 @@ uint16_t idleSeconds = 0;
 uint16_t remainingTime = 100;
 uint16_t APtimeout = 180;
 
-//* Booleans to check if functions will be called 
+//* Booleans to check if functions will be called
 bool workingADS = false;
 bool workingWIFI = false;
 bool workingOTA = false;
