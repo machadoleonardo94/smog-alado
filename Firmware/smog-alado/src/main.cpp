@@ -49,6 +49,8 @@ void loop()
 {
   ArduinoOTA.handle();
 
+  myPID.Compute();
+
   buttonPress(buttonPin);
 
   if ((workingADS) && (adcTimer > (SAMPLES_TO_SEC / 5))) // reads ADC every 200ms
@@ -58,8 +60,6 @@ void loop()
     heaterTemperature = steinhart(thermistor);
     runHeater(preset);
   }
-
-  autoTunePID();  // Call the autoTunePID function for tuning logic
 
   if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
@@ -71,10 +71,10 @@ void loop()
       updateDisplay();
   }
 
-  if (idleTimer > (TIME_TO_SLEEP)) // sleep after 10 minutes
+  /* if (idleTimer > (TIME_TO_SLEEP)) // sleep after 10 minutes
   {
     sleepRoutine();
-  }
+  } */
 
   if ((millis() - globalTimer) > SAMPLING_TIMER)
   {
