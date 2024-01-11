@@ -39,8 +39,11 @@ double Kp = 7, Ki = 0.6, Kd = 180;
 double aggKp = (Kp * 2), aggKi = (Ki * 2), aggKd = (Kd * 2);
 double TKp, TKi, TKd;
 boolean tuning = false;
+bool autoTuneInProgress = true;
+unsigned long autoTuneStartTime;
+uint16_t maxAutoTuneDurationMinutes = 10;
 
-PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, DIRECT);
+PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, P_ON_M, DIRECT);
 PID_ATune aTune(&heaterTemperature, &power);
 
 //* Timers for ilusion of threads
