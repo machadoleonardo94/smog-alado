@@ -6,7 +6,7 @@
 // Assuming these variables are declared in your global variables file
 extern double Kp, Ki, Kd, tempGoal, heaterTemperature, powerPercent;
 extern bool sleepy, tuning;
-extern uint16_t minutes;
+extern uint16_t minutes, maxAutoTuneDurationMinutes;
 extern char timeStr[20];
 
 // Function to load files from FS, determining format
@@ -66,6 +66,19 @@ void handleToggleTuning(AsyncWebServerRequest *request)
 {
   changeAutoTune();  // Toggle the tuning state
   request->send(200, "text/plain", "Tuning state toggled");
+}
+
+// Function to change the PID auto-tune duration
+void handleChangeMaxAutoTuneDuration(AsyncWebServerRequest *request) {
+  if (request->hasParam("newMaxAutoTuneDuration")) {
+    const int newMaxAutoTuneDuration = request->getParam("newMaxAutoTuneDuration")->value().toInt();
+    maxAutoTuneDurationMinutes = newMaxAutoTuneDuration;
+    TelnetStream.println("Max Auto Tune Duration changed successfully");
+    request->send(200, "text/plain", "Max Auto Tune Duration changed successfully");
+  } else {
+    TelnetStream.println("Missing parameter: newMaxAutoTuneDuration");
+    request->send(400, "text/plain", "Invalid request");
+  }
 }
 
 // Function to change temperature goal
@@ -229,6 +242,7 @@ void setupWebServer()
   server.on("/commit-to-eeprom", HTTP_POST, handleCommitToEEPROM);
   server.on("/reboot-esp", HTTP_POST, handleRebootESP);
   server.on("/change-time-to-sleep", HTTP_POST, handleChangeTimeToSleep);
+  server.on("/change-max-auto-tune-duration", HTTP_POST, handleChangeMaxAutoTuneDuration);
 
   server.begin();
 }
