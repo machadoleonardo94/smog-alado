@@ -15,21 +15,26 @@
 #include "interfaces.h"
 
 //* ---------------------- Libraries --------------------------
-//* ADS1115 analog to digital converter and other dependencies:
+//* Libraries and other dependencies:
 #include <SPI.h>
 #include <Wire.h>
+#include <EEPROM.h>
+
 #include <Adafruit_I2CDevice.h>
 #include <Adafruit_ADS1X15.h>
-#include <EEPROM.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+
 #include <ArduinoOTA.h>
 #include <ESP8266WiFi.h>
-#include <ESP8266mDNS.h>
-#include <WiFiUdp.h>
-#include <DNSServer.h>
-#include <ESP8266WebServer.h>
-#include <WiFiManager.h>
+
+#include <ESPAsyncWebServer.h>
+#include <ESPAsyncWiFiManager.h>
+#include <ESPAsyncDNSServer.h>
+#include <ESPAsyncTCP.h>
+#include <ESPAsyncUDP.h>
+#include <ArduinoJson.h>
+
 #include <TelnetStream.h>
 #include <TimeLib.h>
 #include <sntp.h>
@@ -46,4 +51,4 @@
 //* ---------------------- Variables --------------------------
 #include "variables.h"
 
-#endif
+#endif // PROJECT_GLOBAL_DEPENDENCIES
