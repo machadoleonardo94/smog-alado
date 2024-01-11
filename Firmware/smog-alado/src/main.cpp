@@ -67,9 +67,7 @@ void loop()
     runHeater(preset);
   }
 
-  autoTunePID();
-  // Call the autoTunePID function for tuning logic
-  // autoTunePID();  // Call the autoTunePID function for tuning logic
+  autoTunePID(); // Call the autoTunePID function for tuning logic
 
   if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
