@@ -49,6 +49,17 @@ function toggleTuning() {
     });
 }
 
+function changeMaxAutoTuneDuration() {
+  const newMaxAutoTuneDuration = document.getElementById('newMaxAutoTuneDuration').value;
+  fetch('/change-max-auto-tune-duration?newMaxAutoTuneDuration=' + newMaxAutoTuneDuration, {
+    method: 'POST'
+  })
+    .then(response => response.text())
+    .then(result => {
+      showToast(result);
+    });
+}
+
 function changeTempGoal() {
   const newTempGoal = document.getElementById('newTempGoal').value;
   fetch('/change-temp-goal?newTempGoal=' + newTempGoal, {

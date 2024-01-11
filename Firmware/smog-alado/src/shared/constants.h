@@ -24,9 +24,6 @@
 //* Higher resolution for PWM output (default 256)
 #define ANALOG_RANGE 1024
 
-//* Hostname for WebServer and WiFi
-#define hostname Smog-Alado
-
 //* EEPROM addresses for wifi
 #define EEPROM_WIFI_SSID_START 128
 #define EEPROM_WIFI_PASS_START 192

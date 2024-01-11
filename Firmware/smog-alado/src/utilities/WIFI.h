@@ -16,7 +16,8 @@ void configModeCallback(AsyncWiFiManager *myWiFiManager)
 
 void setup_WIFI()
 {
-  WiFi.hostname(hostname);
+  MDNS.begin("smog.alado");
+  WiFi.hostname("smog-alado");
   // Set up ESPAsyncWiFiManager
   AsyncWiFiManager wifiManager(&server, &dns);
   wifiManager.setConfigPortalTimeout(APtimeout);
