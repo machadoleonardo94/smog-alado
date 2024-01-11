@@ -5,7 +5,7 @@ Desktop vaporizer project with 2S battery, homemade heating element and temperat
 
 ![case](https://github.com/machadoleonardo94/smog-alado/assets/52208834/6381df27-6bbc-4f1f-926d-293b742b3708)
 
-![assembled](https://github.com/machadoleonardo94/smog-alado/assets/52208834/fe35bf13-2806-4447-bb05-e174c33028d4)
+<!-- ![assembled](https://github.com/machadoleonardo94/smog-alado/assets/52208834/fe35bf13-2806-4447-bb05-e174c33028d4) -->
 
 ![image](https://github.com/machadoleonardo94/smog-alado/assets/52208834/4fcc112a-15de-4609-a587-74f2b50208d8)
 
