@@ -36,7 +36,7 @@ PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, P_ON_M, DIRECT);
 double globalTimer = 0;
 uint16_t adcTimer = 0;
 uint16_t logTimer = 0;
-uint16_t idleTimer = 0;
+uint32_t idleTimer = 0;
 uint16_t idleMinutes = 0;
 uint16_t idleSeconds = 0;
 uint16_t remainingTime = 100;

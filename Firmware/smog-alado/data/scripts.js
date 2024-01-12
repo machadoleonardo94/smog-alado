@@ -13,14 +13,14 @@ function updateData() {
       document.getElementById('Kd').innerText = 'Kd: ' + data.Kd.toFixed(2);
       document.getElementById('timeStr').innerText = 'Current Time: ' + data.timeStr;
 
-      setTimeout(updateData, 400);
+      setTimeout(updateData, 200);
     })
     .catch(error => {
       // Handle errors, log or display an error message
       console.error('Error fetching data:', error);
 
       // Schedule the next update even in case of an error
-      setTimeout(updateData, 400);
+      setTimeout(updateData, 200);
     });
 }
 

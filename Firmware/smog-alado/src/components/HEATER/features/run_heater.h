@@ -8,6 +8,16 @@
 
 void runHeater(int preset)
 {
+  if ((tempGoal < heaterTemperature) & (tempGoal < 40))
+  {
+    myPID.SetMode(MANUAL);
+    power = 0;
+  }
+  else
+  {
+    myPID.SetMode(AUTOMATIC);
+  }
+  
   powerPercent = 100 * power / ANALOG_RANGE;
 
   if (power > 0)
