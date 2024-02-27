@@ -5,27 +5,10 @@
 
 int buttonPress(int button)
 {
-  int count = 0;
-  int state = 0;
-  while (!digitalRead(button))
-  {
-    count++;
-    delay(1);
-  }
-  if (count < 10)
-    return 0;
-  if (count > 20)
-    state = 1;
-  if (count > 800)
-    state = 2;
-  if (count > 5000)
-    state = 3;
-  if (count > 10000)
-    state = 4;
+  int state = 1;
 
   if (state == 1)
   {
-    preset++;
     if (preset >= 10)
       preset = 0;
     if (sleepy == true)
@@ -39,13 +22,7 @@ int buttonPress(int button)
     Serial.printf("Clict Clect \n");
     idleTimer = 0;
     if (preset == 0)
-      tempGoal = 0;
-    if (preset == 1)
-      tempGoal = 100;
-    if (preset == 2)
-      tempGoal = 120;
-    if ((preset > 2) & (preset < 10))
-      tempGoal = 110 + (preset * 5);
+      tempGoal = 90;
   }
   if (state == 2)
   {
