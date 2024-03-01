@@ -22,7 +22,7 @@ int buttonPress(int button)
     Serial.printf("Clict Clect \n");
     idleTimer = 0;
     if (preset == 0)
-      tempGoal = 90;
+      tempGoal = 85;
   }
   if (state == 2)
   {
@@ -31,7 +31,7 @@ int buttonPress(int button)
   if (state == 3)
   {
     TelnetStream.println("Tuning PID Parameters");
-    changeAutoTune();  // Call the autoTunePID function for tuning logic
+    changeAutoTune(); // Call the autoTunePID function for tuning logic
   }
   if (state == 4)
   {

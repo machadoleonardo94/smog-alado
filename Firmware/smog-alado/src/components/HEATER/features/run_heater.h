@@ -8,14 +8,19 @@
 
 void runHeater(int preset)
 {
-  powerPercent = 100 * power / ANALOG_RANGE;
 
-  if (power > 0)
+  if (heaterTemperature > tempGoal)
   {
-    analogWrite(heater, power);
-  }
-  else
     digitalWrite(heater, LOW);
+    digitalWrite(ledPin, LOW);
+    powerPercent = 0;
+  }
+  else if (heaterTemperature < tempGoal)
+  {
+    digitalWrite(heater, HIGH);
+    digitalWrite(ledPin, HIGH);
+    powerPercent = 100;
+  }
 }
 
 #endif // RUN_HEATER

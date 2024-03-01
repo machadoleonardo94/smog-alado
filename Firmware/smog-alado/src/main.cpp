@@ -57,8 +57,6 @@ void loop()
 {
   ArduinoOTA.handle();
 
-  myPID.Compute();
-
   buttonPress(buttonPin);
 
   if (adcTimer > (SAMPLES_TO_SEC / 5)) // reads ADC every 200ms
@@ -72,7 +70,7 @@ void loop()
   if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
     logTimer = 0;
-    digitalWrite(ledPin, !digitalRead(ledPin));
+    // digitalWrite(ledPin, !digitalRead(ledPin));
     run_logger();
     TelnetPrint();
     if (workingDisplay)

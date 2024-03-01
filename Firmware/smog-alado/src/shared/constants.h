@@ -18,7 +18,7 @@
 #define tempMax 92
 
 //* Pulldown resistor R10
-#define PULLDOWN 4700
+#define PULLDOWN 3300
 
 //* Higher resolution for PWM output (default 256)
 #define ANALOG_RANGE 1024
