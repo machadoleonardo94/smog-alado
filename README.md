@@ -1,5 +1,12 @@
 # smog-alado
-Desktop vaporizer project with 2S battery, homemade heating element and temperature control
+Desktop heating element controller with 2S battery.
+
+## Tested uses: 
+* Precise temperature control for coffee machines
+* SMD soldering hotbed
+* Aromatherapy diffusers
+
+## Mileage may vary, use at your own risk.
 
 ![board](https://github.com/machadoleonardo94/smog-alado/assets/52208834/82a1beb1-0f0f-4a3b-9d36-1a72f8a2a4b8)
 
