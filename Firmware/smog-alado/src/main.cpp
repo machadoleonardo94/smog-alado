@@ -14,12 +14,11 @@
 #include "components/ADS1115/setup.h"
 #include "components/THERMISTOR/setup.h"
 #include "components/HEATER/setup.h"
-#include "components/PUSHBUTTON/setup.h"
 #include "components/DISPLAY/setup.h"
 
 void setup()
 {
-  BLINKY
+  //BLINKY
   delay(1000);
   Serial.begin(115200);
   Serial.println("setup");
@@ -33,7 +32,6 @@ void setup()
 
   workingDisplay = setup_display();
   workingADS = setup_ADS1115();
-  analogWriteRange(ANALOG_RANGE);
   LittleFS.begin();
   // LittleFS.format();
   setup_WIFI();
@@ -43,12 +41,6 @@ void setup()
 
   workingADS = setup_ADS1115();
   timeZoneSet = setup_TELNET();
-  // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnet won't work
-  analogWriteRange(ANALOG_RANGE);
-
-  myPID.SetOutputLimits(0, ANALOG_RANGE);
-  myPID.SetMode(AUTOMATIC);
-  // changeAutoTune();  // Initiate auto-tuning at startup
 
   os_update_cpu_frequency(10);
 }
@@ -57,14 +49,21 @@ void loop()
 {
   ArduinoOTA.handle();
 
-  buttonPress(buttonPin);
+  myPID.Compute();
+
+  WindowPID = millis() - windowStartTime;
+  if (WindowPID > WindowSize)
+  { //time to shift the Relay Window
+    windowStartTime += WindowSize;
+    TelnetStream.println("Window adjust");
+  }
 
   if (adcTimer > (SAMPLES_TO_SEC / 5)) // reads ADC every 200ms
   {
     adcTimer = 0;
     thermistor = calculate_resistance();
     heaterTemperature = steinhart(thermistor);
-    runHeater(preset);
+    runHeater();
   }
 
   if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake

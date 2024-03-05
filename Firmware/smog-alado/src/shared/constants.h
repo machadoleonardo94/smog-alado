@@ -16,6 +16,7 @@
 
 //* Temperature limit to avoid burnout
 #define tempMax 92
+#define WindowSize 10000
 
 //* Pulldown resistor R10
 #define PULLDOWN 3300
