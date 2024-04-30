@@ -43,7 +43,6 @@ void setup()
 
   workingADS = setup_ADS1115();
   timeZoneSet = setup_TELNET();
-  // TODO: implement a routine to periodicaly check if timezone is set, otherwise telnet won't work
   analogWriteRange(ANALOG_RANGE);
 
   myPID.SetOutputLimits(0, ANALOG_RANGE);
@@ -72,6 +71,8 @@ void loop()
     logTimer = 0;
     // digitalWrite(ledPin, !digitalRead(ledPin));
     run_logger();
+    if (!timeZoneSet)
+      timeZoneSet = setup_TELNET();
     TelnetPrint();
     if (workingDisplay)
       updateDisplay();
