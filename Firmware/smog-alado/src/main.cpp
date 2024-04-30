@@ -14,12 +14,11 @@
 #include "components/ADS1115/setup.h"
 #include "components/THERMISTOR/setup.h"
 #include "components/HEATER/setup.h"
-#include "components/PUSHBUTTON/setup.h"
 #include "components/DISPLAY/setup.h"
 
 void setup()
 {
-  BLINKY
+  // BLINKY
   delay(1000);
   Serial.begin(115200);
   Serial.println("setup");
@@ -33,7 +32,6 @@ void setup()
 
   workingDisplay = setup_display();
   workingADS = setup_ADS1115();
-  analogWriteRange(ANALOG_RANGE);
   LittleFS.begin();
   // LittleFS.format();
   setup_WIFI();
@@ -56,14 +54,21 @@ void loop()
 {
   ArduinoOTA.handle();
 
-  buttonPress(buttonPin);
+  myPID.Compute();
+
+  WindowPID = millis() - windowStartTime;
+  if (WindowPID > WindowSize)
+  { // time to shift the Relay Window
+    windowStartTime += WindowSize;
+    TelnetStream.println("Window adjust");
+  }
 
   if (adcTimer > (SAMPLES_TO_SEC / 5)) // reads ADC every 200ms
   {
     adcTimer = 0;
     thermistor = calculate_resistance();
     heaterTemperature = steinhart(thermistor);
-    runHeater(preset);
+    runHeater();
   }
 
   if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake

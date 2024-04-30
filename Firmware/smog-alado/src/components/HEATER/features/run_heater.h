@@ -6,20 +6,19 @@
 // #include "components/0-TEMPLATE/setup.h"
 // ADICIONAR AQUI OS IMPORTS DE LIBS NECESSÁRIOS.
 
-void runHeater(int preset)
+void runHeater()
 {
-
-  if (heaterTemperature > tempGoal)
-  {
-    digitalWrite(heater, LOW);
-    digitalWrite(ledPin, LOW);
-    powerPercent = 0;
-  }
-  else if (heaterTemperature < tempGoal)
+  if (power < WindowPID) 
   {
     digitalWrite(heater, HIGH);
     digitalWrite(ledPin, HIGH);
     powerPercent = 100;
+  }
+  else 
+  {
+    digitalWrite(heater, LOW);
+    digitalWrite(ledPin, LOW);
+    powerPercent = 0;
   }
 }
 

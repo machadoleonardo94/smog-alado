@@ -30,6 +30,9 @@ uint16_t adcFiltered = 1000;
 double Kp = 1, Ki = 1, Kd = 1;
 bool tuning = false;
 
+unsigned long windowStartTime;
+unsigned long WindowPID;
+
 PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, P_ON_M, DIRECT);
 
 //* Timers for ilusion of threads
