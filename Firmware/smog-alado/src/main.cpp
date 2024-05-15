@@ -57,7 +57,10 @@ void loop()
 {
   ArduinoOTA.handle();
 
-  myPID.Compute();
+  if (tempGoal > 0) 
+  {
+    myPID.Compute();
+  }
 
   buttonPress(buttonPin);
 
@@ -79,7 +82,7 @@ void loop()
       updateDisplay();
   }
 
-  if (idleTimer > (TIME_TO_SLEEP)) // sleep after 10 minutes
+  if ((idleTimer > (TIME_TO_SLEEP)) && (tempGoal > 50) ) // sleep after 10 minutes
   {
     sleepRoutine();
   }
