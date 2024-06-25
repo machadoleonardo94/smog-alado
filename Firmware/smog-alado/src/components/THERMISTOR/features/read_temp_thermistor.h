@@ -13,8 +13,8 @@ double calculate_resistance()
   {
     adcRaw = ads.readADC_SingleEnded(0);
     adcVoltage = ads.computeVolts(adcRaw);
-    if (adcRaw < 1000)
-      return 120000;
+    //if (adcRaw < 1000)
+    //  return 120000;
   }
   else
   {
@@ -24,23 +24,28 @@ double calculate_resistance()
   resistor = (3.3 / (adcVoltage)) * PULLDOWN - PULLDOWN;
   if (resistor < 150)
     resistor = 150;
-  if (resistor > 120000)
-    resistor = 120000;
+  //if (resistor > 120000)
+  //  resistor = 120000;
   return resistor;
 }
 
 double steinhart(double thermistor)
 {
+  NTC = 100;
 
-  //  NTC 3950 10k
-  //  const static double  a = 0.0011260101763638105;
-  //  const static double  b = 0.00023990205585764816;
-  //  const static double  c = -3.1848655700239605e-8;
+  if (NTC = 100)  //NTC 3950 100k
+  {
+    a = 0.0008002314855002526;
+    b = 0.0001989545566222665;
+    c = 1.7249962319615102e-7;
+  }
 
-  //  NTC 3950 100k
-  const static double a = 0.0008002314855002526;
-  const static double b = 0.0001989545566222665;
-  const static double c = 1.7249962319615102e-7;
+  if (NTC = 10)  //NTC 3950 10k
+  {
+    a = 0.0011260101763638105;
+    b = 0.00023990205585764816;
+    c = -3.1848655700239605e-8;
+  }
 
   // Utilizes the Steinhart-Hart Thermistor Equation:
   // Temperature in Kelvin = 1 / {A + B[ln(R)] + C[ln(R)]^3}
