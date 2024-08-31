@@ -1,0 +1,14 @@
+------------------ NMEA 2000 SPECIFICATIONS ------------------
+
+---> Bus channels (5pin connector):
+- VCC
+- GND
+- Can high
+- Can low
+- sheild
+
+---> NMEA2000 Logic levels:
+Barramento CAN H / CAN L tem uma tensão de 5V.
+- High = 3.5v
+- Low = 1.5v
+- Iddle = 2.5v

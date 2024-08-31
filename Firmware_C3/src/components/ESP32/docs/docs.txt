@@ -1,0 +1,2 @@
+NMEA2000 Links relevantes:
+- https://www.kvaser.com/tools-troubleshooting-can-nmea-2000/
