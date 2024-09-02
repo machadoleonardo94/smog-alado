@@ -8,18 +8,25 @@
 
 void setup()
 {
+  pinMode(buttonPin, INPUT_PULLUP);
+  digitalWrite(latchPin, HIGH);
   Serial.begin(115200);
   Serial.println("setup");
-  pinMode(buttonPin, INPUT_PULLUP);
   setup_ESP32();
   workingDisplay = setup_display();
   setup_LEDS();
-  digitalWrite(latchPin, HIGH);
 }
 
 void loop()
 {
   ArduinoOTA.handle();
+
+  if (digitalRead(buttonPin))
+  {
+    while (digitalRead(buttonPin))
+      idleTimer = 0;
+    // setLED(greenLED);
+  }
 
   if ((logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
@@ -27,6 +34,14 @@ void loop()
     if (workingDisplay)
       updateDisplay();
     Serial.print(".");
+    uint8_t ledColor = esp_random() % 8;
+    Serial.println(ledColor);
+    bool red = ledColor & 1;
+    bool green = ledColor & 2;
+    bool blue = ledColor & 4;
+    setLED(50 * red, 50 * green, 50 * blue);
+    if (!workingDisplay)
+      workingDisplay = setup_display();
   }
 
   if ((millis() - globalTimer) > SAMPLING_TIMER)
@@ -36,7 +51,8 @@ void loop()
     logTimer++;
     adcTimer++;
   }
-  if (millis() > 30000)
+
+  if (idleTimer > (120 * SAMPLES_TO_SEC))
   {
     setLED(0, 0, 0);
     digitalWrite(latchPin, LOW);

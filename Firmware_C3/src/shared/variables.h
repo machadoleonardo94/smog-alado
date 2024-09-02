@@ -45,5 +45,8 @@ bool workingOTA = false;
 bool workingDisplay = false;
 bool timeZoneSet = false;
 bool sleepy = false;
+bool redLed = false;
+bool greenLed = false;
+bool blueLed = false;
 
 #endif // PROJECT_GLOBAL_VARIABLES
