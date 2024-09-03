@@ -3,8 +3,6 @@
 
 #include "shared/dependencies.h"
 #include "components/LEDS/features/WS_functions.h"
-#include "components/LEDS/features/turn_off.h"
-#include "components/LEDS/features/turn_on.h"
 
 void setup_LEDS()
 {

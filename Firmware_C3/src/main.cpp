@@ -12,9 +12,9 @@ void setup()
   digitalWrite(latchPin, HIGH);
   Serial.begin(115200);
   Serial.println("setup");
+  setup_LEDS();
   setup_ESP32();
   workingDisplay = setup_display();
-  setup_LEDS();
 }
 
 void loop()
