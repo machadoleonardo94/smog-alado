@@ -24,24 +24,21 @@ void loop()
   if (digitalRead(buttonPin))
   {
     while (digitalRead(buttonPin))
-      idleTimer = 0;
-    // setLED(greenLED);
+    {
+      sampleRandomLED();
+      delay(25);
+    }
+    idleTimer = 0;
   }
 
   if ((logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
     logTimer = 0;
-    if (workingDisplay)
-      updateDisplay();
     Serial.print(".");
-    uint8_t ledColor = esp_random() % 8;
-    Serial.println(ledColor);
-    bool red = ledColor & 1;
-    bool green = ledColor & 2;
-    bool blue = ledColor & 4;
-    setLED(50 * red, 50 * green, 50 * blue);
     if (!workingDisplay)
       workingDisplay = setup_display();
+    if (workingDisplay)
+      updateDisplay();
   }
 
   if ((millis() - globalTimer) > SAMPLING_TIMER)
