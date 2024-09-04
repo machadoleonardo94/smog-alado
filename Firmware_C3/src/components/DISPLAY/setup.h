@@ -11,7 +11,7 @@ int setup_display()
 {
   Serial.println("SSD1306 setup");
   Wire.end();
-  Wire.setPins(4,5);
+  Wire.setPins(4, 5);
   if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
   {
     Serial.println("SSD1306 allocation failed");

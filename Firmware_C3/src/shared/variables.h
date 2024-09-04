@@ -5,6 +5,8 @@
 #include "shared/constants.h"
 #include "pinout.h"
 
+#include "components/DISPLAY/constants.h"
+
 //* ---------------------- GLOBAL VARIABLES ----------------------
 //* 0.96" OLED I2C display
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
@@ -45,8 +47,5 @@ bool workingOTA = false;
 bool workingDisplay = false;
 bool timeZoneSet = false;
 bool sleepy = false;
-bool redLed = false;
-bool greenLed = false;
-bool blueLed = false;
 
 #endif // PROJECT_GLOBAL_VARIABLES

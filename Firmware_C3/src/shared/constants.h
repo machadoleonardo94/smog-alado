@@ -32,9 +32,4 @@
 #define EEPROM_KI_ADDRESS 32
 #define EEPROM_KD_ADDRESS 64
 
-//* Paramethers for OLED display
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define SCREEN_ADDRESS 0x3C
-
 #endif // PROJECT_GLOBAL_CONSTANTS

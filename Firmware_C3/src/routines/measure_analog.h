@@ -1,5 +1,7 @@
-#if !defined(READ_TEMPERATURE_THERMISTOR)
-#define READ_TEMPERATURE_THERMISTOR
+#include "shared/dependencies.h"
+
+double calculate_resistance();
+double steinhart();
 
 double calculate_resistance()
 {
@@ -7,8 +9,8 @@ double calculate_resistance()
   uint16_t adcRaw = 0;
   double adcVoltage = 0;
 
-  for(int i=0; i<3; i++)
-    adcRaw =+ analogReadMilliVolts(0);
+  for (int i = 0; i < 3; i++)
+    adcRaw = +analogReadMilliVolts(0);
   Serial.printf("Raw ADC: %d \n", adcRaw);
   adcVoltage = 3.3 * adcRaw / 1024;
   resistor = (3.3 / (adcVoltage)) * PULLDOWN_RES - PULLDOWN_RES;
@@ -38,5 +40,3 @@ double steinhart(double thermistor)
   float temperature = (1 / (a + (b * ln_r) + (c * ln_r * ln_r * ln_r))) - 273.15; // Convert K to ºC
   return (temperature);
 }
-
-#endif // READ_TEMPERATURE_THERMISTOR

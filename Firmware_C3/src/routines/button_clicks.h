@@ -1,7 +1,25 @@
-#if !defined(RUN_PUSHBUTTON)
-#define RUN_PUSHBUTTON
-
 #include "shared/dependencies.h"
+
+void buttonPress()
+{
+  if (digitalRead(buttonPin))
+  {
+    int shutdownCounter = 0;
+    while (digitalRead(buttonPin))
+    {
+      sampleRandomLED();
+      shutdownCounter++;
+      if (shutdownCounter > 100)
+      {
+        digitalWrite(latchPin, LOW);
+        setLED(0, 0, 0);
+        esp_deep_sleep_start();
+      }
+      delay(25);
+    }
+    idleTimer = 0;
+  }
+}
 
 int buttonPress(int button)
 {
@@ -65,5 +83,3 @@ int buttonPress(int button)
   delay(100);
   return 1;
 }
-
-#endif // RUN_PUSHBUTTON

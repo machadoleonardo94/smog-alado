@@ -52,6 +52,11 @@
 #include "components/DISPLAY/setup.h"
 #include "components/ESP32/setup.h"
 #include "components/LEDS/setup.h"
-#include "components/THERMISTOR/setup.h"
+
+//* --------------------- Routines ------------------------
+#include "routines/button_clicks.h"
+#include "routines/measure_analog.h"
+#include "routines/run_heater.h"
+#include "routines/update_screen.h"
 
 #endif // PROJECT_GLOBAL_DEPENDENCIES
