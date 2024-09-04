@@ -23,9 +23,17 @@ void loop()
 
   if (digitalRead(buttonPin))
   {
+    int shutdownCounter=0;
     while (digitalRead(buttonPin))
     {
       sampleRandomLED();
+      shutdownCounter++;
+      if (shutdownCounter>100)
+      {
+        digitalWrite(latchPin, LOW);
+        setLED(0,0,0);
+        esp_deep_sleep_start();
+      }
       delay(25);
     }
     idleTimer = 0;
@@ -54,6 +62,6 @@ void loop()
   {
     setLED(0, 0, 0);
     //digitalWrite(latchPin, LOW);
-    esp_deep_sleep_start();
+    //esp_deep_sleep_start();
   }
 }
