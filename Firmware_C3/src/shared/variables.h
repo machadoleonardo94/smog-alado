@@ -6,8 +6,6 @@
 #include "pinout.h"
 
 //* ---------------------- GLOBAL VARIABLES ----------------------
-//* ADS1115 - Analog to digital converter global instance.
-Adafruit_ADS1115 ads; /* Use this for the 16-bit version */
 //* 0.96" OLED I2C display
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
@@ -21,6 +19,8 @@ double powerPercent = 0;
 int preset = 0;
 uint16_t adcRaw = 1000;
 uint16_t adcFiltered = 1000;
+
+double battery = 0;
 
 // PID control and Tune
 double Kp = 1, Ki = 1, Kd = 1;

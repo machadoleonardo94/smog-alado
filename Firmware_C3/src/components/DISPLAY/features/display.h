@@ -41,17 +41,21 @@ void updateDisplay()
   display.print("PWM: ");
   display.print(powerPercent);
   display.print("%");
+  display.setCursor(92, LINE2);
+  display.print(battery);
+  display.print("V");
+  /*
   display.setCursor(102, LINE2);
   display.print(idleMinutes);
   display.print(":");
   if (idleSeconds < 10)
     display.print("0");
   display.print(idleSeconds);
-
+  */
   // Display the IP address
   display.setCursor(0, LINE3); // Adjust vertical position
   display.print("IP: ");
-  // display.print(WiFi.localIP());
+  display.print(WiFi.localIP());
 
   display.display();
 }

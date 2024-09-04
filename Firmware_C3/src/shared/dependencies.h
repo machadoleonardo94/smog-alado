@@ -52,5 +52,6 @@
 #include "components/DISPLAY/setup.h"
 #include "components/ESP32/setup.h"
 #include "components/LEDS/setup.h"
+#include "components/THERMISTOR/setup.h"
 
 #endif // PROJECT_GLOBAL_DEPENDENCIES

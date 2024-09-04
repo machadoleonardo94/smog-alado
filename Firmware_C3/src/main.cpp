@@ -34,11 +34,12 @@ void loop()
   if ((logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake
   {
     logTimer = 0;
-    Serial.print(".");
-    if (!workingDisplay)
-      workingDisplay = setup_display();
-    if (workingDisplay)
-      updateDisplay();
+    thermistor = calculate_resistance();
+    heaterTemperature = steinhart(thermistor);
+    battery = analogReadMilliVolts(1) * 8.2 / 4095;
+    //Serial.print(".");
+    updateDisplay();
+    sampleRandomLED();
   }
 
   if ((millis() - globalTimer) > SAMPLING_TIMER)
@@ -49,10 +50,10 @@ void loop()
     adcTimer++;
   }
 
-  if (idleTimer > (120 * SAMPLES_TO_SEC))
+  if (idleTimer > (240 * SAMPLES_TO_SEC))
   {
     setLED(0, 0, 0);
-    digitalWrite(latchPin, LOW);
+    //digitalWrite(latchPin, LOW);
     esp_deep_sleep_start();
   }
 }

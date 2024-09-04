@@ -22,6 +22,11 @@ void setup_ESP32()
     //* Setup OTA
     setup_OTA();
 
+    //Sets battery ADC attenuation
+    //analogReadResolution(14);
+    analogSetPinAttenuation(A1, ADC_11db);
+    analogSetPinAttenuation(A0, ADC_0db);
+
     //* Setup Watchdog
     // esp_task_wdt_init(60, true);
     // esp_task_wdt_add(NULL);

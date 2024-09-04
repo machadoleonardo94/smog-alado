@@ -36,7 +36,7 @@ void setLED(int R, int G, int B)
 void sampleRandomLED()
 {
     uint8_t ledColor = esp_random() % 8;
-    Serial.println(ledColor);
+    //Serial.println(ledColor);
     bool red = ledColor & 1;
     bool green = ledColor & 2;
     bool blue = ledColor & 4;
