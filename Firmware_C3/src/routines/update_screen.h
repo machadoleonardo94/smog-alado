@@ -12,9 +12,13 @@ void updateDisplay();
 
 void updateDisplay()
 {
-  int remainingTime = (TIME_TO_SLEEP - idleTimer) / SAMPLING_TIMER;
-  idleMinutes = remainingTime / 600;
-  idleSeconds = (remainingTime % 600) / 10;
+  // int remainingTime = (TIME_TO_SLEEP - idleTimer) / SAMPLING_TIMER;
+  // idleMinutes = remainingTime / 600;
+  // idleSeconds = (remainingTime % 600) / 10;
+
+  int runTime = globalTimer / 1000;
+  idleMinutes = runTime / 60;
+  idleSeconds = (runTime % 60);
 
   display.clearDisplay();
   display.setTextSize(1); // Set text size to 2 (you can adjust the size as needed)
