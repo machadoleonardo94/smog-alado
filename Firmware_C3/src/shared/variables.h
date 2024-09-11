@@ -16,13 +16,16 @@ double thermistor = 500;
 double heaterTemperature = 0;
 double tempGoal = 0;
 double error = 0;
-double power = 0;
+double powerOutput = 0;
 double powerPercent = 0;
 int preset = 0;
 uint16_t adcRaw = 1000;
 uint16_t adcFiltered = 1000;
 
 double battery = 0;
+
+int clickCounter = 0;
+uint16_t burnoutCounter = 0;
 
 // PID control and Tune
 double Kp = 1, Ki = 1, Kd = 1;
@@ -33,6 +36,7 @@ double globalTimer = 0;
 uint16_t adcTimer = 0;
 uint16_t logTimer = 0;
 uint16_t idleTimer = 0;
+uint16_t screenTimer = 0;
 uint16_t idleMinutes = 0;
 uint16_t idleSeconds = 0;
 uint16_t remainingTime = 100;
@@ -47,5 +51,6 @@ bool workingOTA = false;
 bool workingDisplay = false;
 bool timeZoneSet = false;
 bool sleepy = false;
+bool buttonState = false;
 
 #endif // PROJECT_GLOBAL_VARIABLES
