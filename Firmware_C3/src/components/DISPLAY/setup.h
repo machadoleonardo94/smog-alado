@@ -21,7 +21,6 @@ int setup_display()
   drawXbm(logo_bits, _width, _height, 0, 0);
   display.display();
   Serial.println("SSD1306 setup correctly finished");
-  delay(1000);
   return 1;
 }
 #endif // SETUP_DISPLAY
