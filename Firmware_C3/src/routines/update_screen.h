@@ -23,7 +23,7 @@ void updateDisplay()
   display.clearDisplay();
   display.setTextSize(1); // Set text size to 2 (you can adjust the size as needed)
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(102, LINE0);
+  display.setCursor(0, LINE0);
   display.print(idleMinutes);
   display.print(":");
   if (idleSeconds < 10)
