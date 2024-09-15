@@ -17,6 +17,8 @@ int setup_display()
     Serial.println("SSD1306 allocation failed");
     return 0;
   }
+  display.invertDisplay(false);
+  display.setRotation(2);
   display.clearDisplay();
   drawXbm(logo_bits, _width, _height, 0, 0);
   display.display();
