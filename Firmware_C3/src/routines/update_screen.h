@@ -20,6 +20,11 @@ void updateDisplay()
   idleMinutes = runTime / 60;
   idleSeconds = (runTime % 60);
 
+  while (inPowerMenu)
+  {
+    cyclePowerOption();
+  }
+
   display.clearDisplay();
   display.setTextSize(1); // Set text size to 2 (you can adjust the size as needed)
   display.setTextColor(SSD1306_WHITE);
@@ -49,7 +54,7 @@ void updateDisplay()
 void burnoutScreen()
 {
   display.clearDisplay();
-  drawXbm(logo_bits, _width, _height, 0, 0);
+  drawXbm(overtime, _width, _height, 0, 0);
   delay(3000);
 }
 
