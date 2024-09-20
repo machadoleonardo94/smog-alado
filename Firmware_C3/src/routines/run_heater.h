@@ -1,10 +1,13 @@
+#ifndef HEATER_ROUTINE
+#define HEATER_ROUTINE
+
 #include "shared/dependencies.h"
 
 void controlPower(uint16_t power)
 {
-    if ((burnoutCounter > 30) && (burnoutCounter < 800))
+    if ((clickCounter == 2) && (!burnout))
     {
-        powerOutput = power;
+        powerOutput = power * 100 * (4.2 / battery);
     }
     else
     {
@@ -13,3 +16,5 @@ void controlPower(uint16_t power)
     powerPercent = powerOutput / 10;
     ledcWrite(heater, powerOutput);
 }
+
+#endif

@@ -1,3 +1,5 @@
+#ifndef SCREEN_ROUTINE
+#define SCREEN_ROUTINE
 
 #include "shared/dependencies.h"
 #include "components/DISPLAY/setup.h"
@@ -9,6 +11,7 @@
 #define _height 64
 
 void updateDisplay();
+void burnoutScreen();
 
 void updateDisplay()
 {
@@ -24,11 +27,14 @@ void updateDisplay()
   display.setTextSize(1); // Set text size to 2 (you can adjust the size as needed)
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0, LINE0);
+  display.print("Runtime: ");
   display.print(idleMinutes);
   display.print(":");
   if (idleSeconds < 10)
     display.print("0");
   display.print(idleSeconds);
+  display.setCursor(100, LINE0);
+  display.print(powerLevel);
 
   display.setCursor(0, LINE1); // Adjust vertical position
   display.print("PWM: ");
@@ -37,6 +43,11 @@ void updateDisplay()
   display.setCursor(92, LINE1);
   display.print(battery);
   display.print("V");
+
+  display.setCursor(0, LINE2);
+  display.print("Heating: ");
+  display.print(heatingTime * SAMPLING_TIMER);
+  display.print("ms");
 
   // Display the IP address
   display.setCursor(0, LINE3); // Adjust vertical position
@@ -77,3 +88,5 @@ void updateDisplayTemps()
   display.print("C");
   display.display();
 }
+
+#endif
