@@ -43,7 +43,7 @@ void loop()
     battery = analogReadMilliVolts(1) * 8.2 / 4095;
   }
 
-  if (screenTimer > SAMPLES_TO_SEC / 5)
+  if (screenTimer > SAMPLES_TO_SEC / 10)
   {
     screenTimer = 0;
     updateDisplay();

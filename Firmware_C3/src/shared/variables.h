@@ -28,6 +28,7 @@ double battery = 0;
 int clickCounter = 0;
 uint16_t buttonTimer = 0;
 uint16_t heatingTime = 0;
+uint16_t totalHeatingTime = 0;
 bool burnout = false;
 
 // PID control and Tune

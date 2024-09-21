@@ -39,6 +39,7 @@ void buttonPress()
     if (buttonState)
     {
       delay(50); // debounce
+      totalHeatingTime += (heatingTime * SAMPLING_TIMER);
     }
     buttonState = false;
     burnout = false;
