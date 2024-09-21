@@ -29,7 +29,7 @@ void loop()
     buttonPress();
     thermistor = calculate_resistance();
     heaterTemperature = steinhart(thermistor);
-    controlPower(600);
+    controlPower(powerLevel);
     globalTimer = millis();
     idleTimer++;
     logTimer++;
@@ -43,7 +43,7 @@ void loop()
     battery = analogReadMilliVolts(1) * 8.2 / 4095;
   }
 
-  if (screenTimer > SAMPLES_TO_SEC)
+  if (screenTimer > SAMPLES_TO_SEC / 10)
   {
     screenTimer = 0;
     updateDisplay();
@@ -58,14 +58,7 @@ void loop()
     // esp_deep_sleep_start();
   }
 
-  if (burnoutCounter > 800)
-  {
-    controlPower(0);
-    setLED(255, 0, 0);
-    burnoutScreen();
-  }
-
-  if (clickCounter > 2)
+  if (clickCounter > 3)
     shutdownESP();
 }
 

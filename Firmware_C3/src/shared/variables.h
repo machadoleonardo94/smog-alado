@@ -16,6 +16,7 @@ double thermistor = 500;
 double heaterTemperature = 0;
 double tempGoal = 0;
 double error = 0;
+uint8_t powerLevel = 5;
 double powerOutput = 0;
 double powerPercent = 0;
 int preset = 0;
@@ -25,7 +26,10 @@ uint16_t adcFiltered = 1000;
 double battery = 0;
 
 int clickCounter = 0;
-uint16_t burnoutCounter = 0;
+uint16_t buttonTimer = 0;
+uint16_t heatingTime = 0;
+uint16_t totalHeatingTime = 0;
+bool burnout = false;
 
 // PID control and Tune
 double Kp = 1, Ki = 1, Kd = 1;
