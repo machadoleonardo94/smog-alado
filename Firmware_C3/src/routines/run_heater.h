@@ -7,7 +7,9 @@ void controlPower(uint16_t power)
 {
     if ((clickCounter == 2) && (!burnout))
     {
-        powerOutput = power * 100 * (4.2 / battery);
+        powerOutput = power * 130 * (4.2 / battery);
+        if (powerOutput > 900)
+            powerOutput = 900;
     }
     else
     {

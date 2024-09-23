@@ -23,8 +23,8 @@ void buttonPress()
       clickCounter++;
       if (clickCounter == 3)
         powerLevel++;
-      if (powerLevel > 9)
-        powerLevel = 5;
+      if (powerLevel > 5)
+        powerLevel = 1;
     }
     if (buttonTimer > (8 * SAMPLES_TO_SEC))
     {
