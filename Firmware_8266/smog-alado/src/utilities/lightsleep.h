@@ -17,8 +17,8 @@ void sleepRoutine()
 {
   //* Sets outputs as low to save power
   Serial.println("Going to sleep");
-  preset = 0;
   tempGoal = 0;
+  digitalWrite(pumpPin, LOW);
   digitalWrite(triacPin, LOW);
   idleTimer = 0;
   display.clearDisplay();

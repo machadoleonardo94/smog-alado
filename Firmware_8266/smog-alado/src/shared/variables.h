@@ -22,7 +22,7 @@ double tempGoal = 0;
 double error = 0;
 double power = 0;
 double powerPercent = 0;
-int preset = 0;
+int preset = 90;
 uint16_t adcRaw = 1000;
 uint16_t adcFiltered = 1000;
 

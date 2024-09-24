@@ -6,18 +6,6 @@
 // #include "components/0-TEMPLATE/setup.h"
 // ADICIONAR AQUI OS IMPORTS DE LIBS NECESSÁRIOS.
 
-/*void runHeater(int preset)
-{
-  powerPercent = 100 * power / ANALOG_RANGE;
-
-  if (power > 0)
-  {
-    analogWrite(heater, power);
-  }
-  else
-    digitalWrite(heater, LOW);
-}*/
-
 void runHeater(int preset) {
   // Calculate dimming value based on PID output (power)
   dimming = map(power, 0, ANALOG_RANGE, 8333, 1000); // Adjust mapping as needed
