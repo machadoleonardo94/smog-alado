@@ -32,6 +32,9 @@ bool tuning = false;
 
 PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, P_ON_M, DIRECT);
 
+int dimming;
+volatile bool zeroCrossingDetected = false; // Flag set by the interrupt
+
 //* Timers for ilusion of threads
 double globalTimer = 0;
 uint16_t adcTimer = 0;

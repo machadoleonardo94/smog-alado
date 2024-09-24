@@ -19,7 +19,7 @@ void sleepRoutine()
   Serial.println("Going to sleep");
   preset = 0;
   tempGoal = 0;
-  digitalWrite(heater, LOW);
+  digitalWrite(triacPin, LOW);
   idleTimer = 0;
   display.clearDisplay();
   display.display();

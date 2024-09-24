@@ -1,0 +1,40 @@
+{
+  "name": "PID-AutoTune",
+  "export": {},
+  "version": "1.0.0",
+  "frameworks": [
+    "arduino"
+  ],
+  "description": "A proportional-integral-derivative controller is a control loop feedback mechanism (controller) widely used in industrial control systems",
+  "authors": [
+    {
+      "name": "Brett Beauregard",
+      "email": "br3ttb@gmail.com",
+      "url": "https://github.com/br3ttb"
+    }
+  ],
+  "platforms": [
+    "atmelavr"
+  ],
+  "repository": {
+    "url": "https://github.com/br3ttb/Arduino-PID-AutoTune-Library.git",
+    "type": "git"
+  },
+  "keywords": [
+    "pid",
+    "integral",
+    "controller",
+    "industrial"
+  ],
+  "dependencies": [
+    {
+      "name": "PID",
+      "frameworks": [
+        "arduino"
+      ],
+      "authors": [
+        "Brett Beauregard"
+      ]
+    }
+  ]
+}

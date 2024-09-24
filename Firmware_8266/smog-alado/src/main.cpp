@@ -25,10 +25,15 @@ void setup()
   Serial.println("setup");
   pinMode(ledPin, OUTPUT);
   pinMode(buttonPin, INPUT_PULLUP);
-  pinMode(heater, OUTPUT);
+  //pinMode(heater, OUTPUT);
   pinMode(A0, INPUT);
+
+  pinMode(zeroCrossingPin, INPUT_PULLUP);
+  pinMode(triacPin, OUTPUT);
+  attachInterrupt(digitalPinToInterrupt(zeroCrossingPin), zeroCrossingISR, RISING);
+
   digitalWrite(ledPin, LOW); // builtin LED set to ON on boot
-  digitalWrite(heater, LOW); // heater set to OFF on boot
+  //digitalWrite(heater, LOW); // heater set to OFF on boot
   WiFi.mode(WIFI_OFF);
 
   workingDisplay = setup_display();
@@ -58,6 +63,7 @@ void loop()
   ArduinoOTA.handle();
 
   myPID.Compute();
+  runHeater(preset);
 
   buttonPress(buttonPin);
 
@@ -66,7 +72,7 @@ void loop()
     adcTimer = 0;
     thermistor = calculate_resistance();
     heaterTemperature = steinhart(thermistor);
-    runHeater(preset);
+    //runHeater(preset);
   }
 
   if (!sleepy && (logTimer > SAMPLES_TO_SEC)) // logs variables every 1s if awake

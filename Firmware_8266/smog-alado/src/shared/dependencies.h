@@ -42,7 +42,6 @@
 #include <sntp.h>
 #include <TZ.h>
 #include <PID_v1.h>
-#include <PID_AutoTune_v0.h>
 
 //* ---------------------- Constants --------------------------
 #include "constants.h"
