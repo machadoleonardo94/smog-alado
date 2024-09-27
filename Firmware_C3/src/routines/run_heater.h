@@ -5,7 +5,7 @@
 
 void controlPower(uint16_t power)
 {
-    if ((clickCounter == 2) && (!burnout))
+    if ((clickCounter == 2) && (!burnout) && (buttonTimer > 100))
     {
         powerOutput = power * 130 * (4.2 / battery);
         if (powerOutput > 900)

@@ -17,6 +17,12 @@ void setup()
   Serial.println("setup");
   workingDisplay = setup_display();
   setup_LEDS();
+
+  long wakeupTimer = millis();
+  while ((millis() - wakeupTimer) < 2000)
+    buttonPress();
+  if (clickCounter < 2)
+    esp_deep_sleep_start();
   setup_ESP32();
 }
 

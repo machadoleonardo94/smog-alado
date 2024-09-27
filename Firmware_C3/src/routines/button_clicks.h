@@ -13,7 +13,7 @@ void buttonPress()
   if (digitalRead(buttonPin))
   {
     idleTimer = 0;
-    if (clickCounter == 2)
+    if (clickCounter == 1)
       buttonTimer++;
 
     heatingTime = buttonTimer;
@@ -21,7 +21,7 @@ void buttonPress()
     {
       buttonState = true;
       clickCounter++;
-      if (clickCounter == 3)
+      if (clickCounter == 2)
         powerLevel++;
       if (powerLevel > 5)
         powerLevel = 1;
@@ -39,7 +39,7 @@ void buttonPress()
     if (buttonState)
     {
       delay(50); // debounce
-      totalHeatingTime += (heatingTime * SAMPLING_TIMER);
+      totalHeatingTime += (buttonTimer * SAMPLING_TIMER);
     }
     buttonState = false;
     burnout = false;
