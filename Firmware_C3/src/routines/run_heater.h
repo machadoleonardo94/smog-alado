@@ -5,11 +5,17 @@
 
 void controlPower(uint16_t power)
 {
-    if ((clickCounter == 2) && (!burnout) && (buttonTimer > 100))
+    if (buttonTimer > (8 * SAMPLES_TO_SEC))
     {
-        powerOutput = power * 130 * (4.2 / battery);
-        if (powerOutput > 900)
-            powerOutput = 900;
+        burnout = true;
+        powerOutput = 0;
+        setLED(255, 0, 0);
+        burnoutScreen();
+    }
+    if ((clickCounter == 1) && (!burnout) && (buttonTimer > 10))
+    {
+        powerOutput = power * 180 * (pow((4.2 / battery), 2));
+        constrain(powerOutput, 0, 1000);
     }
     else
     {

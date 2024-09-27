@@ -19,26 +19,19 @@ void buttonPress()
     heatingTime = buttonTimer;
     if (buttonState == false)
     {
-      buttonState = true;
       clickCounter++;
+      buttonState = true;
       if (clickCounter == 2)
         powerLevel++;
       if (powerLevel > 5)
         powerLevel = 1;
-    }
-    if (buttonTimer > (8 * SAMPLES_TO_SEC))
-    {
-      burnout = true;
-      controlPower(0);
-      setLED(255, 0, 0);
-      burnoutScreen();
+      delay(10); // debounce
     }
   }
   else
   {
     if (buttonState)
     {
-      delay(50); // debounce
       totalHeatingTime += (buttonTimer * SAMPLING_TIMER);
     }
     buttonState = false;

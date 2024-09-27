@@ -20,9 +20,12 @@ void setup()
 
   long wakeupTimer = millis();
   while ((millis() - wakeupTimer) < 2000)
+  {
     buttonPress();
-  if (clickCounter < 2)
-    esp_deep_sleep_start();
+    delay(50);
+  }
+  if (clickCounter > 5)
+    ; // esp_deep_sleep_start();
   setup_ESP32();
 }
 
