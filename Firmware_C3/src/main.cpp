@@ -18,14 +18,20 @@ void setup()
   workingDisplay = setup_display();
   setup_LEDS();
 
+  setLED(redLED);
   long wakeupTimer = millis();
-  while ((millis() - wakeupTimer) < 2000)
+  while (((millis() - wakeupTimer) < 2000) && clickCounter < 3)
   {
     buttonPress();
     delay(50);
   }
-  if (clickCounter > 5)
-    ; // esp_deep_sleep_start();
+  if (clickCounter < 2)
+  {
+    shutdownESP();
+  }
+  setLED(greenLED);
+  clickCounter = 0;
+
   setup_ESP32();
 }
 
