@@ -1,25 +1,30 @@
 # smog-alado
-Desktop heating element controller with 2S battery.
+Desktop and portable heating element controller.
 
 ## Tested uses: 
 * Precise temperature control for coffee machines
 * SMD soldering hotbed
 * Aromatherapy diffusers
 
+## Current hardware versions: ESP12F and ESP32-C3
+* ESP12F board noes not support wakeup from deep sleep, but accepts 12V input. Aimed at desktop devices running on external power sources. It also uses the integrated ADC that requires calibration.
+* ESP32-C3 board includes deepsleep, 16bit 4channel ADC (two thermistors, input voltage and current on load), USB type-C connector (charging and programming) and a WS2812B LED for debug and fancy lights.
+* The 12F hardware version is considered done and more accessible, while the C3 version is a work in progress. Current C3 PCB version has wiring mistakes and should be avoided while the C3V2 is being built.
+* Both versions can be wired on perfboard using NodeMCU modules and an external MOSFET or SSR if the challanger is bold.
+
 ## Mileage may vary, use at your own risk.
 
-Current portable version with 2S 21700 battery 
-![image](https://github.com/machadoleonardo94/smog-alado/assets/52208834/950063b7-5385-49ff-a1b7-e8a426236dcb)
+Portable version with 1S2P 18650 battery and 510 connector:
 
-![board](https://github.com/machadoleonardo94/smog-alado/assets/52208834/82a1beb1-0f0f-4a3b-9d36-1a72f8a2a4b8)
+<img src="https://github.com/user-attachments/assets/fa0723e2-6af2-440c-a0b0-192bf5949374" width="480">
 
-![case](https://github.com/machadoleonardo94/smog-alado/assets/52208834/6381df27-6bbc-4f1f-926d-293b742b3708)
+Portable version with 2S1P 21700, homemade heating element:
 
- ![assembled](https://github.com/machadoleonardo94/smog-alado/assets/52208834/fe35bf13-2806-4447-bb05-e174c33028d4)
+<img src="https://github.com/user-attachments/assets/df4abeeb-7708-4ad2-8ddf-bf086642f4c5" width="480">
 
-![image](https://github.com/machadoleonardo94/smog-alado/assets/52208834/4fcc112a-15de-4609-a587-74f2b50208d8)
+Current devkit:
 
-![image](https://github.com/machadoleonardo94/smog-alado/assets/52208834/018c4fb9-06f1-4c04-9a11-305f97649fea)
+<img src="https://github.com/user-attachments/assets/6e8d7228-225a-4b9b-a020-bce0da30d1f9" width="480">
 
 
 ## Main Features:
@@ -30,36 +35,25 @@ Current portable version with 2S 21700 battery
 * Telnet debugging
 * Auto power off
 
-## Minimum required parts:
-* 1x 8~12V 20W+ power source
-* 1x 1m 0.15mm NiCr wire
+## Minimum required parts besides components BoM:
+* 1x Power source
+* 0.15mm NiCr wire
+* Heat resistant cable  
 * 1x RS232 USB to TTL module 
 * 1x PCB
-* 1x ESP-12F module
 * 1x 100k NTC 3950 thermistor
-* 2x 1x2 male header 1" spaced
-* 1x AMS1117 3V3
-* 1x 40N02 TO252 N-channel MOSFET
+* 1x 40N02 TO252 N-channel MOSFET or equivalent module
 * 1x 12x12mm pushbutton (or whatever)
-* 1x 2mm DC 2A+ panel power connector
-* 1x 100nF 0805 ceramic capacitor
-* 1x 22uF 1210 tantalum capacitor
-* 2x 330 0805 resistor
-* 2x 1k 0805 resistor
-* 2x 2k2 0805 resistor
-* 6x 10k 0805 resistor
-* 2x 100k 0805 resistor
-* 1x 220k 0805 resistor
+* 1x 0.96" OLED I2C display
 
-## Recomended power sources:
+## Recomended power sources (12F):
 * 2S1P 21700 li-ion batteries with 2S BMS
 * 2S lithium battery charger circuit
 * 9V~12V 2A brick power supply
 
-## Suggested addons:
-* GX16-4 panel connector (for heating element replacement)
-* Lever or rotary switch (for hard turning off)
-* 1.25mm 4 pin JST SMD connector
-* ADS1115 I2C 4 channel ADC
-* 0.96" I2C LCD display
-* 1x 2N7002 SOT23 N-channel mosfet (cannot be BJT, otherwise ESP won't turn on) 
+## Current issues (3C): 
+* Missing GND connection on I2C connector;
+* Button wrongly wired to 3V3. Cut the trace and connect directly to Vin;
+* Gate driver does not hold MOSFET off, requires a bleeding resistor between gate and source MOSFET pins;
+* 12 pin USB C connector is fucking terrible to solder correctly, so I've added an external header for serial programming and a backup 6 pin connector for charging;
+* I had the dumb and forgot the antenna, so now I either solder an 1U footprint or deal with a lump on the 3D case.
