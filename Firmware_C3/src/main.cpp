@@ -62,7 +62,10 @@ void loop()
   {
     screenTimer = 0;
     updateDisplay();
-    sampleRandomLED();
+    if (clickCounter < 1)
+      setLED(0, 50, 0);
+    else
+      sampleRandomLED();
   }
 
   if (idleTimer > (SAMPLES_TO_SEC / 2))
@@ -73,7 +76,7 @@ void loop()
     // esp_deep_sleep_start();
   }
 
-  if (clickCounter > 3)
+  if (clickCounter > 5)
     shutdownESP();
 }
 

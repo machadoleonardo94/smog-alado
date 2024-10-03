@@ -59,4 +59,7 @@
 #include "routines/run_heater.h"
 #include "routines/update_screen.h"
 
+//* --------------------- Services ---------------------
+#include "services/wifi_settings.h"
+
 #endif // PROJECT_GLOBAL_DEPENDENCIES

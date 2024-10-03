@@ -2,9 +2,7 @@
 #define SETUP_ESP32
 
 #include "shared/dependencies.h"
-#include "components/ESP32/features/connect_wifi.h"
 #include "components/ESP32/features/enable_deep_sleep.h"
-#include "components/ESP32/features/read_wifi_state.h"
 #include "components/ESP32/features/update_firmware_ota.h"
 #include "components/ESP32/features/wakeup.h"
 
@@ -13,17 +11,16 @@ void setup_ESP32()
     serialMon.println("[ESP32] SETUP STARTED!");
 
     //* Setup WiFi
-    setup_WIFI();
     // WiFi.mode(WIFI_OFF);
 
     //* Setup bluetooth
     btStop();
 
     //* Setup OTA
-    setup_OTA();
+    //setup_OTA();
 
-    //Sets battery ADC attenuation
-    //analogReadResolution(14);
+    // Sets battery ADC attenuation
+    // analogReadResolution(14);
     analogSetPinAttenuation(A1, ADC_11db);
     analogSetPinAttenuation(A0, ADC_0db);
 

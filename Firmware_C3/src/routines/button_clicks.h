@@ -4,6 +4,7 @@
 #include "shared/dependencies.h"
 #include "routines/update_screen.h"
 #include "routines/run_heater.h"
+#include "services/wifi_settings.h"
 
 void shutdownESP();
 void buttonPress();
@@ -13,7 +14,7 @@ void buttonPress()
   if (digitalRead(buttonPin))
   {
     idleTimer = 0;
-    if (clickCounter == 1)
+    if (clickCounter > 0)
       buttonTimer++;
 
     heatingTime = buttonTimer;
@@ -26,6 +27,12 @@ void buttonPress()
       if (powerLevel > 5)
         powerLevel = 1;
       delay(10); // debounce
+    }
+    if ((clickCounter == 3) && (buttonTimer > SAMPLES_TO_SEC))
+    {
+      connectWiFiScreen();
+      setup_WIFI();
+      setup_OTA();
     }
   }
   else
