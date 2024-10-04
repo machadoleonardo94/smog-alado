@@ -7,6 +7,7 @@
 //* Sampling timers
 #define SAMPLING_TIMER 10                    // delay between counting increments
 #define SAMPLES_TO_SEC 1000 / SAMPLING_TIMER // how many increments every 1s
+#define SAMPLES_TO_MIN 60000 / SAMPLING_TIMER
 
 //* Sleep timer
 #define TIME_TO_SLEEP minutes * 60 * SAMPLES_TO_SEC - 1

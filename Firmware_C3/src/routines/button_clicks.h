@@ -22,13 +22,21 @@ void buttonPress()
     {
       clickCounter++;
       buttonState = true;
-      if (clickCounter == 2)
-        powerLevel++;
-      if (powerLevel > 5)
-        powerLevel = 1;
       delay(10); // debounce
     }
+    if ((clickCounter == 2) && (buttonTimer > SAMPLES_TO_SEC))
+    {
+      buttonTimer = 0;
+      powerLevel++;
+      if (powerLevel > 5)
+        powerLevel = 1;
+    }
     if ((clickCounter == 3) && (buttonTimer > SAMPLES_TO_SEC))
+    {
+      buttonTimer = 0;
+      constantHeating = !constantHeating;
+    }
+    if ((clickCounter == 4) && (buttonTimer > SAMPLES_TO_SEC))
     {
       connectWiFiScreen();
       setup_WIFI();

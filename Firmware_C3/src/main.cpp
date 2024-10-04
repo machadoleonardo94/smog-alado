@@ -62,10 +62,10 @@ void loop()
   {
     screenTimer = 0;
     updateDisplay();
-    if (clickCounter < 1)
-      setLED(0, 50, 0);
-    else
+    if (buttonState)
       sampleRandomLED();
+    else
+      setLED(0, 50, 0);
   }
 
   if (idleTimer > (SAMPLES_TO_SEC / 2))
@@ -76,13 +76,14 @@ void loop()
     // esp_deep_sleep_start();
   }
 
-  if (clickCounter > 5)
+  if ((clickCounter > 5) || (idleTimer > (5 * SAMPLES_TO_MIN)))
     shutdownESP();
 }
 
 void shutdownESP()
 {
-  digitalWrite(latchPin, LOW);
   setLED(0, 0, 0);
+  delay(50);
+  // digitalWrite(latchPin, LOW);
   esp_deep_sleep_start();
 }

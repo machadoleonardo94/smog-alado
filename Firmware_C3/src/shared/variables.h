@@ -22,13 +22,14 @@ double powerPercent = 0;
 int preset = 0;
 uint16_t adcRaw = 1000;
 uint16_t adcFiltered = 1000;
+bool constantHeating = false;
 
 double battery = 0;
 
 int clickCounter = 0;
 uint16_t buttonTimer = 0;
 uint16_t heatingTime = 0;
-uint16_t totalHeatingTime = 0;
+uint32_t totalHeatingTime = 0;
 bool burnout = false;
 
 // PID control and Tune
