@@ -10,7 +10,7 @@ void setup()
   pinMode(latchPin, OUTPUT);
   digitalWrite(latchPin, HIGH);
   pinMode(heater, OUTPUT);
-  ledcAttach(heater, 1000, 10);
+  ledcAttach(heater, 30000, 10);
   digitalWrite(heater, 0);
 
   Serial.begin(115200);
