@@ -5,9 +5,9 @@
 #include "shared/constants.h"
 #include "pinout.h"
 
+#include "components/DISPLAY/constants.h"
+
 //* ---------------------- GLOBAL VARIABLES ----------------------
-//* ADS1115 - Analog to digital converter global instance.
-Adafruit_ADS1115 ads; /* Use this for the 16-bit version */
 //* 0.96" OLED I2C display
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
@@ -16,11 +16,21 @@ double thermistor = 500;
 double heaterTemperature = 0;
 double tempGoal = 0;
 double error = 0;
-double power = 0;
+uint8_t powerLevel = 1;
+double powerOutput = 0;
 double powerPercent = 0;
 int preset = 0;
 uint16_t adcRaw = 1000;
 uint16_t adcFiltered = 1000;
+bool constantHeating = false;
+
+double battery = 0;
+
+int clickCounter = 0;
+uint16_t buttonTimer = 0;
+uint16_t heatingTime = 0;
+uint32_t totalHeatingTime = 0;
+bool burnout = false;
 
 // PID control and Tune
 double Kp = 1, Ki = 1, Kd = 1;
@@ -31,6 +41,7 @@ double globalTimer = 0;
 uint16_t adcTimer = 0;
 uint16_t logTimer = 0;
 uint16_t idleTimer = 0;
+uint16_t screenTimer = 0;
 uint16_t idleMinutes = 0;
 uint16_t idleSeconds = 0;
 uint16_t remainingTime = 100;
@@ -45,5 +56,6 @@ bool workingOTA = false;
 bool workingDisplay = false;
 bool timeZoneSet = false;
 bool sleepy = false;
+bool buttonState = false;
 
 #endif // PROJECT_GLOBAL_VARIABLES

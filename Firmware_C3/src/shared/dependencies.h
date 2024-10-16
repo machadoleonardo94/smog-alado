@@ -31,6 +31,8 @@
 #include <ArduinoOTA.h>
 //* Fancy LED WS2812B
 #include <Adafruit_NeoPixel.h>
+//* RNG
+#include "esp_random.h"
 
 //* ----------------------- SHARED ----------------------------
 //* Constants
@@ -50,5 +52,14 @@
 #include "components/DISPLAY/setup.h"
 #include "components/ESP32/setup.h"
 #include "components/LEDS/setup.h"
+
+//* --------------------- Routines ------------------------
+#include "routines/button_clicks.h"
+#include "routines/measure_analog.h"
+#include "routines/run_heater.h"
+#include "routines/update_screen.h"
+
+//* --------------------- Services ---------------------
+#include "services/wifi_settings.h"
 
 #endif // PROJECT_GLOBAL_DEPENDENCIES

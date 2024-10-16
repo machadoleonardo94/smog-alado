@@ -7,6 +7,7 @@
 //* Sampling timers
 #define SAMPLING_TIMER 10                    // delay between counting increments
 #define SAMPLES_TO_SEC 1000 / SAMPLING_TIMER // how many increments every 1s
+#define SAMPLES_TO_MIN 60000 / SAMPLING_TIMER
 
 //* Sleep timer
 #define TIME_TO_SLEEP minutes * 60 * SAMPLES_TO_SEC - 1
@@ -31,10 +32,5 @@
 #define EEPROM_KP_ADDRESS 0
 #define EEPROM_KI_ADDRESS 32
 #define EEPROM_KD_ADDRESS 64
-
-//* Paramethers for OLED display
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define SCREEN_ADDRESS 0x3C
 
 #endif // PROJECT_GLOBAL_CONSTANTS
