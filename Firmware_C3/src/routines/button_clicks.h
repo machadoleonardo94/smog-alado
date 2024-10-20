@@ -22,19 +22,20 @@ void buttonPress()
     {
       clickCounter++;
       buttonState = true;
-      delay(10); // debounce
+      constantHeating = false;
+      delay(50); // debounce
     }
-    if ((clickCounter == 2) && (buttonTimer > SAMPLES_TO_SEC))
+    if ((clickCounter == 2) && (buttonTimer > (SAMPLES_TO_SEC / 2)))
     {
       buttonTimer = 0;
       powerLevel++;
-      if (powerLevel > 5)
+      if (powerLevel > 7)
         powerLevel = 1;
     }
     if ((clickCounter == 3) && (buttonTimer > SAMPLES_TO_SEC))
     {
       buttonTimer = 0;
-      constantHeating = !constantHeating;
+      constantHeating = true;
     }
     if ((clickCounter == 4) && (buttonTimer > SAMPLES_TO_SEC))
     {
@@ -45,10 +46,10 @@ void buttonPress()
   }
   else
   {
-    if (buttonState)
-    {
-      totalHeatingTime += (buttonTimer * SAMPLING_TIMER);
-    }
+    // if (buttonState)
+    //{
+    //   totalHeatingTime += (buttonTimer * SAMPLING_TIMER);
+    // }
     buttonState = false;
     burnout = false;
     buttonTimer = 0;

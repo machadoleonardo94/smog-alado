@@ -71,7 +71,11 @@ void updateDisplay()
   display.setCursor(0, LINE3); // Adjust vertical position
   display.print("IP: ");
   display.print(WiFi.localIP());
-
+  if (constantHeating)
+  {
+    display.setCursor(115, LINE3);
+    display.print("*");
+  }
   display.display();
 }
 

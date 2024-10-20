@@ -5,6 +5,10 @@
 
 void controlPower(uint16_t power)
 {
+    if ((clickCounter == 1) || constantHeating)
+    {
+        totalHeatingTime += SAMPLING_TIMER;
+    }
     if (buttonTimer > (8 * SAMPLES_TO_SEC))
     {
         burnout = true;
@@ -16,7 +20,7 @@ void controlPower(uint16_t power)
     {
         if ((clickCounter == 1) && (!burnout) && (buttonTimer > 10))
         {
-            powerOutput = power * 180 * (pow((4.2 / battery), 2));
+            powerOutput = power * 130;
             int powerCeiling = 100 + (buttonTimer * 10);
             powerCeiling = constrain(powerCeiling, 0, 1000);
             powerOutput = constrain(powerOutput, 0, powerCeiling);
@@ -28,7 +32,8 @@ void controlPower(uint16_t power)
     }
     else
     {
-        powerOutput = 200;
+        powerOutput = power * 130;
+        powerOutput = constrain(powerOutput, 0, 1000);
     }
     powerPercent = powerOutput / 10;
     ledcWrite(heater, powerOutput);

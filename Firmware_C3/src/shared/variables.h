@@ -44,6 +44,7 @@ uint16_t idleTimer = 0;
 uint16_t screenTimer = 0;
 uint16_t idleMinutes = 0;
 uint16_t idleSeconds = 0;
+uint16_t constantheatingSecs = 0;
 uint16_t remainingTime = 100;
 uint16_t APtimeout = 180;
 uint16_t minutes = 10;
