@@ -14,17 +14,19 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 //* Heater variables
 double thermistor = 500;
 double heaterTemperature = 0;
+double heaterResistance = 99;
 double tempGoal = 0;
 double error = 0;
-uint8_t powerLevel = 1;
+uint8_t powerLevel = 15;
+double pwmOutput = 0;
 double powerOutput = 0;
 double powerPercent = 0;
 int preset = 0;
-uint16_t adcRaw = 1000;
-uint16_t adcFiltered = 1000;
 bool constantHeating = false;
 
 double battery = 0;
+double loadVoltage = 0;
+double current = 0;
 
 int clickCounter = 0;
 uint16_t buttonTimer = 0;

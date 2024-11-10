@@ -1,23 +1,33 @@
 #include "shared/dependencies.h"
 
+#ifndef MEASURE_SERVICE
+#define MEASURE_SERVICE
+
 double calculate_resistance();
 double steinhart();
+double calculate_battery();
+double calculate_current();
+double calculate_load();
 
-double calculate_resistance()
+double calculate_resistance(int channel, int pulldown)
 {
-  double resistor = 0;
   uint16_t adcRaw = 0;
   double adcVoltage = 0;
+  double resistor = 0;
 
-  for (int i = 0; i < 3; i++)
-    adcRaw = +analogReadMilliVolts(0);
+  if (workingADS)
+    adcRaw = ads.readADC_SingleEnded(channel); // Channels TH0 and TH1 are valid with ADS
+  else
+  {
+    for (int i = 0; i < 3; i++)
+      adcRaw = +analogReadMilliVolts(0); // Only reads TH0 without ADS
+  }
   Serial.printf("Raw ADC: %d \n", adcRaw);
-  adcVoltage = 3.3 * adcRaw / 1024;
-  resistor = (3.3 / (adcVoltage)) * PULLDOWN_RES - PULLDOWN_RES;
-  if (resistor < 10)
-    resistor = 10;
-  if (resistor > 140000)
-    resistor = 140000;
+  adcVoltage = ads.computeVolts(adcRaw);
+  Serial.printf("Voltage at pin: %dV \n", adcRaw);
+  resistor = (3.3 / (adcVoltage)) * pulldown - pulldown;
+  // resistor = roundl(resistor * 10) / 10;
+  resistor = constrain(resistor, 10, 140000);
   return resistor;
 }
 
@@ -40,3 +50,53 @@ double steinhart(double thermistor)
   float temperature = (1 / (a + (b * ln_r) + (c * ln_r * ln_r * ln_r))) - 273.15; // Convert K to ºC
   return (temperature);
 }
+
+double calculate_battery()
+{
+  uint16_t adcRaw = 0;
+  if (workingADS)
+    adcRaw = ads.readADC_SingleEnded(VBATT);
+  else
+  {
+    for (int i = 0; i < 3; i++)
+      adcRaw = +analogReadMilliVolts(1);
+  }
+  Serial.printf("Raw reading: %d \n", adcRaw);
+  double voltage = ads.computeVolts(adcRaw);
+  voltage = voltage * 1.303; // Voltage divider 33k+10k
+  // voltage = roundl(voltage * 10) / 10;
+  return voltage;
+}
+
+double calculate_current()
+{
+  uint16_t adcRaw = 0;
+  if (!workingADS)
+    return 0;
+  adcRaw = ads.readADC_SingleEnded(Rsns);
+  Serial.printf("Raw reading: %d \n", adcRaw);
+  double isense = ads.computeVolts(adcRaw);
+  // isense = roundl(isense * 10) / 10;
+  isense = constrain(isense, 0, 20);
+  isense = isense * 2 * 1.07; // Rsns 20mR, INA180 gain 20x
+  return isense;
+}
+
+double calculate_load()
+{
+  if (!workingADS)
+    return 0;
+  double resistance = 0;
+  ledcWrite(heater, 1000);
+  delay(100);
+  battery = calculate_battery();
+  current = calculate_current();
+  if (current > 0.01)
+    resistance = battery / current;
+  else
+    resistance = 99;
+  digitalWrite(heater, LOW);
+  return resistance;
+}
+
+#endif

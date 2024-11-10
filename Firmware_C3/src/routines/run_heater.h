@@ -2,8 +2,12 @@
 #define HEATER_ROUTINE
 
 #include "shared/dependencies.h"
+#include "routines/measure_analog.h"
 
-void controlPower(uint16_t power)
+void controlPowerV(uint16_t power);
+void controlPowerW(uint16_t power);
+
+void controlPowerV(uint16_t power)
 {
     if ((clickCounter == 1) || constantHeating)
     {
@@ -12,31 +16,74 @@ void controlPower(uint16_t power)
     if (buttonTimer > (8 * SAMPLES_TO_SEC))
     {
         burnout = true;
-        powerOutput = 0;
+        pwmOutput = 0;
         setLED(255, 0, 0);
         burnoutScreen();
+        return;
     }
-    if (!constantHeating)
+    if (constantHeating)
     {
-        if ((clickCounter == 1) && (!burnout) && (buttonTimer > 10))
-        {
-            powerOutput = power * 130;
-            int powerCeiling = 100 + (buttonTimer * 10);
-            powerCeiling = constrain(powerCeiling, 0, 1000);
-            powerOutput = constrain(powerOutput, 0, powerCeiling);
-        }
-        else
-        {
-            powerOutput = 0;
-        }
+        pwmOutput = power * 130;
+        pwmOutput = constrain(pwmOutput, 0, 1000);
     }
     else
     {
-        powerOutput = power * 130;
-        powerOutput = constrain(powerOutput, 0, 1000);
+        if ((clickCounter == 1) && (!burnout) && (buttonTimer > 10))
+        {
+            pwmOutput = power * 130;
+            int powerCeiling = 100 + (buttonTimer * 10);
+            powerCeiling = constrain(powerCeiling, 0, 1000);
+            pwmOutput = constrain(pwmOutput, 0, powerCeiling);
+        }
+        else
+        {
+            pwmOutput = 0;
+        }
     }
-    powerPercent = powerOutput / 10;
-    ledcWrite(heater, powerOutput);
+    powerPercent = pwmOutput / 10;
+    ledcWrite(heater, pwmOutput);
+}
+
+void controlPowerW(uint16_t power)
+{
+    if ((clickCounter == 1) || constantHeating)
+    {
+        totalHeatingTime += SAMPLING_TIMER;
+    }
+    if (buttonTimer > (8 * SAMPLES_TO_SEC))
+    {
+        burnout = true;
+        pwmOutput = 0;
+        ledcWrite(heater, 0);
+        setLED(255, 0, 0);
+        burnoutScreen();
+        return;
+    }
+    if (constantHeating)
+    {
+        if (powerOutput < (power))
+            pwmOutput += 3;
+        else if ((powerOutput - 1) > (power))
+            pwmOutput--;
+        pwmOutput = constrain(pwmOutput, 0, 1000);
+    }
+    else if ((clickCounter == 1) && (!burnout) && (buttonTimer > 10))
+    {
+        if (buttonTimer % 3 == 0)
+        {
+            if ((powerOutput + 0.5) < (power))
+                pwmOutput += 5;
+            if ((powerOutput - 1) > (power))
+                pwmOutput -= 1;
+        }
+        pwmOutput = constrain(pwmOutput, 0, 1000);
+    }
+    else
+    {
+        pwmOutput = 0;
+    }
+    powerPercent = pwmOutput / 10;
+    ledcWrite(heater, pwmOutput);
 }
 
 #endif

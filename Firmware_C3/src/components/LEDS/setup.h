@@ -6,7 +6,7 @@
 
 void setup_LEDS()
 {
-    serialMon.println("[LEDS] SETUP STARTED!");
+    Serial.println("[LEDS] SETUP STARTED!");
 
     ws2812b.begin();
     ws2812b.clear();
@@ -23,7 +23,7 @@ void setup_LEDS()
     // ws2812b.setPixelColor(0, ws2812b.Color(0, 0, 0)); // it only takes effect if pixels.show() is called
     // ws2812b.show();
     */
-    serialMon.println("[LEDS] SETUP FINISHED!");
+    Serial.println("[LEDS] SETUP FINISHED!");
 }
 
 #endif // SETUP_LEDS

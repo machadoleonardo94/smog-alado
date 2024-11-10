@@ -6,6 +6,5 @@
 
 //* ---------------------- UART ----------------------
 //* Serial port used for USB connection to the PC.
-#define serialMon Serial
 
 #endif // PROJECT_GLOBAL_INTERFACES

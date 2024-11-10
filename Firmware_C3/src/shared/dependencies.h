@@ -50,6 +50,7 @@
 
 //* --------------------- Components --------------------------
 #include "components/DISPLAY/setup.h"
+#include "components/ADS1115/setup.h"
 #include "components/ESP32/setup.h"
 #include "components/LEDS/setup.h"
 

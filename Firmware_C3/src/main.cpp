@@ -2,22 +2,28 @@
 //* Shared:
 #include "shared/dependencies.h"
 
+//************************************************************************************************
+//  All the code in this project was writen under the GoHorse method: it just works, until it does not.
+//
+//
+
 void shutdownESP();
 
 void setup()
 {
+  Serial.begin(115200);
+  Serial.println("Setup begin...");
   pinMode(buttonPin, INPUT_PULLUP);
-  pinMode(latchPin, OUTPUT);
-  digitalWrite(latchPin, HIGH);
+  pinMode(button2Pin, INPUT_PULLUP);
   pinMode(heater, OUTPUT);
-  ledcAttach(heater, 30000, 10);
+
+  ledcAttach(heater, 20000, 10);
   digitalWrite(heater, 0);
 
-  Serial.begin(115200);
-  Serial.println("setup");
-  workingDisplay = setup_display();
-  setup_LEDS();
-
+  pinMode(latchPin, OUTPUT);
+  if (!digitalRead(buttonPin))
+    shutdownESP();
+  digitalWrite(latchPin, HIGH);
   setLED(redLED);
   long wakeupTimer = millis();
   while (((millis() - wakeupTimer) < 2000) && clickCounter < 3)
@@ -26,13 +32,18 @@ void setup()
     delay(50);
   }
   if (clickCounter < 2)
-  {
     shutdownESP();
-  }
+
+  workingDisplay = setup_display();
+  setup_LEDS();
+  workingADS = setup_ADS1115();
   setLED(greenLED);
   clickCounter = 0;
 
   setup_ESP32();
+  battery = calculate_battery();
+  if (workingADS)
+    heaterResistance = calculate_load();
 }
 
 void loop()
@@ -42,9 +53,7 @@ void loop()
   if ((millis() - globalTimer) > SAMPLING_TIMER)
   {
     buttonPress();
-    thermistor = calculate_resistance();
-    heaterTemperature = steinhart(thermistor);
-    controlPower(powerLevel);
+    controlPowerW(powerLevel);
     globalTimer = millis();
     idleTimer++;
     logTimer++;
@@ -52,18 +61,26 @@ void loop()
     screenTimer++;
   }
 
-  if ((logTimer > (SAMPLES_TO_SEC / 10))) // logs variables every 100ms if awake
+  if ((logTimer > (SAMPLES_TO_SEC / 2))) // logs variables every 500ms if awake
   {
     logTimer = 0;
-    battery = analogReadMilliVolts(1) * 8.2 / 4095;
+    battery = calculate_battery();
+    current = calculate_current();
+    loadVoltage = powerPercent * battery / 100;
+    powerOutput = loadVoltage * current;
+    // thermistor = calculate_resistance(TH0, 2200);
+    thermistor = calculate_resistance(TH1, 33000);
+    heaterTemperature = steinhart(thermistor);
   }
 
   if (screenTimer > SAMPLES_TO_SEC / 10)
   {
     screenTimer = 0;
     updateDisplay();
-    if (buttonState)
+    if ((buttonState) && (!constantHeating))
       sampleRandomLED();
+    else if (constantHeating)
+      setLED(255, 50, 100);
     else
       setLED(0, 50, 0);
   }
@@ -83,7 +100,8 @@ void loop()
 void shutdownESP()
 {
   setLED(0, 0, 0);
-  delay(50);
-  // digitalWrite(latchPin, LOW);
+  display.clearDisplay();
+  digitalWrite(latchPin, LOW);
+  delay(200);
   esp_deep_sleep_start();
 }

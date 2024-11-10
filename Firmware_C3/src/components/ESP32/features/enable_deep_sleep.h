@@ -6,7 +6,7 @@
 //* Puts ESP32 in deep sleep for the specified number of seconds.
 void esp_sleep_timer_init(int seconds)
 {
-    serialMon.println("[ESP_SLEEP_TIMER] Going to sleep for " + String(seconds) + " seconds.");
+    Serial.println("[ESP_SLEEP_TIMER] Going to sleep for " + String(seconds) + " seconds.");
     esp_sleep_enable_timer_wakeup(seconds * one_second_in_microseconds);
     esp_deep_sleep_start();
 }

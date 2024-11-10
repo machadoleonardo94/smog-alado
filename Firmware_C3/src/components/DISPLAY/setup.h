@@ -3,7 +3,6 @@
 
 #include "shared/dependencies.h"
 
-// ADICIONAR AQUI OS IMPORTS DOS ARQUIVOS DAS FEATURES.
 #include "components/DISPLAY/features/display.h"
 #include "components/DISPLAY/constants.h"
 

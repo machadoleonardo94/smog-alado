@@ -4,20 +4,13 @@
 #include "shared/dependencies.h"
 #include "components/ESP32/features/enable_deep_sleep.h"
 #include "components/ESP32/features/update_firmware_ota.h"
-#include "components/ESP32/features/wakeup.h"
 
 void setup_ESP32()
 {
-    serialMon.println("[ESP32] SETUP STARTED!");
-
-    //* Setup WiFi
-    // WiFi.mode(WIFI_OFF);
+    Serial.println("[ESP32] SETUP STARTED!");
 
     //* Setup bluetooth
     btStop();
-
-    //* Setup OTA
-    //setup_OTA();
 
     // Sets battery ADC attenuation
     // analogReadResolution(14);
@@ -28,7 +21,7 @@ void setup_ESP32()
     // esp_task_wdt_init(60, true);
     // esp_task_wdt_add(NULL);
 
-    serialMon.println("[ESP32] SETUP FINISHED!");
+    Serial.println("[ESP32] SETUP FINISHED!");
 }
 
 #endif // SETUP_ESP32

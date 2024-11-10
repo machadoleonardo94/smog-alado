@@ -4,6 +4,7 @@
 #include "shared/dependencies.h"
 #include "routines/update_screen.h"
 #include "routines/run_heater.h"
+#include "routines/measure_analog.h"
 #include "services/wifi_settings.h"
 
 void shutdownESP();
@@ -11,6 +12,10 @@ void buttonPress();
 
 void buttonPress()
 {
+  if (digitalRead(button2Pin))
+  {
+    sampleRandomLED();
+  }
   if (digitalRead(buttonPin))
   {
     idleTimer = 0;
@@ -28,17 +33,20 @@ void buttonPress()
     if ((clickCounter == 2) && (buttonTimer > (SAMPLES_TO_SEC / 2)))
     {
       buttonTimer = 0;
-      powerLevel++;
-      if (powerLevel > 7)
-        powerLevel = 1;
+      powerLevel += 3;
+      if (powerLevel > 45)
+        powerLevel = 3;
     }
     if ((clickCounter == 3) && (buttonTimer > SAMPLES_TO_SEC))
     {
       buttonTimer = 0;
+      clickCounter = 0;
       constantHeating = true;
+      heaterResistance = calculate_load();
     }
     if ((clickCounter == 4) && (buttonTimer > SAMPLES_TO_SEC))
     {
+      clickCounter = 0;
       connectWiFiScreen();
       setup_WIFI();
       setup_OTA();
