@@ -4,7 +4,7 @@
 #include "shared/dependencies.h"
 
 // Assuming these variables are declared in your global variables file
-extern double Kp, Ki, Kd, tempGoal, heaterTemperature, powerPercent;
+extern double Kp, Ki, Kd, tempGoal, heaterTemperature, powerPercent, maxTemp;
 extern bool sleepy, tuning;
 extern uint16_t minutes;
 extern char timeStr[20];
@@ -62,10 +62,12 @@ void handleCSS(AsyncWebServerRequest *request)
 }
 
 // Function to toggle PID auto-tune
-void handleToggleTuning(AsyncWebServerRequest *request)
+void handleToggleAutoTune(AsyncWebServerRequest *request)
 {
-  changeAutoTune();  // Toggle the tuning state
-  request->send(200, "text/plain", "Tuning state toggled");
+  changeAutoTune();
+  String response = tuning ? "Auto-tuning started" : "Auto-tuning stopped";
+  TelnetStream.println(response);
+  request->send(200, "text/plain", response);
 }
 
 // Function to change temperature goal
@@ -200,8 +202,10 @@ void setupWebServer()
   server.on("/data", HTTP_GET, [](AsyncWebServerRequest *request){
     DynamicJsonDocument jsonDoc(256);
     jsonDoc["heaterTemperature"] = heaterTemperature;
+    jsonDoc["maxTemp"] = maxTemp;
     jsonDoc["tempGoal"] = tempGoal;
     jsonDoc["powerPercent"] = powerPercent;
+    jsonDoc["heaterStatus"] = heaterStatus;
     jsonDoc["idleMinutes"] = idleMinutes;
     jsonDoc["idleSeconds"] = idleSeconds;
     jsonDoc["sleepy"] = sleepy;
@@ -221,7 +225,7 @@ void setupWebServer()
   server.on("/scripts.js", HTTP_GET, handleJS);
   server.on("/styles.css", HTTP_GET, handleCSS);
 
-  server.on("/toggle-tuning", HTTP_POST, handleToggleTuning);
+  server.on("/toggle-autotune", HTTP_GET, handleToggleAutoTune);
   server.on("/change-temp-goal", HTTP_POST, handleChangeTempGoal);
   server.on("/change-kp", HTTP_POST, handleChangeKp);
   server.on("/change-ki", HTTP_POST, handleChangeKi);

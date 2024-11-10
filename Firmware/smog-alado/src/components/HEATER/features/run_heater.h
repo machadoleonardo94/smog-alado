@@ -8,17 +8,32 @@
 
 void runHeater()
 {
-  if (power < WindowPID) 
-  {
-    digitalWrite(heater, HIGH);
-    digitalWrite(ledPin, HIGH);
-    powerPercent = 100;
-  }
-  else 
+  if (heaterTemperature >= tempMax)
   {
     digitalWrite(heater, LOW);
     digitalWrite(ledPin, LOW);
     powerPercent = 0;
+    heaterStatus = false;
+  }
+  else 
+  {
+    while (globalTimer - windowStartTime > WindowSize) 
+    {
+      windowStartTime += WindowSize;
+    }
+    if (power > globalTimer - windowStartTime) 
+    {
+      digitalWrite(heater, HIGH);
+      digitalWrite(ledPin, HIGH);
+      heaterStatus = true;
+    }
+    else 
+    {
+      digitalWrite(heater, LOW);
+      digitalWrite(ledPin, LOW);
+      heaterStatus = false;
+    }
+    powerPercent = (power * 100) / WindowSize;
   }
 }
 

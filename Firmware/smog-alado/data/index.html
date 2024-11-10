@@ -8,13 +8,15 @@
 </head>
 
 <body>
-  <h1>Smog Alado - Controles</h1>
+  <h1>Expresso Alado - Controles</h1>
   <p id='timeStr'>Current Time: </p>
 
   <div class="form-container">
     <p id='tempGoal'>Temperature Goal: </p>
     <p id='temperature'>Temperature: </p>
+    <p id='maxTemp'>Maximum Temperature Reached</p>
     <p id='pwmOutput'>PWM Output: </p>
+    <p id='heaterStatus'>Heating: </p>
     <p id='timeToSleep'>Time to Sleep: </p>
   </div>
 
@@ -57,7 +59,7 @@
     </div>
 
     <div class="group-container">
-      <button type='button' onclick='toggleTuning();'>Auto-tune PID</button>
+      <button type='button' onclick='toggleAutoTune();'>Auto-tune PID</button>
       <button type='button' onclick='commitToEEPROM();'>Commit to EEPROM</button>
       <button type='button' onclick='rebootESP();'>Reboot</button><br>
     </div>

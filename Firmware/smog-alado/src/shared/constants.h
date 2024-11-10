@@ -15,8 +15,8 @@
 #define TIME_ZONE TZ_America_Sao_Paulo
 
 //* Temperature limit to avoid burnout
-#define tempMax 92
-#define WindowSize 10000
+#define tempMax 95
+#define WindowSize 1000
 
 //* Pulldown resistor R10
 #define PULLDOWN 3300

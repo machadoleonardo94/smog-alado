@@ -47,6 +47,8 @@ void setup()
   myPID.SetMode(AUTOMATIC);
   // changeAutoTune();  // Initiate auto-tuning at startup
 
+  windowStartTime = millis();
+
   os_update_cpu_frequency(10);
 }
 
@@ -56,18 +58,16 @@ void loop()
 
   myPID.Compute();
 
-  WindowPID = millis() - windowStartTime;
-  if (WindowPID > WindowSize)
-  { // time to shift the Relay Window
-    windowStartTime += WindowSize;
-    TelnetStream.println("Window adjust");
-  }
 
   if (adcTimer > (SAMPLES_TO_SEC / 5)) // reads ADC every 200ms
   {
     adcTimer = 0;
     thermistor = calculate_resistance();
     heaterTemperature = steinhart(thermistor);
+    if (heaterTemperature > maxTemp)
+    {
+      maxTemp = heaterTemperature;
+    }
     runHeater();
   }
 

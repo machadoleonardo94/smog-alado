@@ -10,12 +10,11 @@ void setupPID()
 {
   readPIDParametersFromEEPROM();
 
-  windowStartTime = millis();
-  tempGoal = 90;
+  //windowStartTime = millis();
+  tempGoal = 92;
 
   myPID.SetOutputLimits(0, WindowSize);
   myPID.SetMode(AUTOMATIC);
-  //myPID.SetSampleTime(SAMPLES_TO_SEC / 5);
   myPID.SetTunings(Kp, Ki, Kd);
 }
 

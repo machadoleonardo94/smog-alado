@@ -19,6 +19,7 @@ AsyncWiFiManager wifiManager(&server, &dns);
 double thermistor = 500;
 double heaterTemperature = 0;
 double tempGoal = 0;
+double maxTemp = 0;
 double error = 0;
 double power = 0;
 double powerPercent = 0;
@@ -32,6 +33,7 @@ bool tuning = false;
 
 unsigned long windowStartTime;
 unsigned long WindowPID;
+bool heaterStatus = false;
 
 PID myPID(&heaterTemperature, &power, &tempGoal, Kp, Ki, Kd, P_ON_M, DIRECT);
 
@@ -44,7 +46,7 @@ uint16_t idleMinutes = 0;
 uint16_t idleSeconds = 0;
 uint16_t remainingTime = 100;
 uint16_t APtimeout = 180;
-uint16_t minutes = 10;
+uint16_t minutes = 30;
 char timeStr[20];
 
 //* Booleans to check if functions will be called

@@ -4,7 +4,9 @@ function updateData() {
     .then(data => {
       // Update your UI with the data
       document.getElementById('temperature').innerText = 'Current Temperature: ' + data.heaterTemperature.toFixed(2) + ' °C';
+      document.getElementById('maxTemp').innerText = 'Maximum Temperature: ' + data.maxTemp.toFixed(2) + ' °C';
       document.getElementById('pwmOutput').innerText = 'PWM Output: ' + data.powerPercent.toFixed(2) + '%';
+      document.getElementById('heaterStatus').innerText = 'Heating: ' + (data.heaterStatus ? 'Yes' : 'No');
       document.getElementById('timeToSleep').innerText = 'Time to Sleep: ' + data.idleMinutes + ':' + data.idleSeconds + ' minutes';
       document.getElementById('tuningState').innerText = 'Tuning: ' + (data.tuning ? 'Yes' : 'No');
       document.getElementById('tempGoal').innerText = 'Goal Temperature: ' + data.tempGoal.toFixed(2) + ' °C';
@@ -12,6 +14,7 @@ function updateData() {
       document.getElementById('Ki').innerText = 'Ki: ' + data.Ki.toFixed(2);
       document.getElementById('Kd').innerText = 'Kd: ' + data.Kd.toFixed(2);
       document.getElementById('timeStr').innerText = 'Current Time: ' + data.timeStr;
+
 
       setTimeout(updateData, 400);
     })
@@ -39,13 +42,20 @@ function changeTimeToSleep() {
     });
 }
 
-function toggleTuning() {
-  fetch('/toggle-tuning', {
+function toggleAutoTune() {
+  fetch('/toggle-autotune', {
     method: 'POST'
   })
     .then(response => response.text())
     .then(result => {
       console.log(result);
+      showToast(result);
+      // Update the tuning state display
+      document.getElementById('tuningState').textContent = 'Tuning: ' + (result.includes('started') ? 'On' : 'Off');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      showToast('Error toggling auto-tune');
     });
 }
 
