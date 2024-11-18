@@ -12,7 +12,7 @@ void setup_ESP32()
     //* Setup bluetooth
     btStop();
 
-    // Sets battery ADC attenuation
+    // Sets input voltage ADC attenuation
     // analogReadResolution(14);
     analogSetPinAttenuation(A1, ADC_11db);
     analogSetPinAttenuation(A0, ADC_0db);

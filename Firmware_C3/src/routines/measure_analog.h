@@ -58,8 +58,8 @@ double calculate_battery()
     adcRaw = ads.readADC_SingleEnded(VBATT);
   else
   {
-    for (int i = 0; i < 3; i++)
-      adcRaw = +analogReadMilliVolts(1);
+    for (int i = 0; i < 4; i++)
+      adcRaw += analogReadMilliVolts(1);
   }
   Serial.printf("Raw reading: %d \n", adcRaw);
   double voltage = ads.computeVolts(adcRaw);
@@ -77,8 +77,8 @@ double calculate_current()
   Serial.printf("Raw reading: %d \n", adcRaw);
   double isense = ads.computeVolts(adcRaw);
   // isense = roundl(isense * 10) / 10;
+  isense = isense * 2.5; // Rsns 20mR, INA180 gain 20x
   isense = constrain(isense, 0, 20);
-  isense = isense * 2 * 1.07; // Rsns 20mR, INA180 gain 20x
   return isense;
 }
 
@@ -88,11 +88,23 @@ double calculate_load()
     return 0;
   double resistance = 0;
   ledcWrite(heater, 1000);
+
+  //* Direct method: Apply DC and measure V and I after settling time
   delay(100);
-  battery = calculate_battery();
-  current = calculate_current();
-  if (current > 0.01)
-    resistance = battery / current;
+  uint16_t rawBatt = ads.readADC_SingleEnded(VBATT);
+  double battVoltage = ads.computeVolts(rawBatt);
+  delay(10);
+  uint16_t rawSns = ads.readADC_SingleEnded(Rsns);
+  double loadCurrent = ads.computeVolts(rawSns) * 2.5; // Compensate gain as I = V(Rsns)/(20*20mR)
+  if (loadCurrent > 0.05)
+  {
+    resistance = battVoltage / loadCurrent;
+    current = loadCurrent;
+  }
+  // inputVoltage= calculate_battery();
+  // current = calculate_current();
+  //  if (current > 0.05)
+  //  resistance = inputVoltage/ current;
   else
     resistance = 99;
   digitalWrite(heater, LOW);

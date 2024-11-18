@@ -41,7 +41,7 @@ void setup()
   clickCounter = 0;
 
   setup_ESP32();
-  battery = calculate_battery();
+  inputVoltage = calculate_battery();
   if (workingADS)
     heaterResistance = calculate_load();
 }
@@ -64,9 +64,9 @@ void loop()
   if ((logTimer > (SAMPLES_TO_SEC / 2))) // logs variables every 500ms if awake
   {
     logTimer = 0;
-    battery = calculate_battery();
+    inputVoltage = calculate_battery();
     current = calculate_current();
-    loadVoltage = powerPercent * battery / 100;
+    loadVoltage = powerPercent * inputVoltage / 100;
     powerOutput = loadVoltage * current;
     // thermistor = calculate_resistance(TH0, 2200);
     thermistor = calculate_resistance(TH1, 33000);

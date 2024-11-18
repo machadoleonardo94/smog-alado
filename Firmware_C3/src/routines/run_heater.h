@@ -46,6 +46,8 @@ void controlPowerV(uint16_t power)
 
 void controlPowerW(uint16_t power)
 {
+    if ((!buttonState) && (!constantHeating))
+        pwmOutput = 0;
     if ((clickCounter == 1) || constantHeating)
     {
         totalHeatingTime += SAMPLING_TIMER;
@@ -77,10 +79,6 @@ void controlPowerW(uint16_t power)
                 pwmOutput -= 1;
         }
         pwmOutput = constrain(pwmOutput, 0, 1000);
-    }
-    else
-    {
-        pwmOutput = 0;
     }
     powerPercent = pwmOutput / 10;
     ledcWrite(heater, pwmOutput);

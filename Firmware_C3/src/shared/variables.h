@@ -17,14 +17,14 @@ double heaterTemperature = 0;
 double heaterResistance = 99;
 double tempGoal = 0;
 double error = 0;
-uint8_t powerLevel = 15;
+uint8_t powerLevel = 30;
 double pwmOutput = 0;
 double powerOutput = 0;
 double powerPercent = 0;
 int preset = 0;
 bool constantHeating = false;
 
-double battery = 0;
+double inputVoltage = 0;
 double loadVoltage = 0;
 double current = 0;
 
