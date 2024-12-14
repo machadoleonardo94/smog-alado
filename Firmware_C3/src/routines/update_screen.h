@@ -49,7 +49,7 @@ void updateDisplay()
   display.print(sessionSec);
 
   display.setCursor(COLUMN1, LINE1);
-  display.print(battery, 2);
+  display.print(inputVoltage, 2);
   display.print("V");
 
   display.setCursor(0, LINE2);
