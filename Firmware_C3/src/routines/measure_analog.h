@@ -87,18 +87,18 @@ double calculate_load()
   if (!workingADS)
     return 0;
   double resistance = 0;
-  ledcWrite(heater, 1000);
-
+  // ledcWrite(heater, 1000);
+  digitalWrite(heater, HIGH);
   //* Direct method: Apply DC and measure V and I after settling time
   delay(100);
   uint16_t rawBatt = ads.readADC_SingleEnded(VBATT);
-  double battVoltage = ads.computeVolts(rawBatt);
+  inputVoltage = ads.computeVolts(rawBatt);
   delay(10);
   uint16_t rawSns = ads.readADC_SingleEnded(Rsns);
   double loadCurrent = ads.computeVolts(rawSns) * 2.5; // Compensate gain as I = V(Rsns)/(20*20mR)
   if (loadCurrent > 0.05)
   {
-    resistance = battVoltage / loadCurrent;
+    resistance = inputVoltage / loadCurrent;
     current = loadCurrent;
   }
   // inputVoltage= calculate_battery();
