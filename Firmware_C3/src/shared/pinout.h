@@ -15,7 +15,7 @@
 #define latchPin 3
 //* DIGITAL IN:
 #define buttonPin 7
-#define button2Pin 0
+#define button2Pin 9
 //* I2C PINS:
 #define SDA 4
 #define SCL 5

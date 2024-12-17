@@ -85,7 +85,7 @@ double calculate_current()
 double calculate_load()
 {
   if (!workingADS)
-    return 0;
+    return 99.99;
   double resistance = 0;
   // ledcWrite(heater, 1000);
   digitalWrite(heater, HIGH);

@@ -12,10 +12,14 @@ void buttonPress();
 
 void buttonPress()
 {
-  if (digitalRead(button2Pin))
+  if (!digitalRead(button2Pin))
   {
-    sampleRandomLED();
+    while (!digitalRead(button2Pin))
+      delay(50);
+    constantHeating = !constantHeating;
+    heaterResistance = calculate_load();
   }
+
   if (digitalRead(buttonPin))
   {
     idleTimer = 0;
