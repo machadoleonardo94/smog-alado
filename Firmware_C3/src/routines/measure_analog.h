@@ -77,7 +77,7 @@ double calculate_current()
   Serial.printf("Raw reading: %d \n", adcRaw);
   double isense = ads.computeVolts(adcRaw);
   // isense = roundl(isense * 10) / 10;
-  isense = isense * 2.5; // Rsns 20mR, INA180 gain 20x
+  isense = isense * 5; // Rsns 10mR, INA180 gain 20x
   isense = constrain(isense, 0, 20);
   return isense;
 }
