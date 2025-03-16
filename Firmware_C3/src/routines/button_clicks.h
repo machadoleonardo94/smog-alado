@@ -42,8 +42,9 @@ void buttonPress()
       clickCounter = 0;
       constantHeating = true;
       heaterResistance = calculate_load();
-      if ((heaterResistance < 20) && (heaterResistance > 0.2))
-        pwmOutput = 500;
+      controlPowerW(0);
+      // if ((heaterResistance < 20) && (heaterResistance > 0.2))
+      //   pwmOutput = 500;
     }
     if ((clickCounter == 3) && (buttonTimer > (SAMPLES_TO_SEC / 2)))
     {

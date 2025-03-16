@@ -94,7 +94,7 @@ double calculate_load()
   uint16_t rawSns = ads.readADC_SingleEnded(Rsns);
 
   // double loadCurrent = ads.computeVolts(rawSns) * 2.5; // Compensate gain as I = V(Rsns)/(20*20mR)
-  double loadCurrent = ads.computeVolts(rawSns) * 1.25; // Compensate gain as I = V(Rsns)/(20*20mR)
+  double loadCurrent = ads.computeVolts(rawSns) * 5; // Compensate gain as I = V(Rsns)/(20*10mR)
   for (uint8_t i = 0; i < 4; i++)
   {
     if (loadCurrent > 0.05)
