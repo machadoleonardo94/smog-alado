@@ -18,6 +18,7 @@ void buttonPress()
       delay(50);
     constantHeating = !constantHeating;
     heaterResistance = calculate_load();
+    idleTimer = 0;
   }
 
   if (digitalRead(buttonPin))
