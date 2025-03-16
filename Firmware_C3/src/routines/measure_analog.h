@@ -95,7 +95,8 @@ double calculate_load()
   double battVoltage = ads.computeVolts(rawBatt);
   delay(10);
   uint16_t rawSns = ads.readADC_SingleEnded(Rsns);
-  double loadCurrent = ads.computeVolts(rawSns) * 2.5; // Compensate gain as I = V(Rsns)/(20*20mR)
+  // double loadCurrent = ads.computeVolts(rawSns) * 2.5; // Compensate gain as I = V(Rsns)/(20*20mR)
+  double loadCurrent = ads.computeVolts(rawSns) * 1.25; // Compensate gain as I = V(Rsns)/(20*20mR)
   if (loadCurrent > 0.05)
   {
     resistance = battVoltage / loadCurrent;

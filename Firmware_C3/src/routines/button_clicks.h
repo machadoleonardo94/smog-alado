@@ -32,7 +32,7 @@ void buttonPress()
       clickCounter++;
       buttonState = true;
       constantHeating = false;
-      pwmOutput = 500;
+      pwmOutput = 0;
       delay(50); // debounce
     }
     if ((clickCounter == 2) && (buttonTimer > SAMPLES_TO_SEC))
@@ -47,13 +47,15 @@ void buttonPress()
     if ((clickCounter == 3) && (buttonTimer > (SAMPLES_TO_SEC / 2)))
     {
       buttonTimer = 0;
+      controlPowerW(0);
       powerLevel += 3;
       if (powerLevel > 45)
-        powerLevel = 15;
+        powerLevel = 9;
     }
     if ((clickCounter == 4) && (buttonTimer > SAMPLES_TO_SEC))
     {
       clickCounter = 0;
+      controlPowerW(0);
       connectWiFiScreen();
       setup_WIFI();
       setup_OTA();
